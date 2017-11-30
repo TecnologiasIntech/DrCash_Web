@@ -1,0 +1,22 @@
+
+
+<div >
+    <header class="header" style="background-color: #328bc7!important">
+        <navigation-trigger></navigation-trigger>
+
+        <div class="header__logo hidden-sm-down ">
+            <a [routerLink]="['categorias']">
+                <i class="zmdi zmdi-pin" style="color: #FFFFFF; font-size: 25px"></i>
+                <!--<i class="zmdi zmdi-settings" sytle="color:white"></i>-->
+                <h2 class="logo">getLink</h2></a>
+        </div>
+
+        <header-search #search class="toggled" [class.toggled]="search.searchActive"></header-search>
+
+        <ul class="top-nav">
+            <!--<li class="hidden-xl-up"><a (click)="search.searchActive = true"><i class="zmdi zmdi-search"></i></a></li>-->
+            <button class="btn btn-danger">Cerrar Sesión</button>
+        </ul>
+
+    </header>
+</div>

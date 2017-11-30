@@ -1,0 +1,58 @@
+.timepicker {
+  .glyphicon {
+    font-size: 1.8rem;
+    color: lighten($text-muted, 20%);
+    line-height: 100%;
+    @include transition(color 200ms);
+
+    &:before {
+      font-family: $font-family-icon;
+    }
+  }
+
+  .glyphicon-chevron-down:before {
+    content: '\f2f9';
+  }
+
+  .glyphicon-chevron-up:before {
+    content: '\f2fc';
+  }
+
+  .form-control {
+    text-align: center;
+    border: 1px solid $input-border-color;
+    font-weight: 500;
+    color: $headings-color;
+  }
+
+  table {
+    & > tbody {
+      & > tr {
+        &.hidden {
+          display: none;
+        }
+
+        & > td {
+          text-align: center;
+
+          .btn {
+            &:not(.btn-link) {
+              border-radius: 0;
+              border: 1px solid $input-border-color !important;
+              background-color: transparent;
+              height: 34px;
+              margin-left: 5px;
+              box-shadow: none !important;
+            }
+          }
+          
+          & > a:hover {
+            .glyphicon {
+              color: $body-color;
+            }
+          }
+        }
+      }
+    }
+  }
+}

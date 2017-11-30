@@ -1,0 +1,114 @@
+<div class="page-loader2" *ngIf="isLoading">
+    <div class="page-loader__spinner">
+        <svg viewBox="25 25 50 50">
+            <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+    </div>
+</div>
+
+<section class="row">
+    <div class="background bgsize">
+        <div class="offset-xl-4 col-xl-4 offset-lg-3 col-lg-6 offset-md-2 col-md-8 offset-sm-1 col-sm-10 offset-1 col-10"
+             align="center">
+
+            <!--CARD DE VERIFICAR EMAIL-->
+            <div class="card p-3 m-t-20 cardLogin-Register animated fadeIn"
+                 style="height: 430px!important;" *ngIf="view=='verifyEmail'&& !errorInVerifyEmail">
+                <div class="card-header" align="center">
+                    <h2>Has verificado tu email con éxito!</h2>
+                </div>
+                <div class="card-body" align="center">
+                    <i class="zmdi zmdi-thumb-up iconStyle animated {{ animatedIcon? 'tada' : '' }}"></i>
+                    <p class="f-s-18">Pulsa el siguiente botón para solicitar tu primer servicio</p>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-success btn-block f-s-18" (click)="verifyEmail()"><a
+                            [routerLink]="['/usuarios']" style="color: white;">Ir a la app</a></button>
+                </div>
+
+            </div>
+
+            <!--Card de error de verificacion de email-->
+            <div class="card p-3 m-t-20 cardLogin-Register animated fadeIn"
+                 style="height: 430px!important;" *ngIf="view=='errorCodeEmail'">
+                <div class="card-header" align="center">
+                    <h2>Lo siento, ha ocurrido un error !</h2>
+                </div>
+                <div class="card-body" align="center">
+                    <i class="zmdi zmdi-thumb-down iconStyle animated  {{ animatedIcon ? 'bounce' : ' ' }}"></i>
+                    <p class="f-s-18">Intenta de nuevo</p>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-success btn-block f-s-18" [routerLink]="['/login']"><a
+                             style="color: white;">Regresar al inicio</a></button>
+                </div>
+            </div>
+
+            <!--CARD DE CAMBIAR CONTRASEÑA-->
+
+            <div class="card p-3 m-t-20 cardLogin-Register animated fadeIn"
+                 style="" *ngIf="view=='resetPassword'">
+
+                <!--Card header/cambiar contraseña-->
+                <div class="card-header">
+                    <h2>Restablecer tu contraseña</h2>
+                </div>
+                <!--Card body/cambiar contraseña-->
+                <div class="card-body m-l-25 m-r-15">
+                    <form>
+                        <!--Contraseña/cambiar contraseña-->
+                        <div class="row">
+                            <div class="col-10">
+                                <div class="form-group form-group--float mb-0 pl-2 m-t-0" style="text-align: left">
+                                    <input class="form-control p-3 m-t-20 "
+                                           type="{{ShowPassRegister? 'text':'password'}}" formControlFloat autofocus
+                                           required [(ngModel)]="user.pass" name="pass" #pass (keyup)="errorPass=false">
+                                    <label class="{{errorPass? 'errorColor':''}}"><i class="zmdi zmdi-lock m-r-10"></i>Nueva
+                                        contraseña</label>
+                                    <i class="form-group__bar"></i>
+                                </div>
+                            </div>
+                            <div class="col-1 m-t-20">
+                                <i class="zmdi zmdi-eye-off zmdi-hc-lg m-t-20" *ngIf="!ShowPassRegister"
+                                   (click)="ShowPassRegister=!ShowPassRegister"></i>
+                                <i class="zmdi zmdi-eye zmdi-hc-lg cursor-pointer m-t-20" *ngIf="ShowPassRegister"
+                                   (click)="ShowPassRegister=!ShowPassRegister"></i>
+                            </div>
+                        </div>
+                        <!--Confirmar contraseña-->
+                        <div class="row">
+                            <div class="col-10">
+                                <div class="form-group form-group--float mb-0 pl-2 m-t-0" style="text-align: left">
+                                    <input class="form-control p-3 m-t-20" type="{{ShowVerifyPass? 'text':'password'}}"
+                                           formControlFloat autofocus
+                                           required [(ngModel)]="user.passVerify" name="verifyPass" #verifyPass
+                                           (keyup)="errorVerifyPass=false">
+                                    <label class="{{errorVerifyPass? 'errorColor':''}}"><i
+                                            class="zmdi zmdi-lock m-r-10"></i>Confirmar contraseña</label>
+                                    <i class="form-group__bar"></i>
+                                </div>
+                            </div>
+                            <div class="col-1 m-t-20">
+                                <i class="zmdi zmdi-eye-off zmdi-hc-lg m-t-20" *ngIf="!ShowVerifyPass"
+                                   (click)="ShowVerifyPass=!ShowVerifyPass"></i>
+                                <i class="zmdi zmdi-eye zmdi-hc-lg cursor-pointer m-t-20" *ngIf="ShowVerifyPass"
+                                   (click)="ShowVerifyPass=!ShowVerifyPass"></i>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!--Card footer-->
+                <div class="card-footer m-t-30">
+                    <button class="btn btn-success btn-block f-s-18" (click)="restorePass(user)"><a
+                            style="color: white">Enviar</a>
+                    </button>
+                </div>
+            </div>
+            <div *ngIf="showError"
+                 class="alert alert-danger animated {{ showError ? 'bounceIn':'' }}  {{ closeError ? 'bounceOut' : '' }}"
+                 role="alert">
+                Verifica los datos en rojo
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,93 @@
+.card {
+  box-shadow: $card-shadow;
+  margin-bottom: $grid-gutter-width-base;
+
+  &:not([class*="card-outline-"]) {
+    border: 0;
+  }
+}
+
+[class*="card-outline-"] {
+  background-color: $white;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: normal;
+  margin-bottom: 0;
+}
+
+.card-subtitle {
+  color: $text-muted;
+  display: block;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.card-header {
+  position: relative;
+
+  & + .card-block {
+    padding-top: 0;
+  }
+
+  .btn--float {
+    right: 25px;
+    bottom: -23px;
+    z-index: 1;
+  }
+}
+
+.card > .actions,
+.card-header .actions {
+  position: absolute;
+  right: 15px;
+  z-index: 2;
+  top: 18px;
+}
+
+[class*="card-img"] {
+  width: 100%;
+}
+
+.card-inverse {
+  .card-link,
+  .card-text,
+  .card-subtitle,
+  .card-blockquote .blockquote-footer {
+    color: rgba($white, 0.85);
+  }
+
+  .card-header,
+  .card-footer {
+    border-color: transparent;
+  }
+}
+
+.card-link {
+  text-transform: uppercase;
+  font-size: 0.98rem;
+  color: $headings-color;
+  font-weight: 500;
+
+  &:hover {
+    color: lighten($headings-color, 10%);
+  }
+}
+
+.card-footer {
+  padding-top: 0;
+}
+
+.card-block {
+  p:only-child {
+    margin-bottom: 0;
+  }
+}
+
+.card-block__title {
+  font-size: 1.1rem;
+  color: $headings-color;
+  margin-bottom: 0.6rem;
+  font-weight: normal;
+}

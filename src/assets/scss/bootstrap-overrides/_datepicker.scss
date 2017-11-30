@@ -1,0 +1,214 @@
+.datepicker {
+  .card {
+    display: inline-block;
+    background-color: $white;
+    padding: 15px;
+    margin: 0;
+    border: 0;
+
+    &:before {
+      content: '';
+      width: 100%;
+      height: 60px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      border-radius: $border-radius $border-radius 0 0;
+    }
+
+    table {
+      position: relative;
+      z-index: 1;
+
+      td, th {
+        text-align: center;
+      }
+
+      th {
+        b {
+          font-size: 0;
+          display: block;
+          margin-bottom: 10px;
+          font-weight: normal;
+          color: $headings-color;
+
+          &:first-letter {
+            font-size: 0.9rem;
+          }
+        }
+      }
+
+      td {
+        .btn {
+          padding: 8px 10px;
+          
+          &:not(.btn-info) {
+            &:hover {
+              background-color: darken($gray-lighter, 3%);
+            }
+          }
+        }
+        
+        em {
+          font-style: normal;
+        }
+      }
+
+
+      .btn {
+        background-color: $white;
+        font-size: 0.9rem;
+        border: 0;
+        box-shadow: none;
+        cursor: pointer;
+
+        &:focus,
+        &:active {
+          box-shadow: none;
+        }
+
+        &:not(.btn-info) {
+          & > span {
+            color: $body-color;
+
+            &.text-muted {
+              color: lighten($text-muted, 10%);
+            }
+          }
+        }
+
+
+      }
+
+      & > thead {
+        .btn {
+          margin-bottom: 35px;
+          height: 30px;
+          width: 100%;
+          border: 0;
+          background: transparent;
+          box-shadow: none;
+          color: $white;
+          text-transform: uppercase;
+          position: relative;
+
+          &.pull-left,
+          &.pull-right {
+            font-size: 0;
+
+            &:before {
+              font-family: $font-family-icon;
+              font-size: 1.4rem;
+              color: $white;
+              font-style: normal;
+              position: relative;
+              z-index: 1;
+            }
+          }
+
+          &.pull-left {
+            &:before {
+              content: '\f2ff';
+            }
+          }
+
+          &.pull-right {
+            &:before {
+              content: '\f301';
+            }
+          }
+
+          &:hover {
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+  }
+
+  &:not(.datepicker--inline) {
+    .well {
+      box-shadow: none;
+    }
+  }
+}
+
+.datepicker--popup {
+  &:not(.datepicker--toggled) {
+    display: none;
+  }
+
+  box-shadow: $dropdown-box-shadow;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  @include animate(fadeIn, 300ms);
+}
+
+.datepicker--popup--alt {
+  bottom: 0;
+  top: auto;
+}
+
+.datepicker__close {
+  display: block;
+  text-align: center;
+  width: 100%;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: $headings-color;
+  border: 0;
+  background-color: $white;
+  padding: 0 0 15px;
+  margin-top: -5px;
+  cursor: pointer;
+  border-radius: 0 0 2px 2px;
+  
+  &:hover {
+    color: lighten($headings-color, 10%);
+  }
+}
+
+// Theming
+@mixin datepicker-theme($color) {
+  &:before {
+    background-color: $color;
+  }
+
+  table {
+    tbody {
+      td {
+        .btn-info {
+          background-color: $color;
+          box-shadow: none;
+
+          & > span {
+            color: $white !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+.datepicker:not(.datepicker--red):not(.datepicker--blue):not(.datepicker--amber):not(.datepicker--green) .well {
+  @include datepicker-theme($teal);
+}
+
+.datepicker--red .well {
+  @include datepicker-theme($red);
+}
+
+.datepicker--blue .well {
+  @include datepicker-theme($light-blue);
+}
+
+.datepicker--amber .well {
+  @include datepicker-theme($amber);
+}
+
+.datepicker--green .well {
+  @include datepicker-theme($green);
+}

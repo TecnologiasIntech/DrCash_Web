@@ -1,0 +1,71 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "materal-admin-2-angular"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "favicon.ico"
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.json",
+      "prefix": "app",
+      "styles": [
+        "../node_modules/material-design-iconic-font/dist/css/material-design-iconic-font.min.css",
+        "../node_modules/animate.css/animate.min.css",
+        "../node_modules/dropzone/dist/min/dropzone.min.css",
+        "../node_modules/nouislider/distribute/nouislider.min.css",
+        "styles.scss",
+        "../node_modules/sweetalert2/dist/sweetalert2.min.css"
+      ],
+      "scripts": [
+        "../node_modules/jquery/dist/jquery.js",
+        "../node_modules/select2/dist/js/select2.full.min.js",
+        "../node_modules/jquery-sparkline/jquery.sparkline.min.js",
+        "../node_modules/easy-pie-chart/dist/jquery.easypiechart.min.js",
+        "../node_modules/dropzone/dist/min/dropzone.min.js",
+        "../node_modules/nouislider/distribute/nouislider.min.js",
+        "../node_modules/flot/jquery.flot.js",
+        "../node_modules/flot/jquery.flot.pie.js",
+        "../src/assets/vendors/bower_components/flot.curvedlines/curvedLines.js",
+        "../src/assets/vendors/bower_components/flot.orderbars/js/jquery.flot.orderBars.js",
+        "../node_modules/jqvmap/dist/jquery.vmap.min.js",
+        "../node_modules/jqvmap/dist/maps/jquery.vmap.world.js",
+        "../node_modules/sweetalert2/dist/sweetalert2.min.js"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "scss",
+    "class": {
+      "spec": false
+    },
+    "component": {
+      "spec": true,
+      "inlineStyle": false,
+      "inlineTemplate": false
+    }
+  }
+}

@@ -1,0 +1,61 @@
+<!--<bootstrap-growl [alertCount]="1" [autoClose]="30000"></bootstrap-growl>-->
+
+<section class="row background bgsize m-l-0 m-r-0" style="">
+    <div class="offset-xl-4 col-xl-4 offset-lg-3 col-lg-6 offset-md-2 col-md-8 offset-sm-1 col-sm-10 offset-1 col-10"
+         align="center">
+
+        <!--CARD DE CONTRASEÑA OLVIDADA-->
+        <div class="card p-3 m-t-20 p-l-30 p-r-30 animated fadeIn">
+
+            <div class="page-loader2" *ngIf="isLoading" style="padding-bottom: 27%">
+                <div class="page-loader__spinner">
+                    <svg viewBox="25 25 50 50">
+                        <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="card-header">
+                <h2>Recupera tu contraseña</h2>
+                <p class="m-t-25">Primero escribe tu correo electronico para enviarte un enlace y puedas restablecer
+                    tu contraseña</p>
+            </div>
+
+            <div class="card-body m-l-25 m-r-15">
+
+                <form>
+
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="form-group form-group--float mb-0 pl-2 m-t-0" style="text-align: left">
+
+                                <input type="email" class="form-control" formControlFloat
+                                       [(ngModel)]="userEmail" name="e" #email (keyup)="errorEmail=false" (keyup.enter)="sendEmailVerification(userEmail)">
+
+                                <label class="{{errorEmail? 'errorColor':''}}"><i class="zmdi zmdi-email m-r-10"></i>Correo
+                                    electrónico</label>
+                                <i class="form-group__bar"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="card-footer m-t-15">
+                <button class="btn btn-success mt-4 btn-block" style="font-size: 16px;"
+                        (click)="sendEmailVerification(userEmail)">Enviar enlace
+                </button>
+            </div>
+
+        </div>
+        <div *ngIf="error"
+             class="alert alert-danger animated {{ error ? 'bounceIn':'' }}  {{ closeError ? 'bounceOut' : '' }}"
+             role="alert">
+            Verifica los datos en rojo
+        </div>
+
+    </div>
+</section>

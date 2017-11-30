@@ -1,0 +1,256 @@
+<!--<bootstrap-growl [alertCount]="1" [autoClose]="30000"></bootstrap-growl>-->
+<div class="page-loader2" *ngIf="isLoading">
+    <div class="page-loader__spinner">
+        <svg viewBox="25 25 50 50">
+            <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+        </svg>
+    </div>
+</div>
+
+<section class="row ">
+    <div class="background bgsize">
+        <div class="offset-xl-4 col-xl-4 offset-lg-3 col-lg-6 offset-md-2 col-md-8 offset-sm-1 col-sm-10 offset-1 col-10"
+             align="center">
+
+            <!--CARD DE AUTENTIFICACION-->
+            <div class="card p-3 m-t-20 cardLogin-Register animated fadeIn {{ view=='registrate'? 'cardRegister':'' }}"
+                 style="">
+
+                <!--NAVEGACION-->
+                <div class="card-header p-b-0">
+                    <ul class="nav nav-tabs">
+
+                        <li class="nav-item {{ view == 'login' ? 'active':'' }}">
+                            <a class="nav-link {{ view == 'login' ? 'active':'' }}"
+                               (click)="view = 'login';userRegister=[]"
+                               style="">
+                                <span>Iniciar sesión</span>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item {{ view == 'registrate' ? 'active':'' }}">
+                            <a class="nav-link {{ view == 'registrate' ? 'active':'' }}"
+                               (click)="view = 'registrate';userRegister=[]"
+                               style="">
+
+                                <span>Registrate</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <!--LOGIN Y REGISTRO-->
+                <div class="card-body ml-3 mr-3 cardLogin {{ view=='registrate'? 'card-Register':'' }}"
+                     style=""
+                     align="left">
+
+                    <!--LOGIN-->
+                    <div *ngIf="view == 'login'">
+                        <!--inicio del form-->
+                        <form action="" (submit)="loginUser(userRegister)">
+                            <div class="row">
+                                <div class="col-10">
+                                    <div class="form-group form-group--float mb-0">
+                                        <!--error email-->
+                                        <input class="form-control p-3" type="email" formControlFloat autofocus
+                                               required [(ngModel)]="userRegister.email" name="e" #email
+                                               (keyup)="errorEmail=false">
+                                        <!--errorColor-->
+
+                                        <label style="" class="{{errorEmail? 'errorColor':''}}"><i
+                                                class="zmdi zmdi-email m-r-10"></i>Correo
+
+                                            electrónico</label>
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-10">
+                                    <div class="form-group form-group--float mb-0">
+                                        <input class="form-control p-3" type="{{showPassLogin? 'text':'password'}}"
+                                               formControlFloat autofocus
+                                               required [(ngModel)]="userRegister.pass" name="e" #pass
+                                               (keyup)="errorPass=false">
+
+                                        <label class="{{errorPass? 'errorColor':''}}"><i
+                                                class="zmdi zmdi-lock m-r-10"></i>Contraseña</label>
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                                <div class="col-1 m-t-45">
+                                    <i class="zmdi zmdi-eye-off zmdi-hc-lg" *ngIf="!showPassLogin"
+                                       (click)="showPassLogin=!showPassLogin"></i>
+                                    <i class="zmdi zmdi-eye zmdi-hc-lg cursor-pointer" *ngIf="showPassLogin"
+                                       (click)="showPassLogin=!showPassLogin"></i>
+                                </div>
+                                <div align="center" style="width: 100%">
+                                    <div class="m-t-20 cursor-pointer"><a [routerLink]="['/contrasenia-olvidada']">
+                                        ¿Olvidaste tu
+                                        contraseña?</a>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div align="center">
+                                <button class="btn btn-success btn-lg m-t-20 m-b-20"
+                                        style=" border-radius: 5px 5px 5px 5px">
+                                    Ingresar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!--REGISTRO-->
+                    <div *ngIf="view == 'registrate'">
+                        <form action="">
+                            <!--formulario de registrate-->
+                            <div class="row">
+                                <div class="col-11">
+                                    <div class="form-group form-group--float mb-0">
+
+                                        <input class="form-control p-3" type="email"
+                                               formControlFloat autofocus
+                                               required [(ngModel)]="userRegister.email" name="e" #email
+                                               (keyup)="errorEmail=false"
+                                        >
+                                        <!--<div *ngIf="verifyEmail"></div>-->
+
+                                        <label class="{{errorEmail? 'errorColor':''}}"><i
+                                                class="zmdi zmdi-email IconSpace"></i> Correo
+                                            electrónico</label>
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-11">
+                                    <div class="form-group form-group--float mb-0">
+
+                                        <input class="form-control p-3" type="tel"
+                                               formControlFloat autofocus #phone
+                                               [(ngModel)]="userRegister.phone" name="phone" required
+                                               (keyup)="errorPhone=false"
+                                        >
+
+                                        <label class="{{ errorPhone? 'errorColor' : ' ' }}"><i
+                                                class="zmdi zmdi-phone IconSpace "></i>Telefono</label>
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10">
+                                    <div class="form-group form-group--float mb-0">
+
+                                        <input type="{{ShowPassRegister? 'text':'password'}}"
+                                               class="form-control p-3"
+                                               formControlFloat autofocus required #pass
+                                               [(ngModel)]="userRegister.pass" name="pass"
+                                               (keyup)="errorPass=false"
+                                        >
+                                        <label class="{{ errorPass? 'errorColor' : ' ' }}"><i
+                                                class="zmdi zmdi-lock IconSpace"></i>Contraseña</label>
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                                <div class="col-1 marginTopIconView">
+                                    <i class="zmdi zmdi-eye-off cursor-pointer zmdi-hc-lg"
+                                       (click)="ShowPassRegister=!ShowPassRegister" *ngIf="!ShowPassRegister"></i>
+                                    <i class="zmdi zmdi-eye cursor-pointer zmdi-hc-lg"
+                                       (click)="ShowPassRegister=!ShowPassRegister" *ngIf="ShowPassRegister"></i>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10">
+                                    <div class="form-group form-group--float mb-0">
+
+                                        <input type="{{ShowVerifyPass? 'text':'password'}}"
+                                               class="form-control p-3"
+                                               formControlFloat autofocus required #verifyPass
+                                               [(ngModel)]="userRegister.passVerify" name="verifyPass"
+                                               (keyup)="errorVerifyPass=false"
+                                        >
+
+                                        <label class="{{ errorVerifyPass? 'errorColor': '' }}"><i
+                                                class="zmdi zmdi-lock IconSpace"></i>Repetir Contraseña</label>
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                                <div class="col-1 marginTopIconView">
+                                    <i class="zmdi zmdi-eye-off cursor-pointer zmdi-hc-lg"
+                                       (click)="ShowVerifyPass=!ShowVerifyPass" *ngIf="!ShowVerifyPass"></i>
+                                    <i class="zmdi zmdi-eye cursor-pointer zmdi-hc-lg"
+                                       (click)="ShowVerifyPass=!ShowVerifyPass" *ngIf="ShowVerifyPass"></i>
+                                </div>
+                            </div>
+
+                            <div class="terminos">
+                                <!--Terminos y Condiciones-->
+                                <div align="center" class="has-success  styleCheckbox">
+                                    <label class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox"
+                                               [(ngModel)]="userRegister.terms" name="terms"
+                                               checked=" {{ errorTerms? '' : 'errorTerms = false' }} ">
+                                        <!-- [(ngModel)]="userAuthInterface.radioTerms" -->
+                                        <span class="custom-control-indicator"></span>
+                                    </label>
+                                    <span style="color: #32c787"
+                                          class=" cursor-pointer custom-control-description {{ errorTerms ? 'errorColor' : ' ' }} "
+                                          (click)="showInfoTerms(userRegister)">Acepto Términos y Condiciones</span>
+                                </div>
+                                <button class="cursor-pointer btn btn-success btn-lg btnLogin btn-block"
+                                        data-toggle="tooltip" data-placement="right" title="Verifica todos los campos"
+                                        (click)="registerUser(userRegister)">Registrate
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+
+                <!--AUTH CON REDES SOCIALES-->
+                <div class="card-footer" style="padding-right: 0;padding-left: 0; padding-bottom: 0!important;">
+                    <div class="authSocial" style="border-radius: 0 0 10px 10px;width: 100%; height: 115px;">
+
+                        <div class="row" style="width: 90%;">
+
+                            <!--Facebook-->
+                            <div class="col-4">
+                                <div class="circleSocial facebookColor" (click)="authFacebook()">
+                                    <i class="zmdi zmdi-facebook"></i>
+                                </div>
+                            </div>
+
+                            <!--Google-->
+                            <div class="col-4">
+                                <div class="circleSocial googleColor" (click)="authGoogle()">
+                                    <i class="zmdi zmdi-google-plus"></i>
+                                </div>
+                            </div>
+
+                            <!--Twitter-->
+                            <div class="col-4">
+                                <div class="circleSocial twitterColor" (click)="authTwitter()">
+                                    <i class="zmdi zmdi-twitter"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="showError"
+                 class="alert alert-danger animated {{ showError ? 'bounceIn':'' }}  {{ closeError ? 'bounceOut' : '' }}"
+                 role="alert">
+                Verifica los datos en rojo
+            </div>
+
+        </div>
+    </div>
+</section>
