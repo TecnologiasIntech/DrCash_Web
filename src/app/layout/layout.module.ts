@@ -1,3 +1,4 @@
+///<reference path="../modals/sign-up/sign-up.component.ts"/>
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { NgModule } from "@angular/core";
@@ -20,6 +21,27 @@ import {TransactionService} from "../services/transaction.service";
 import {LogService} from "../services/log.service";
 import {ReportService} from "../services/report.service";
 import {UserService} from "../services/user.service";
+import {CashInComponent} from "../modals/cash-in/cash-in.component";
+import {CashOutComponent} from "../modals/cash-out/cash-out.component";
+import {AuthorizationComponent} from "../modals/authorization/authorization.component";
+import {RefundComponent} from "../modals/refund/refund.component";
+import {CredentialsComponent} from "../modals/credentials/credentials.component";
+import {CloseDateComponent} from "../modals/close-date/close-date.component";
+import {DailyTransactionsComponent} from "../pages/daily-transactions/daily-transactions.component";
+import {LogsComponent} from "../pages/logs/logs.component";
+import {TransactionsComponent} from "../pages/transactions/transactions.component";
+import {UpdateTransactionComponent} from "../modals/update-transaction/update-transaction.component";
+import {ClosedStatementsComponent} from "../pages/closed-statements/closed-statements.component";
+import {UserProfileComponent} from "../pages/user-profile/user-profile.component";
+import {ManageUsersComponent} from "../modals/manage-users/manage-users.component";
+import {RegisterComponent} from "../pages/register/register.component";
+import {NewRegisterComponent} from "../modals/new-register/new-register.component";
+import {GeneralComponent} from "../pages/general/general.component";
+import {SmtpComponent} from "../pages/smtp/smtp.component";
+import {SignUpComponent} from "../modals/sign-up/sign-up.component";
+import {SharedModule} from "../shared/shared.module";
+import {LoginComponent} from "../modals/login/login.component";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -32,7 +54,26 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         SearchComponent,
         NavigationComponent,
         NavigationTriggerComponent,
-        HomeComponent
+        HomeComponent,
+        CashInComponent,
+        CashOutComponent,
+        AuthorizationComponent,
+        RefundComponent,
+        CredentialsComponent,
+        CloseDateComponent,
+        DailyTransactionsComponent,
+        LogsComponent,
+        TransactionsComponent,
+        UpdateTransactionComponent,
+        ClosedStatementsComponent,
+        UserProfileComponent,
+        ManageUsersComponent,
+        RegisterComponent,
+        NewRegisterComponent,
+        GeneralComponent,
+        SmtpComponent,
+        SignUpComponent,
+        LoginComponent
     ],
     imports: [
         CommonModule,
@@ -42,7 +83,10 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         BsDropdownModule.forRoot(),
         ProgressbarModule.forRoot(),
         ButtonsModule.forRoot(),
-        PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG)
+        PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG),
+        SharedModule,
+        NgbModule,
+        NgbModule.forRoot(),
     ],
     providers: [
         alertService,
@@ -51,6 +95,20 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         LogService,
         ReportService,
         UserService
+    ],
+    entryComponents: [
+        CashInComponent,
+        CashOutComponent,
+        CloseDateComponent,
+        CredentialsComponent,
+        LoginComponent,
+        ManageUsersComponent,
+        NewRegisterComponent,
+        RefundComponent,
+        SignUpComponent,
+        UpdateTransactionComponent,
+        AuthorizationComponent
+
     ]
 })
 

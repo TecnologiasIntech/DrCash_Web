@@ -1,17 +1,16 @@
 export interface Transaction {
-    trn_id:number;
-    userId:number;
-    dateRegistered:string;
-    comment:string;
+    userKey:string;
+    dateRegistered?:string;
+    comment?:string;
     type:number;
-    amountCharged:number;
-    initial_Cash:number;
-    cash:number;
-    credit:number;
-    check:number;
-    checkNumber:number;
-    change:number;
-    patientFirstName:string;
+    amountCharged?:number;
+    initial_Cash?:number;
+    cash?:number;
+    credit?:number;
+    check?:number;
+    checkNumber?:number;
+    change?:number;
+    patientFirstName?:string;
     copayment:boolean;
     selfPay:boolean;
     deductible:boolean;
@@ -20,7 +19,7 @@ export interface Transaction {
     otherComments:string;
     closed:boolean;
     registerId:string;
-    modifiedById:number;
-    modificationDate:string;
+    modifiedById?:number;
+    modificationDate?:string;
 }
 

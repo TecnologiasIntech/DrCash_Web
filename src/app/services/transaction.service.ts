@@ -22,10 +22,10 @@ export class TransactionService {
 
     getTransactionsByRange(startAt:number, endAt) {
         //TODO verificar esta consulta
-        return this.db.list('transactions', ref => ref
-            .orderByChild('date')
-            .startAt(startAt)
-            .end(endAt))
+        // return this.db.list('transactions', ref => ref
+        //     .orderByChild('date')
+        //     .startAt(startAt)
+        //     .end(endAt))
     }
 
     setTransaction(transaction: Transaction) {

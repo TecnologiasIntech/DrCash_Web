@@ -1,13 +1,9 @@
 import { Routes, RouterModule } from '@angular/router';
-import {LoginComponent} from "./pages/login/login.component";
+import {LoginComponent} from "./modals/login/login.component";
 
 const ROUTES: Routes = [
 
-    { path: '', loadChildren: './layout/layout.module#LayoutModule' },
-    { path: 'login', component: LoginComponent },
-    { path: 'contrasenia-olvidada', loadChildren: './pages/contrasenia-olvidada/contrasenia-olvidada.module#ContraseniaOlvidadaModule'},
-    { path: 'auth' , loadChildren: './pages/auth/auth.module#AuthModule' }
-
+    { path: '', loadChildren: './layout/layout.module#LayoutModule' }
 ];
 
 export const routing = RouterModule.forRoot(ROUTES)
