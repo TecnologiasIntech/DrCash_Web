@@ -16,6 +16,13 @@ export class alertService {
             'error'
         )
     }
+    success(title:string, message:string){
+        swal(
+            title,
+            message,
+            'success'
+        )
+    }
     infoTerms(title:string) {
        return new Promise((resolve =>{
            swal({
