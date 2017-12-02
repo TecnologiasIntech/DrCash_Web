@@ -1,13 +1,15 @@
-import {CashOutComponent} from "../../modals/cash-out/cash-out.component";
-import {Component, OnInit} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {InitialCashComponent} from "../../modals/initial-cash/initial-cash.component";
 import {Globals} from "../../statics/globals";
 import {LoginComponent} from "../../modals/login/login.component";
+import { Component, OnInit } from '@angular/core';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {CashInComponent} from "../../modals/cash-in/cash-in.component";
+import {CashOutComponent} from "../../modals/cash-out/cash-out.component";
+import {RefundComponent} from "../../modals/refund/refund.component";
+import {SignUpComponent} from "../../modals/sign-up/sign-up.component";
 import {CloseDateComponent} from "../../modals/close-date/close-date.component";
 import {AuthorizationComponent} from "../../modals/authorization/authorization.component";
-import {RefundComponent} from "../../modals/refund/refund.component";
+
 
 @Component({
     selector: 'app-home',
@@ -17,25 +19,31 @@ import {RefundComponent} from "../../modals/refund/refund.component";
 export class HomeComponent implements OnInit {
 
     constructor(private _modal: NgbModal,
-                private _globals: Globals) {
-        _modal.open(LoginComponent,Globals.optionModalLg);
-      // _modal.open(AuthorizationComponent,Globals.optionModalLg).result.then((result)=>{
-      //     debugger
-      //     if(result){
-      //         _modal.open(RefundComponent,Globals.optionModalLg);
-      //     }
-      // })
-
+                private _globals: Globals){
+      _modal.open(LoginComponent,Globals.optionModalLg);
   }
 
-    ngOnInit() {
+  ngOnInit() {
+  }
 
-    }
-    open(){
-        this._modal.open(InitialCashComponent, Globals.optionModalLg)
+    openCashIn() {
+        this.modalService.open(CashInComponent, {backdrop: 'static', keyboard: false, size: "lg"});
     }
 
-    openC(){
-        this._modal.open(CloseDateComponent, Globals.optionModalLg)
+    openCashOut() {
+        this.modalService.open(CashOutComponent, {backdrop: 'static', keyboard: false, size: "lg"});
     }
+
+    openRefund() {
+        this.modalService.open(RefundComponent, {backdrop: 'static', keyboard: false, size: "lg"});
+    }
+
+    openSignUp() {
+        this.modalService.open(SignUpComponent, {backdrop: 'static', keyboard: false, size: "lg"});
+    }
+
+    openCloseDate() {
+        this.modalService.open(CloseDateComponent, {backdrop: 'static', keyboard: false, size: "lg"});
+    }
+
 }

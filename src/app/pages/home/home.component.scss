@@ -1,0 +1,33 @@
+.br-button{
+  border-radius: 5px 5px 5px 5px;
+}
+.size-button{
+  width: 100px;
+  height: 80px;
+}
+.header_fijo {
+  width: 411px;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.header_fijo thead tr {
+  display: block;
+  position: relative;
+}
+
+.header_fijo tbody {
+  display: block;
+  //overflow: auto;
+  width: 100%;
+  height: 180px;
+}
+.w-847_5{
+  width: 847.5px;
+}
+.w-282{
+  width: 282px;
+}
+.h-436{
+  height: 436px;
+}
