@@ -17,8 +17,8 @@
                         <div class="form-group form-group--float inputFieldStyle d-ilb">
 
                             <input class="form-control" type="text"
-                                   [(ngModel)]="user.username" name="username" required #username
-                                   placeholder="UserName" (keyup)="errorUserName=false"
+                                   [(ngModel)]="User.username" name="username" required #username
+                                   placeholder="UserName" (keyup)="changeBooleansUserAndErrorsInLogin()"
                             >
 
                             <i class="form-group__bar"></i>
@@ -39,8 +39,8 @@
                         <div class="form-group  inputFieldStyle d-ilb">
 
                             <input class="form-control" type="password"
-                                   [(ngModel)]="user.password" name="pass" required #password
-                                   placeholder="Password" (keyup)="errorPass=false"
+                                   [(ngModel)]="User.password" name="password" required #password
+                                   placeholder="Password" (keyup)="changeBooleansPasswordAndErrorsInLogin()"
                             >
 
                             <i class="form-group__bar"></i>
@@ -59,7 +59,7 @@
         <div class="button-container" style="margin-top: 20px">
             <div class="row">
                 <div class="offset-1 col-10">
-                    <button class="btn btn-success btn-block" (click)="errorInLoginFields(user)">Login</button>
+                    <button class="btn btn-success btn-block" (click)="errorInLoginFields(User)">Login</button>
                 </div>
             </div>
 
@@ -70,20 +70,13 @@
             </div>
         </div>
 
-
-    </div>
-    <div>
-        <div class="row">
-            <div class="col-12" align="center" style="margin-top: 20px">
-                <div *ngIf="showError"
-                     class="alertMessage alert alert-danger animated {{ showError ? 'bounceIn':'' }}  {{ closeError ? 'bounceOut' : '' }}"
-                     role="alert">
-                    Verifica los campos en rojo
-                </div>
+        <div class="row" align="center" style="margin-top: 10px;">
+            <div class="col-12">
+                <span  class="errorColor" *ngIf="errorsInLogin">Verify Data Username or Password is incorrect</span>
             </div>
         </div>
+
     </div>
-    <!--Mensaje de error-->
 
 
 </section>
