@@ -13,12 +13,17 @@ export class UserService {
                 private alertService: alertService) {
     }
 
-    authUser(user: userAuthInterface) {
+    authUser(user: User) {
         return new Promise((resolve, reject) => {
             this.db.object('users/' + user.username).subscribe((result: User) => {
                 if (result.username != null) {
+                    if(result.password==user.password){
+                        resolve();
+                    }else{
+                        reject();
+                    }
                     // this._globals.userInfo = result;
-                    resolve();
+
                 } else {
                     reject();
                 }
