@@ -1,7 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {alertService} from '../../services/alert.service'
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import{userAuthInterface} from "../../interfaces/user.interface";
 import {UserService} from "../../services/user.service";
 import {User} from "../../interfaces/user";
 
@@ -28,8 +26,7 @@ export class LoginComponent implements OnInit {
     @ViewChild('password') private passRef: ElementRef;
 
 
-    constructor(private _alertService: alertService,
-                private activeModal: NgbActiveModal,
+    constructor(private activeModal: NgbActiveModal,
                 private _usrService:UserService) {
 
 
@@ -95,6 +92,4 @@ export class LoginComponent implements OnInit {
         this.errorPassAndUsername=false;
         this.wrongPassword=false;
     }
-
-
 }
