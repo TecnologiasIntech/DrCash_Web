@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {Transaction} from "../../interfaces/transaction";
 
 @Component({
   selector: 'app-cash-in',
@@ -8,13 +9,16 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 })
 export class CashInComponent implements OnInit {
 
-  constructor(private activeModal: NgbActiveModal) { }
+  constructor(private _activeModal: NgbActiveModal) { }
+
+  newTransaction: Transaction = {} as Transaction;
+
 
   ngOnInit() {
   }
 
   closeModal(){
-    this.activeModal.close();
+    this._activeModal.close();
   }
 
 }
