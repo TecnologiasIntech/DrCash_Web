@@ -20,10 +20,12 @@ export class CashInComponent implements OnInit {
     }
 
 
-
-
     validationsTest() {
-        if (!this.areBasicAmountInputsEmpty() && this.isAtLeastOneCheckBoxChecked() && !this.isOtherCheckButOtherCommentsEmpty()) {
+        if (!this.areBasicAmountInputsEmpty() &&
+            this.isAtLeastOneCheckBoxChecked() &&
+            !this.isOtherCheckButOtherCommentsEmpty() &&
+        !this.isPatientNameEMpty() &&
+        !this.isCommentsInputEmpty()) {
             console.log("Campos Rellenos");
         } else {
             console.log("Campos Vacios");
@@ -32,6 +34,22 @@ export class CashInComponent implements OnInit {
 
     closeModal() {
         this._activeModal.close();
+    }
+
+    isPatientNameEMpty() {
+        if (this.isUndefinedOrEmpty(this.newTransaction.patientFirstName)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    isCommentsInputEmpty() {
+        if (this.isUndefinedOrEmpty(this.newTransaction.comment)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     isUndefinedOrEmpty(field) {
@@ -82,18 +100,18 @@ export class CashInComponent implements OnInit {
             !this.isUndefinedOrEmpty(this.newTransaction.labs) ||
             !this.isUndefinedOrEmpty(this.newTransaction.other)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    isOtherCheckButOtherCommentsEmpty(){
-        if(this.isUndefinedOrEmpty(this.newTransaction.other)){
+    isOtherCheckButOtherCommentsEmpty() {
+        if (this.isUndefinedOrEmpty(this.newTransaction.other)) {
             return false;
-        }else{
-            if(this.isUndefinedOrEmpty(this.newTransaction.otherComments)){
+        } else {
+            if (this.isUndefinedOrEmpty(this.newTransaction.otherComments)) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         }
