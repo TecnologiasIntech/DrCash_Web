@@ -1,13 +1,24 @@
-<section class="container" style="height: 200px; width: 200px">
+<section class="container" style="height: 230px; width: 200px ">
     <div class="card">
         <div class="card-header align-content-center">
-            <h2>Initial Cash</h2>
+            <h4>Initial Cash</h4>
         </div>
-        <div class="card-body">
+        <div class="card-body m-b-30">
+            <div class="form-group m-b-0">
+                <input type="number" min="0" step="0.01"
+                       class="form-control form-control-line text-center currency {{ errorInitialCash ? 'initialCashError' : '' }}"
+                       placeholder="$0.00" [(ngModel)]="transaction.cash" (keyup)="errorInitialCash = false;"
+                       (keyup.enter)="setInitialCash(transaction.cash)" #cash autofocus>
+                <i class="form-group__bar"></i>
+            </div>
 
+            <!--Error-->
+            <div style="color: #e74c3c; text-align: center; height: 20px;" class="m-t-10">
+                <span *ngIf="errorInitialCash">Insert Initial Cash</span>
+            </div>
         </div>
-        <div class="card-footer">
-
+        <div class="card-footer p-b-20">
+            <button class="btn btn-block btn-primary" (click)="setInitialCash(transaction.cash)">ACCEPT</button>
         </div>
     </div>
 </section>

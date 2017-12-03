@@ -1,4 +1,5 @@
 import {Injectable} from "@angular/core";
+import {User} from "../interfaces/user";
 
 @Injectable()
 export class Globals {
@@ -12,4 +13,6 @@ export class Globals {
         keyboard: false,
         size: "lg"
     };
+    static userInfo:User;
+
 }
