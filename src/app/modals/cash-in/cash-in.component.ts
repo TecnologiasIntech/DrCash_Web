@@ -36,6 +36,10 @@ export class CashInComponent implements OnInit {
         this._activeModal.close();
     }
 
+    clearAllInputs(){
+        this.newTransaction = {} as Transaction;
+    }
+
     isPatientNameEMpty() {
         if (this.isUndefinedOrEmpty(this.newTransaction.patientFirstName)) {
             return true;
