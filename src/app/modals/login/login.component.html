@@ -69,12 +69,39 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+          <div class="col-12">
 
-        <div class="row" align="center" style="margin-top: 10px;">
-            <div class="col-12">
-                <span  class="errorColor" *ngIf="errorsInLogin">Verify Data Username or Password is incorrect</span>
-            </div>
+              <div class="row" align="center" style="margin-top: 10px;">
+                  <div class="col-12">
+                      <span  class="errorColor" *ngIf="errorUserName">UserName Field is Empty</span>
+                  </div>
+              </div>
+              <div class="row" align="center">
+                  <div class="col-12">
+                      <span  class="errorColor" *ngIf="errorPass">Password Field is Empty</span>
+                  </div>
+              </div>
+              <div class="row" align="center" >
+                  <div class="col-12">
+                      <span  class="errorColor" *ngIf="errorPassAndUsername">UserName and Password Fields is empty</span>
+                  </div>
+              </div>
+              <div class="row" align="center" >
+                  <div class="col-12">
+                      <span  class="errorColor" *ngIf="userNotFound">User Not Found</span>
+                  </div>
+              </div>
+              <div class="row" align="center" >
+                  <div class="col-12">
+                      <span  class="errorColor" *ngIf="wrongPassword">Wrong Password</span>
+                  </div>
+              </div>
+
+          </div>
         </div>
+
+
 
     </div>
 

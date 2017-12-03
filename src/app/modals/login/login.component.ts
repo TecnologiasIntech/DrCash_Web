@@ -19,6 +19,9 @@ export class LoginComponent implements OnInit {
     errorsInLogin: boolean = false;
     errorPass: boolean = false;
     errorUserName: boolean = false;
+    errorPassAndUsername:boolean=false;
+    userNotFound:boolean=false;
+    wrongPassword:boolean=false;
 
     // Referencias al DOM
     @ViewChild('username') private userRef: ElementRef;
@@ -37,19 +40,25 @@ export class LoginComponent implements OnInit {
 
 
     errorInLoginFields(user: User) {
-        if (user.username == null || user.username=="") {
-            this.errorUserName = true;
-            this.errorsInLogin = true;
-            this.userRef.nativeElement.focus();
-        }
-        if (user.password == null || user.password=="") {
-            this.errorPass = true;
-            this.errorsInLogin = true;
-            this.passRef.nativeElement.focus();
+        debugger
+        if((user.username==null && user.password==null)||(user.username=="" && user.password=="") ){
+            this.errorPassAndUsername=true;
+            this.errorsInLogin=true;
+        }else{
+            if (user.username == null || user.username == "") {
+                this.errorUserName = true;
+                this.errorsInLogin = true;
+                this.userRef.nativeElement.focus();
+            }
+            if (user.password == null || user.password == "") {
+                this.errorPass = true;
+                this.errorsInLogin = true;
+                this.passRef.nativeElement.focus();
 
+            }
         }
 
-        if(!this.errorsInLogin){
+        if(!this.errorsInLogin || !this.errorPassAndUsername){
             this.userAuthentification(user);
         }
     }
@@ -57,11 +66,16 @@ export class LoginComponent implements OnInit {
     userAuthentification(user:User){
         this._usrService.authUser(user).then((response)=>{
             this.activeModal.dismiss();
-        }).catch((reject)=>{
-            this._alertService.error("User Not Found","Try Again");
-            user.username = null;
-            user.password = null;
-
+        }).catch((reject:any)=>{
+            // this._alertService.error(reject,"Try Again");
+            if(reject == "User Not Found"){
+                user.username = null;
+                user.password = null;
+                this.userNotFound=true;
+            }else{
+                user.password = null;
+                this.wrongPassword=true;
+            }
         })
     }
 
@@ -72,10 +86,14 @@ export class LoginComponent implements OnInit {
     changeBooleansUserAndErrorsInLogin(){
         this.errorsInLogin = false;
         this.errorUserName=false;
+        this.errorPassAndUsername=false;
+        this.userNotFound=false;
     }
     changeBooleansPasswordAndErrorsInLogin(){
         this.errorsInLogin = false;
         this.errorPass=false;
+        this.errorPassAndUsername=false;
+        this.wrongPassword=false;
     }
 
 

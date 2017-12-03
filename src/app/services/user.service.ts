@@ -1,10 +1,7 @@
 import {Injectable} from '@angular/core';
-import {userAuthInterface} from "../interfaces/user.interface";
 import {AngularFireDatabase} from "angularfire2/database";
 import {alertService} from "./alert.service";
 import {User} from "../interfaces/user";
-import {Globals} from "../statics/globals";
-// import {_global} from "@angular/core/src/util";
 
 @Injectable()
 export class UserService {
@@ -20,12 +17,12 @@ export class UserService {
                     if(result.password==user.password){
                         resolve();
                     }else{
-                        reject();
+                        reject("Wrong Password");
                     }
                     // this._globals.userInfo = result;
 
                 } else {
-                    reject();
+                    reject("User Not Found");
                 }
             })
         })
