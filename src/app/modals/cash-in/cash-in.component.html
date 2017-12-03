@@ -14,6 +14,7 @@
         </div>
     </div>
 
+
     <div class="card-body p-15">
 
         <!--Patient Name Input-->
@@ -94,7 +95,7 @@
                 <!-- Radio Buttons-->
                 <div>
                     <label class="custom-control custom-radio">
-                        <input id="radio1" name="radio" type="radio" class="custom-control-input">
+                        <input type="checkbox" class="custom-control-input">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Copayment</span>
                     </label>
@@ -102,7 +103,7 @@
                     <div class="clearfix mt-2"></div>
 
                     <label class="custom-control custom-radio">
-                        <input type="radio" name="radio" class="custom-control-input">
+                        <input type="checkbox" class="custom-control-input">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">SelfPay</span>
                     </label>
@@ -110,7 +111,7 @@
                     <div class="clearfix mt-2"></div>
 
                     <label class="custom-control custom-radio">
-                        <input type="radio" name="radio" class="custom-control-input">
+                        <input type="checkbox" class="custom-control-input">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Deductible</span>
                     </label>
@@ -118,7 +119,7 @@
                     <div class="clearfix mt-2"></div>
 
                     <label class="custom-control custom-radio">
-                        <input type="radio" name="radio" class="custom-control-input">
+                        <input type="checkbox" class="custom-control-input">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Labs</span>
                     </label>
@@ -126,13 +127,15 @@
                     <div class="clearfix mt-2"></div>
 
                     <label class="custom-control custom-radio">
-                        <input type="radio" name="radio" class="custom-control-input">
+                        <input type="checkbox" class="custom-control-input">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Other</span>
                     </label>
                 </div>
+
+                <!--Other Comments-->
                 <div class="form-group">
-                    <input type="text" class="form-control form-control-lg" placeholder="Other">
+                    <input type="text" class="form-control form-control-lg" placeholder="Other" [(ngModel)]="newTransaction.otherComments" >
                     <i class="form-group__bar"></i>
                 </div>
 
