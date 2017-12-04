@@ -2,6 +2,9 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {UserService} from "../../services/user.service";
 import {User} from "../../interfaces/user";
+import {ValidationService} from "../../services/validation.service";
+import {Globals} from "../../statics/globals";
+import {ERRORAUTH} from "../../enums/enums";
 
 
 @Component({
@@ -13,13 +16,13 @@ import {User} from "../../interfaces/user";
 export class LoginComponent implements OnInit {
 
     // Declaracion de variables
-    User:User[]=[];
+    User: User[] = [];
     errorsInLogin: boolean = false;
     errorPass: boolean = false;
     errorUserName: boolean = false;
-    errorPassAndUsername:boolean=false;
-    userNotFound:boolean=false;
-    wrongPassword:boolean=false;
+    errorPassAndUsername: boolean = false;
+    userNotFound: boolean = false;
+    wrongPassword: boolean = false;
 
     // Referencias al DOM
     @ViewChild('username') private userRef: ElementRef;
@@ -27,7 +30,7 @@ export class LoginComponent implements OnInit {
 
 
     constructor(private activeModal: NgbActiveModal,
-                private _usrService:UserService) {
+                private _usrService: UserService) {
 
 
     }
@@ -38,58 +41,53 @@ export class LoginComponent implements OnInit {
 
     errorInLoginFields(user: User) {
         debugger
-        if((user.username==null && user.password==null)||(user.username=="" && user.password=="") ){
-            this.errorPassAndUsername=true;
-            this.errorsInLogin=true;
-        }else{
-            if (user.username == null || user.username == "") {
+        if (ValidationService.errorInField(user.username) && ValidationService.errorInField(user.password)) {
+            this.errorPassAndUsername = true;
+        } else {
+            if (ValidationService.errorInField(user.username)) {
                 this.errorUserName = true;
-                this.errorsInLogin = true;
                 this.userRef.nativeElement.focus();
+            } else {
+                if (ValidationService.errorInField(user.password)) {
+                    this.errorPass = true;
+                    this.passRef.nativeElement.focus();
+                }else{
+                    this.userAuth(user);
+                }
             }
-            if (user.password == null || user.password == "") {
-                this.errorPass = true;
-                this.errorsInLogin = true;
-                this.passRef.nativeElement.focus();
-
-            }
-        }
-
-        if(!this.errorsInLogin || !this.errorPassAndUsername){
-            this.userAuthentification(user);
         }
     }
 
-    userAuthentification(user:User){
-        this._usrService.authUser(user).then((response)=>{
+    userAuth(user: User) {
+        this._usrService.authUser(user).then((response:User) => {
+            Globals.userInfo = response;
             this.activeModal.dismiss();
-        }).catch((reject:any)=>{
+        }).catch((reject: any) => {
             // this._alertService.error(reject,"Try Again");
-            if(reject == "User Not Found"){
-                user.username = null;
+            if (reject == ERRORAUTH.USERNOTFOUND) {
+                this.userNotFound = true;
+                this.userRef.nativeElement.focus();
+            } else {
                 user.password = null;
-                this.userNotFound=true;
-            }else{
-                user.password = null;
-                this.wrongPassword=true;
+                this.wrongPassword = true;
+                this.passRef.nativeElement.focus();
             }
         })
     }
 
-    closeApp(){
+    closeApp() {
         window.close();
     }
 
-    changeBooleansUserAndErrorsInLogin(){
-        this.errorsInLogin = false;
-        this.errorUserName=false;
-        this.errorPassAndUsername=false;
-        this.userNotFound=false;
+    changeBooleansUserAndErrorsInLogin() {
+        this.errorUserName = false;
+        this.errorPassAndUsername = false;
+        this.userNotFound = false;
     }
-    changeBooleansPasswordAndErrorsInLogin(){
-        this.errorsInLogin = false;
-        this.errorPass=false;
-        this.errorPassAndUsername=false;
-        this.wrongPassword=false;
+
+    changeBooleansPasswordAndErrorsInLogin() {
+        this.errorPass = false;
+        this.errorPassAndUsername = false;
+        this.wrongPassword = false;
     }
 }
