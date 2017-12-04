@@ -14,35 +14,28 @@ import {window} from "rxjs/operator/window";
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private _modalService: NgbModal) { }
 
   ngOnInit() {
   }
 
     openCashIn() {
-        this.modalService.open(CashInComponent, {backdrop: 'static', keyboard: false, size: "lg"});
+        this._modalService.open(CashInComponent, {backdrop: 'static', keyboard: false, size: "lg"});
     }
 
     openCashOut() {
-        this.modalService.open(CashOutComponent, {backdrop: 'static', keyboard: false, size: "lg"});
+        this._modalService.open(CashOutComponent, {backdrop: 'static', keyboard: false, size: "lg"});
     }
 
     openRefund() {
-        this.modalService.open(RefundComponent, {backdrop: 'static', keyboard: false, size: "lg"});
+        this._modalService.open(RefundComponent, {backdrop: 'static', keyboard: false, size: "lg"});
     }
 
     openSignUp() {
-        this.modalService.open(SignUpComponent, {backdrop: 'static', keyboard: false, size: "lg"});
+        this._modalService.open(SignUpComponent, {backdrop: 'static', keyboard: false, size: "lg"});
     }
 
     openCloseDate() {
-        this.modalService.open(CloseDateComponent, {backdrop: 'static', keyboard: false, size: "lg"});
+        this._modalService.open(CloseDateComponent, {backdrop: 'static', keyboard: false, size: "lg"});
     }
-
-  //   open(){
-  //     window.document.write("<p>This is 'myWindow'</p>");
-  //   }
-  //   close(){
-  // window.close();
-  // }
 }
