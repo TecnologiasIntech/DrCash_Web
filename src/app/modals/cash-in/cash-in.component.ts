@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {Transaction} from "../../interfaces/transaction";
 import {isUndefined} from "util";
+import {ValidationService} from "../../services/validation.service";
 
 @Component({
     selector: 'app-cash-in',
@@ -15,17 +16,55 @@ export class CashInComponent implements OnInit {
 
     newTransaction: Transaction = {} as Transaction;
 
+    total : number = 0;
+
+    change: number = 0;
 
     ngOnInit() {
     }
 
+    calculateTotal(cash: number, credit: number, check:number){
+        this.total = parseInt(cash.toString()) + parseInt(credit.toString()) + parseInt(check.toString())
+        this.calculateChange();
+    }
+
+    calculateChange(){
+        if(!ValidationService.errorInField(this.newTransaction.amountCharged)){
+            this.change = this.total - this.newTransaction.amountCharged;
+        }
+    }
+
+    areCashCreditCheckInputsEmpty(){
+        let cash : number;
+        let credit: number;
+        let check: number;
+
+        if(!ValidationService.errorInField(this.newTransaction.cash)){
+            cash = this.newTransaction.cash
+        }else{
+            cash = 0;
+        }
+        if(!ValidationService.errorInField(this.newTransaction.credit)){
+            credit = this.newTransaction.credit
+        }else{
+            credit = 0;
+        }
+        if(!ValidationService.errorInField(this.newTransaction.check)){
+            check = this.newTransaction.check
+        }else{
+            check = 0;
+        }
+
+        this.calculateTotal(cash,credit,check);
+
+    }
 
     validationsTest() {
         if (!this.areBasicAmountInputsEmpty() &&
             this.isAtLeastOneCheckBoxChecked() &&
             !this.isOtherCheckButOtherCommentsEmpty() &&
-        !this.isPatientNameEMpty() &&
-        !this.isCommentsInputEmpty()) {
+            !this.isPatientNameEMpty() &&
+            !this.isCommentsInputEmpty()) {
             console.log("Campos Rellenos");
         } else {
             console.log("Campos Vacios");
@@ -36,12 +75,14 @@ export class CashInComponent implements OnInit {
         this._activeModal.close();
     }
 
-    clearAllInputs(){
+    clearAllInputs() {
         this.newTransaction = {} as Transaction;
+        this.total = 0;
+        this.change = 0;
     }
 
     isPatientNameEMpty() {
-        if (this.isUndefinedOrEmpty(this.newTransaction.patientFirstName)) {
+        if (ValidationService.errorInField(this.newTransaction.patientFirstName)) {
             return true;
         } else {
             return false;
@@ -49,40 +90,22 @@ export class CashInComponent implements OnInit {
     }
 
     isCommentsInputEmpty() {
-        if (this.isUndefinedOrEmpty(this.newTransaction.comment)) {
+        if (ValidationService.errorInField(this.newTransaction.comment)) {
             return true;
         } else {
             return false;
         }
     }
 
-    isUndefinedOrEmpty(field) {
-        if (isUndefined(field)) {
-            return true;
-        } else {
-            if (field.length == 0) {
-                return true;
-            } else {
-                if (field != false) {
-                    return false
-                }
-                else {
-                    return true;
-                }
-            }
-        }
-
-    }
-
     areBasicAmountInputsEmpty() {
-        if (this.isUndefinedOrEmpty(this.newTransaction.amountCharged)) {
+        if (ValidationService.errorInField(this.newTransaction.amountCharged)) {
             return true;
         } else {
-            if (!this.isUndefinedOrEmpty(this.newTransaction.cash) ||
-                !this.isUndefinedOrEmpty(this.newTransaction.credit) ||
-                !this.isUndefinedOrEmpty(this.newTransaction.check)) {
-                if (!this.isUndefinedOrEmpty(this.newTransaction.check)) {
-                    if (!this.isUndefinedOrEmpty(this.newTransaction.checkNumber)) {
+            if (!ValidationService.errorInField(this.newTransaction.cash) ||
+                !ValidationService.errorInField(this.newTransaction.credit) ||
+                !ValidationService.errorInField(this.newTransaction.check)) {
+                if (!ValidationService.errorInField(this.newTransaction.check)) {
+                    if (!ValidationService.errorInField(this.newTransaction.checkNumber)) {
                         return false;
                     } else {
                         return true;
@@ -98,11 +121,11 @@ export class CashInComponent implements OnInit {
     }
 
     isAtLeastOneCheckBoxChecked() {
-        if (!this.isUndefinedOrEmpty(this.newTransaction.copayment) ||
-            !this.isUndefinedOrEmpty(this.newTransaction.selfPay) ||
-            !this.isUndefinedOrEmpty(this.newTransaction.deductible) ||
-            !this.isUndefinedOrEmpty(this.newTransaction.labs) ||
-            !this.isUndefinedOrEmpty(this.newTransaction.other)) {
+        if (!ValidationService.errorInField(this.newTransaction.copayment) ||
+            !ValidationService.errorInField(this.newTransaction.selfPay) ||
+            !ValidationService.errorInField(this.newTransaction.deductible) ||
+            !ValidationService.errorInField(this.newTransaction.labs) ||
+            !ValidationService.errorInField(this.newTransaction.other)) {
             return true;
         } else {
             return false;
@@ -110,10 +133,10 @@ export class CashInComponent implements OnInit {
     }
 
     isOtherCheckButOtherCommentsEmpty() {
-        if (this.isUndefinedOrEmpty(this.newTransaction.other)) {
+        if (ValidationService.errorInField(this.newTransaction.other)) {
             return false;
         } else {
-            if (this.isUndefinedOrEmpty(this.newTransaction.otherComments)) {
+            if (ValidationService.errorInField(this.newTransaction.otherComments)) {
                 return true;
             } else {
                 return false;
@@ -121,4 +144,25 @@ export class CashInComponent implements OnInit {
         }
     }
 
+    restrictNumeric(e) {
+        let input;
+        if (e.metaKey || e.ctrlKey) {
+            return true;
+        }
+        if (e.which === 32) {
+            return false;
+        }
+        if (e.which === 0) {
+            return true;
+        }
+        if (e.which < 33) {
+            return true;
+        }
+        input = String.fromCharCode(e.which);
+        return !!/[\d\s]/.test(input);
+    }
+
+    printTicket(){
+
+    }
 }
