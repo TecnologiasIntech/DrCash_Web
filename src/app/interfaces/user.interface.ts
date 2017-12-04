@@ -3,6 +3,6 @@ export interface userAuthInterface{
     email?:string;
     phone?:string;
     pass?:string;
-    passVerify?:string;
+    username?:string;
     terms?:boolean;
 }

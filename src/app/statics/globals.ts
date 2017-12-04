@@ -14,5 +14,4 @@ export class Globals {
         size: "lg"
     };
     static userInfo:User;
-
 }
