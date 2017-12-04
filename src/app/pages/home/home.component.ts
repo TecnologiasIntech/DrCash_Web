@@ -10,7 +10,6 @@ import {RefundComponent} from "../../modals/refund/refund.component";
 import {SignUpComponent} from "../../modals/sign-up/sign-up.component";
 import {CloseDateComponent} from "../../modals/close-date/close-date.component";
 
-
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
@@ -22,7 +21,6 @@ export class HomeComponent implements OnInit {
                 private _globals: Globals){
       _modal.open(LoginComponent,Globals.optionModalLg);
   }
-
   ngOnInit() {
   }
 
