@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
         this._modalService.open(CashInComponent, {backdrop: 'static', keyboard: false, size: "lg"});
     }
 
+
     openCashOut() {
         this._modalService.open(CashOutComponent, {backdrop: 'static', keyboard: false, size: "lg"});
     }
