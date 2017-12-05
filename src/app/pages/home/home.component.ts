@@ -3,6 +3,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {InitialCashComponent} from "../../modals/initial-cash/initial-cash.component";
 import {Globals} from "../../statics/globals";
 import {LoginComponent} from "../../modals/login/login.component";
+import {CashInComponent} from "../../modals/cash-in/cash-in.component";
 
 @Component({
     selector: 'app-home',
@@ -13,8 +14,9 @@ export class HomeComponent implements OnInit {
 
     constructor(private _modal: NgbModal,
                 private _globals: Globals) {
-        // _modal.open(InitialCashComponent, _globals.optionModalSm)
-      _modal.open(LoginComponent,{backdrop: 'static', keyboard: false, size: "lg"});
+       /* _modal.open(InitialCashComponent, _globals.optionModalSm)*/
+        _modal.open(CashInComponent, _globals.optionModalLg)
+      //this.modalService.open(LoginComponent,{backdrop: 'static', keyboard: false, size: "lg"});
   }
 
   ngOnInit() {
