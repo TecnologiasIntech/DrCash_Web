@@ -39,7 +39,7 @@
                         <span class="input-group-addon">$</span>
                         <div class="form-group">
                             <input type="number" class="form-control" placeholder="0.00" (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.amountCharged"
-                                   (ngModelChange)="areCashCreditCheckInputsEmpty()">
+                                   (ngModelChange)="calculateTotal()">
                             <i class="form-group__bar"></i>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                         <span class="input-group-addon">$</span>
                         <div class="form-group">
                             <input type="number" class="form-control" placeholder="0.00" (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.cash"
-                                   (ngModelChange)="areCashCreditCheckInputsEmpty()">
+                                   (ngModelChange)="calculateTotal()">
                             <i class="form-group__bar"></i>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                         <span class="input-group-addon">$</span>
                         <div class="form-group">
                             <input type="number" class="form-control" placeholder="0.00" (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.credit"
-                                   (ngModelChange)="areCashCreditCheckInputsEmpty()">
+                                   (ngModelChange)="calculateTotal()">
                             <i class="form-group__bar"></i>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                         <span class="input-group-addon">$</span>
                         <div class="form-group">
                             <input type="number" class="form-control" placeholder="0.00" (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.check"
-                                   (ngModelChange)="areCashCreditCheckInputsEmpty()">
+                                   (ngModelChange)="calculateTotal()">
                             <i class="form-group__bar"></i>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                         <span class="input-group-addon">#</span>
                         <div class="form-group">
                             <input type="number" class="form-control" placeholder="0" (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.checkNumber"
-                                   (ngModelChange)="areCashCreditCheckInputsEmpty()">
+                                   (ngModelChange)="calculateTotal()">
                             <i class="form-group__bar"></i>
                         </div>
                     </div>
@@ -181,7 +181,7 @@
 
             <div class="col-3 offset-5">
                 <button class="btn btn-dark" (click)="closeModal()">Cancel</button>
-                <button class="btn btn-success" (click)="validationsTest()">Save print</button>
+                <button class="btn btn-success" (click)="savePrint()">Save print</button>
             </div>
         </div>
 
