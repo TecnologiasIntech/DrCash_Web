@@ -141,6 +141,7 @@ export class CashInComponent implements OnInit {
         this.newTransaction = {} as Transaction;
         this.total = 0.00;
         this.change = 0.00;
+        this.amount = 0.00
     }
 
     isPatientNameEMpty() {
