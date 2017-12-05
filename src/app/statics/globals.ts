@@ -28,4 +28,6 @@ export class Globals {
         userId: 1,
         clinic: 0
     }
+     sidebarVisible:boolean=false;
+
 }
