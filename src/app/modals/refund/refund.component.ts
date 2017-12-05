@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RefundComponent implements OnInit {
 
+  transactionNumber:string;
   constructor() { }
 
   ngOnInit() {
+  }
+
+  clearTransaction(){
+    this.transactionNumber=null;
   }
 
 }
