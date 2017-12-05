@@ -18,7 +18,7 @@
     <div class="card-body p-15">
 
         <!--Patient Name Input-->
-        <div class="mt-5">
+        <div class="mt-3">
             <h5>Patient Name</h5>
             <div class="form-group">
                 <input type="text" class="form-control form-control-lg" placeholder="Name" [(ngModel)]="newTransaction.patientFirstName">
@@ -38,8 +38,8 @@
                     <div class="input-group">
                         <span class="input-group-addon">$</span>
                         <div class="form-group">
-                            <input type="number" class="form-control" placeholder="0.00" (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.amountCharged"
-                                   (ngModelChange)="calculateTotal()">
+                            <input type="text" class="form-control" placeholder="0.00" (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.amountCharged"
+                                   (ngModelChange)="showTotalAmountChange()">
                             <i class="form-group__bar"></i>
                         </div>
                     </div>
@@ -50,8 +50,8 @@
                     <div class="input-group">
                         <span class="input-group-addon">$</span>
                         <div class="form-group">
-                            <input type="number" class="form-control" placeholder="0.00" (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.cash"
-                                   (ngModelChange)="calculateTotal()">
+                            <input type="text" class="form-control" placeholder="0.00" (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.cash"
+                                   (ngModelChange)="showTotalAmountChange()">
                             <i class="form-group__bar"></i>
                         </div>
                     </div>
@@ -62,8 +62,8 @@
                     <div class="input-group">
                         <span class="input-group-addon">$</span>
                         <div class="form-group">
-                            <input type="number" class="form-control" placeholder="0.00" (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.credit"
-                                   (ngModelChange)="calculateTotal()">
+                            <input type="text" class="form-control" placeholder="0.00" (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.credit"
+                                   (ngModelChange)="showTotalAmountChange()">
                             <i class="form-group__bar"></i>
                         </div>
                     </div>
@@ -74,8 +74,8 @@
                     <div class="input-group">
                         <span class="input-group-addon">$</span>
                         <div class="form-group">
-                            <input type="number" class="form-control" placeholder="0.00" (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.check"
-                                   (ngModelChange)="calculateTotal()">
+                            <input type="text" class="form-control" placeholder="0.00" (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.check"
+                                   (ngModelChange)="showTotalAmountChange()">
                             <i class="form-group__bar"></i>
                         </div>
                     </div>
@@ -86,8 +86,8 @@
                     <div class="input-group">
                         <span class="input-group-addon">#</span>
                         <div class="form-group">
-                            <input type="number" class="form-control" placeholder="0" (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.checkNumber"
-                                   (ngModelChange)="calculateTotal()">
+                            <input type="text" class="form-control" placeholder="0" (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.checkNumber"
+                                   (ngModelChange)="showTotalAmountChange()">
                             <i class="form-group__bar"></i>
                         </div>
                     </div>
@@ -156,7 +156,7 @@
 
                     <div class="col-4 offset-2">
                         <div>${{total}}</div>
-                        <div>${{newTransaction.amountCharged}}</div>
+                        <div>${{amount}}</div>
                         <div>${{change}}</div>
                     </div>
                 </div>

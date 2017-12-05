@@ -18,7 +18,7 @@ export class CashInComponent implements OnInit {
     newTransaction: Transaction = {} as Transaction;
 
     total: number = 0;
-
+    amount: number = 0
     change: number = 0;
     cash: number;
     credit: number;
@@ -27,6 +27,7 @@ export class CashInComponent implements OnInit {
     transactionDate;
     transactionDateNumber: string;
     transactionDateLetter:  string;
+
     ngOnInit() {
     }
 
@@ -72,10 +73,23 @@ export class CashInComponent implements OnInit {
         this.transactionDateNumber += this.transactionDate.getSeconds().toString();
     }
 
+    showTotalAmountChange(){
+        this.calculateAmount();
+        this.calculateTotal();
+        this.calculateChange();
+    }
+
+    calculateAmount(){
+        if (!ValidationService.errorInField(this.newTransaction.amountCharged)) {
+            this.amount = parseInt(this.newTransaction.amountCharged.toString());
+        }
+        else{
+            this.amount = 0;
+        }
+    }
     calculateTotal() {
         this.validateCashCreditCheckInputsArentNull();
         this.total = parseInt(this.cash.toString()) + parseInt(this.credit.toString()) + parseInt(this.check.toString());
-        this.calculateChange();
     }
 
     calculateChange() {
@@ -125,8 +139,8 @@ export class CashInComponent implements OnInit {
 
     clearAllInputs() {
         this.newTransaction = {} as Transaction;
-        this.total = 0;
-        this.change = 0;
+        this.total = 0.00;
+        this.change = 0.00;
     }
 
     isPatientNameEMpty() {
@@ -201,6 +215,12 @@ export class CashInComponent implements OnInit {
             return false;
         }
         if (e.which === 0) {
+            return true;
+        }
+        if (e.which === 45) {
+            return false;
+        }
+        if (e.which === 46) {
             return true;
         }
         if (e.which < 33) {
@@ -299,7 +319,7 @@ export class CashInComponent implements OnInit {
             
             <div style="text-align: center">
             <br>
-            Printed By 
+            Printed By David
             <br>
             ${this.transactionDateLetter}
             <br>
