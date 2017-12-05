@@ -5,7 +5,7 @@
         <div class="row m-0">
 
             <div class="col-12">
-                <div class="row" style="background-color: #597eaa">
+                <div class="row headerStyle">
                     <div class="col-1">
                         <i class="zmdi zmdi-upload fz-40 colorWhite" style="margin-left: 10px;"></i>
                     </div>
@@ -26,7 +26,7 @@
                         <!--100's bills-->
                         <div class="row">
                             <div class="offset-1 col-2 m-t-20">
-                                <button class="btn btn-danger" (click)="decrementBills100()">
+                                <button class="btn btn-danger" (click)="decrementBills(Bills100,BILLS.BILLS100)">
                                     <i class="zmdi zmdi-minus"></i>
                                 </button>
                             </div>
@@ -37,14 +37,19 @@
                                   </div>
                                 </div>
                                 <div class="form-group" align="center">
-                                    <input type="number" class="form-control t-a-c"
-                                         min="0" (ngModelChange)="Bills100" [(ngModel)]="Bills100" name="Bills100" (keydown.ArrowDown)="decrementBills100()"
+                                    <input type="number" class="form-control t-a-c form-control-line"
+                                         min="0" [(ngModel)]="Bills100" name="Bills100"
+                                           (ngModelChange)="calculateTotalCash()"
+                                           (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                                           (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                           (keypress)="_validationService.restrictNumeric($event)"
+
                                     >
                                     <i class="form-group__bar"></i>
                                 </div>
                             </div>
                             <div class="col-2 m-t-20">
-                                <button class="btn btn-success" (click)="incrementBills100()">
+                                <button class="btn btn-success" (click)="incrementBills(Bills100,BILLS.BILLS100)">
                                     <i class="zmdi zmdi-plus" ></i>
                                 </button>
                             </div>
@@ -56,7 +61,7 @@
                         <!--50's bills-->
                         <div class="row">
                             <div class="offset-1 col-2 m-t-20">
-                                <button class="btn btn-danger" (click)="decrementBills50()">
+                                <button class="btn btn-danger" (click)="decrementBills(Bills50,BILLS.BILLS50)">
                                     <i class="zmdi zmdi-minus"></i>
                                 </button>
                             </div>
@@ -67,14 +72,18 @@
                                     </div>
                                 </div>
                                 <div class="form-group" align="center">
-                                    <input type="text" class="form-control t-a-c" placeholder="50's"
+                                    <input type="text" class="form-control t-a-c form-control-line" placeholder="50's"
                                           min="0" [(ngModel)]="Bills50" name="fiftyBills"
+                                           (ngModelChange)="calculateTotalCash()"
+                                           (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                                           (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                           (keypress)="_validationService.restrictNumeric($event)"
                                     >
                                     <i class="form-group__bar"></i>
                                 </div>
                             </div>
                             <div class="col-2 m-t-20">
-                                <button class="btn btn-success" (click)="incrementBills50()">
+                                <button class="btn btn-success" (click)="incrementBills(Bills50,BILLS.BILLS50)">
                                     <i class="zmdi zmdi-plus"></i>
                                 </button>
                             </div>
@@ -86,7 +95,7 @@
                         <!--20's bills-->
                         <div class="row">
                             <div class="offset-1 col-2 m-t-20">
-                                <button class="btn btn-danger" (click)="decrementBills20()">
+                                <button class="btn btn-danger" (click)="decrementBills(Bills20,BILLS.BILLS20)">
                                     <i class="zmdi zmdi-minus"></i>
                                 </button>
                             </div>
@@ -97,14 +106,18 @@
                                     </div>
                                 </div>
                                 <div class="form-group" align="center">
-                                    <input type="text" class="form-control t-a-c" placeholder="20's"
+                                    <input type="text" class="form-control t-a-c form-control-line" placeholder="20's"
                                            [(ngModel)]="Bills20" name="twentyBills"
+                                           (ngModelChange)="calculateTotalCash()"
+                                           (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                                           (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                           (keypress)="_validationService.restrictNumeric($event)"
                                     >
                                     <i class="form-group__bar"></i>
                                 </div>
                             </div>
                             <div class="col-2 m-t-20">
-                                <button class="btn btn-success" (click)="incrementBills20()">
+                                <button class="btn btn-success" (click)="incrementBills(Bills20,BILLS.BILLS20)">
                                     <i class="zmdi zmdi-plus"></i>
                                 </button>
                             </div>
@@ -116,7 +129,7 @@
                         <!--10's bills-->
                         <div class="row">
                             <div class="offset-1 col-2 m-t-20">
-                                <button class="btn btn-danger" (click)="decrementBills10()">
+                                <button class="btn btn-danger" (click)="decrementBills(Bills10,BILLS.BILLS10)">
                                     <i class="zmdi zmdi-minus"></i>
                                 </button>
                             </div>
@@ -127,14 +140,18 @@
                                     </div>
                                 </div>
                                 <div class="form-group" align="center">
-                                    <input type="text" class="form-control t-a-c" placeholder="10's"
+                                    <input type="text" class="form-control t-a-c form-control-line" placeholder="10's"
                                            [(ngModel)]="Bills10" name="tenBills"
+                                           (ngModelChange)="calculateTotalCash()"
+                                           (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                                           (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                           (keypress)="_validationService.restrictNumeric($event)"
                                     >
                                     <i class="form-group__bar"></i>
                                 </div>
                             </div>
                             <div class="col-2 m-t-20">
-                                <button class="btn btn-success" (click)="incrementBills10()">
+                                <button class="btn btn-success" (click)="incrementBills(Bills10,BILLS.BILLS10)">
                                     <i class="zmdi zmdi-plus"></i>
                                 </button>
                             </div>
@@ -146,7 +163,7 @@
                         <!--5's bills-->
                         <div class="row">
                             <div class="offset-1 col-2 m-t-20">
-                                <button class="btn btn-danger" (click)="decrementBills5()">
+                                <button class="btn btn-danger" (click)="decrementBills(Bills5,BILLS.BILLS5)">
                                     <i class="zmdi zmdi-minus"></i>
                                 </button>
                             </div>
@@ -157,14 +174,18 @@
                                     </div>
                                 </div>
                                 <div class="form-group" align="center">
-                                    <input type="text" class="form-control t-a-c" placeholder="5's"
+                                    <input type="text" class="form-control t-a-c form-control-line" placeholder="5's"
                                            [(ngModel)]="Bills5" name="fiveBills"
+                                           (ngModelChange)="calculateTotalCash()"
+                                           (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                                           (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                           (keypress)="_validationService.restrictNumeric($event)"
                                     >
                                     <i class="form-group__bar"></i>
                                 </div>
                             </div>
                             <div class="col-2 m-t-20">
-                                <button class="btn btn-success" (click)="incrementBills5()">
+                                <button class="btn btn-success" (click)="incrementBills(Bills5,BILLS.BILLS5)">
                                     <i class="zmdi zmdi-plus"></i>
                                 </button>
                             </div>
@@ -176,7 +197,7 @@
                         <!--1's bills-->
                         <div class="row">
                             <div class="offset-1 col-2 m-t-20">
-                                <button class="btn btn-danger" (click)="decrementBills1()">
+                                <button class="btn btn-danger" (click)="decrementBills(Bills1,BILLS.BILLS1)">
                                     <i class="zmdi zmdi-minus"></i>
                                 </button>
                             </div>
@@ -187,14 +208,18 @@
                                     </div>
                                 </div>
                                 <div class="form-group" align="center">
-                                    <input type="text" class="form-control t-a-c" placeholder="1's"
+                                    <input type="text" class="form-control t-a-c form-control-line" placeholder="1's"
                                            [(ngModel)]="Bills1" name="oneBills"
+                                           (ngModelChange)="calculateTotalCash()"
+                                           (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                                           (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                           (keypress)="_validationService.restrictNumeric($event)"
                                     >
                                     <i class="form-group__bar"></i>
                                 </div>
                             </div>
                             <div class="col-2 m-t-20">
-                                <button class="btn btn-success" (click)="incrementBills1()">
+                                <button class="btn btn-success" (click)="incrementBills(Bills1,BILLS.BILLS1)">
                                     <i class="zmdi zmdi-plus"></i>
                                 </button>
                             </div>
@@ -230,9 +255,8 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label class="m-t-20">Comment</label>
-                                    <textarea class="form-control" name="" #comment
-                                              cols="30" rows="10" placeholder="Write a comment">
-                                  </textarea>
+                                    <textarea class="form-control form-control-line"  [(ngModel)]="comment" name="comment"
+                                              cols="30" rows="10" placeholder="Write a comment"></textarea>
                                     <i class="form-group__bar"></i>
                                 </div>
                             </div>
@@ -258,7 +282,7 @@
                                 <div class="col-12">
                                     <div class="row">
                                         <div class="col-6">
-                                            <button class="btn btn-danger">Cancel</button>
+                                            <button class="btn btn-danger" (click)="closeModal()">Cancel</button>
                                         </div>
                                         <div class="col-6">
                                             <button class="btn btn-success">Save & Print</button>
@@ -277,4 +301,4 @@
 
     </div>
 
-</section>¿
+</section>

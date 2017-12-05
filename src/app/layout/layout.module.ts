@@ -42,6 +42,7 @@ import {SignUpComponent} from "../modals/sign-up/sign-up.component";
 import {SharedModule} from "../shared/shared.module";
 import {LoginComponent} from "../modals/login/login.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {ValidationService} from "../services/validation.service";
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -94,7 +95,8 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         TransactionService,
         LogService,
         ReportService,
-        UserService
+        UserService,
+        ValidationService
     ],
     entryComponents: [
         CashInComponent,
