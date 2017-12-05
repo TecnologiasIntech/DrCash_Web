@@ -4,7 +4,6 @@ import {AngularFireDatabase} from "angularfire2/database";
 import {alertService} from "./alert.service";
 import {User} from "../interfaces/user";
 import {Globals} from "../statics/globals";
-import {_global} from "@angular/core/src/util";
 
 @Injectable()
 export class UserService {
@@ -18,7 +17,7 @@ export class UserService {
         return new Promise((resolve, reject) => {
             this.db.object('users/' + user.username).subscribe((result: User) => {
                 if (result.username != null) {
-                    this._globals.userInfo = result;
+                    Globals.userInfo = result;
                     resolve();
                 } else {
                     reject();
