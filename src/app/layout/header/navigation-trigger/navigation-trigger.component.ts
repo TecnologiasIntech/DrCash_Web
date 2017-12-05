@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from "../../../shared/services/shared.service";
+import {Globals} from "../../../statics/globals";
 
 @Component({
     selector: 'navigation-trigger',
@@ -7,16 +8,27 @@ import { SharedService } from "../../../shared/services/shared.service";
     styleUrls: ['./navigation-trigger.component.scss'],
 })
 export class NavigationTriggerComponent implements OnInit {
-    sidebarVisible: boolean;
-
-    constructor(private sharedService: SharedService) {
-        sharedService.sidebarVisibilitySubject.subscribe((value) => {
-            this.sidebarVisible = value
-        })
+    // sidebarVisible: boolean;
+    viewReportsOptions: boolean=false;
+    constructor(private sharedService: SharedService,
+                private _globals: Globals) {
+        // sharedService.sidebarVisibilitySubject.subscribe((value) => {
+        //
+        //     this.sidebarVisible = value
+        // })
     }
 
     toggleSidebarVisibility() {
-        this.sharedService.toggleSidebarVisibilty()
+        this._globals.sidebarVisible=!this._globals.sidebarVisible;
+    }
+
+    openCloseNav(){
+        if (this._globals.sidebarVisible==false){
+            document.getElementById("mySidenav").style.width="250px";
+        }else {
+            document.getElementById("mySidenav").style.width="0";
+        }
+
     }
 
     ngOnInit() {

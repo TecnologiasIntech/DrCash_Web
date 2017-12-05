@@ -1,9 +1,57 @@
-<div class="navigation-trigger hidden-xl-up" [class.toggled]="sidebarVisible" (click)="toggleSidebarVisibility()">
-    <div class="navigation-trigger__inner">
+<div class="navigation-trigger" [class.toggled]="_globals.sidebarVisible" (click)="toggleSidebarVisibility()">
+    <div class="navigation-trigger__inner" (click)="openCloseNav()" style="cursor: pointer;">
         <i class="navigation-trigger__line"></i>
         <i class="navigation-trigger__line"></i>
         <i class="navigation-trigger__line"></i>
     </div>
 </div>
 
-{{ isSidebarVisible }}
+<aside id="mySidenav" class="sidenav" style="margin-top: 72px;" [class.toggled]="_globals.sidebarVisible">
+    <div class="row">
+       <div class="col-12">
+           <!--<i class="zmdi zmdi-close-circle-o zmdi-hc-2x" style="cursor: pointer"></i>-->
+           <!--{{_globals.sidebarVisible}}-->
+           <div class="user">
+               <div class="user__info">
+                   <img class="borderStyleImage" src="../../../../assets/demo/img/profile-pics/4.jpg">
+                   <div>
+                       <div class="user__name">Bienvenido</div>
+                   </div>
+               </div>
+           </div>
+           <!--menu and submenus-->
+           <div style="color: #707070; font-size: 14px">
+               <!--#EBEDEF-->
+               <!--rgba(0, 0, 0, 0.03)-->
+               <ul style="list-style:none; padding: 0">
+                   <!--padding: 25px 25px 10px 0px-->
+                   <li style=""><i class="zmdi zmdi-home m-r-10"></i>Home</li>
+                   <li  (click)="viewReportsOptions=!viewReportsOptions" style="cursor: pointer;">Reports</li>
+                   <ul class="animated fadeIn" *ngIf="viewReportsOptions" style="list-style:none">
+                       <li>Daily Transactions</li>
+                       <li>Log</li>
+                       <li>Receipt</li>
+                       <li>Closed Statements</li>
+                   </ul>
+                   <li style="">User</li>
+                   <li style="">Settings</li>
+                   <ul style="list-style:none">
+                       <li>Register</li>
+                       <li>General</li>
+                       <li>SMPT</li>
+                   </ul>
+               </ul>
+           </div>
+       </div>
+    </div>
+
+    <!--<div class="dropdown">-->
+        <!--<button class="dropbtn">Dropdown</button>-->
+        <!--<div class="dropdown-content">-->
+            <!--<a href="#">Link 1</a>-->
+            <!--<a href="#">Link 2</a>-->
+            <!--<a href="#">Link 3</a>-->
+        <!--</div>-->
+    <!--</div>-->
+
+</aside>
