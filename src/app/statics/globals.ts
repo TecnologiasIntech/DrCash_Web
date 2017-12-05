@@ -14,4 +14,6 @@ export class Globals {
         size: "lg"
     };
     static userInfo:User;
+     sidebarVisible:boolean=false;
+
 }
