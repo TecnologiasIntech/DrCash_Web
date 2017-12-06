@@ -5,6 +5,7 @@ import {User} from "../../interfaces/user";
 import {ValidationService} from "../../services/validation.service";
 import {Globals} from "../../statics/globals";
 import {ERRORAUTH} from "../../enums/enums";
+import {timeout} from "q";
 
 
 @Component({
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
 
     // Declaracion de variables
     User: User[] = [];
-    errorsInLogin: boolean = false;
+    enableButton:boolean=true;
     errorPass: boolean = false;
     errorUserName: boolean = false;
     errorPassAndUsername: boolean = false;
@@ -40,9 +41,10 @@ export class LoginComponent implements OnInit {
 
 
     errorInLoginFields(user: User) {
-        debugger
         if (ValidationService.errorInField(user.username) && ValidationService.errorInField(user.password)) {
             this.errorPassAndUsername = true;
+            this.enableButton=false;
+            this.closeError(this.errorPassAndUsername,ERRORAUTH.PASSANDUSERNAME);
         } else {
             if (ValidationService.errorInField(user.username)) {
                 this.errorUserName = true;
@@ -89,5 +91,18 @@ export class LoginComponent implements OnInit {
         this.errorPass = false;
         this.errorPassAndUsername = false;
         this.wrongPassword = false;
+    }
+
+    closeError(error:boolean, errorAuth:any){
+        debugger
+        setTimeout(()=>{
+            this.enableButton=true;
+            // switch (errorAuth){
+            //     case ENUMS.PASSANDUSERNAME:
+            //         //code
+            //         break;
+            //
+            // }
+        },1000)
     }
 }

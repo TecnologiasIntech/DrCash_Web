@@ -59,7 +59,7 @@
         <div class="button-container" style="margin-top: 20px">
             <div class="row">
                 <div class="offset-1 col-10">
-                    <button class="btn btn-success btn-block" (click)="errorInLoginFields(User)">Login</button>
+                    <button [disabled]="!enableButton" class="btn btn-success btn-block" (click)="errorInLoginFields(User)" >Login</button>
                 </div>
             </div>
 
