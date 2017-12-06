@@ -66,7 +66,7 @@ export class CashInComponent implements OnInit {
         console.log(this.transactionDateNumber);
         this.transactionDateNumber += this.transactionDate.getMonth().toString();
         console.log(this.transactionDateNumber);
-        this.transactionDateNumber += this.transactionDate.getDay().toString();
+        this.transactionDateNumber += this.transactionDate.getDate().toString();
         console.log(this.transactionDateNumber);
         this.transactionDateNumber += this.transactionDate.getHours().toString();
         this.transactionDateNumber += this.transactionDate.getMinutes().toString();
@@ -237,15 +237,25 @@ export class CashInComponent implements OnInit {
 
         mywindow.document.write('<html><head>');
         mywindow.document.write(` 
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
  <style>
  body {
     overflow:hidden;
+    -webkit-print-color-adjust: exact;
+}
+@media print{
+  .oculto-impresion, .oculto-impresion *{
+    display: none !important;
+  }
+  .thead-dark th {
+        color: #fff !important;
+        background-color: #292b2c !important;
+    }
 }
 </style>
- 
  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.8.0/JsBarcode.all.js"></script>
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+ 
  </head><body >`);
         // language=HTML
         mywindow.document.write(`
@@ -314,7 +324,7 @@ export class CashInComponent implements OnInit {
             
             <script>
             $(document).ready(function(){
-                $("#barcode").JsBarcode("${this.transactionDateNumber}",{displayValue: true, fontSize: 20, width: 2});
+                $("#barcode").JsBarcode("${this.transactionDateNumber}",{displayValue: true, fontSize: 20, width: 2, height: 50});
             })
             </script>
             
