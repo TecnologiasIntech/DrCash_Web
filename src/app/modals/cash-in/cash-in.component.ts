@@ -81,20 +81,21 @@ export class CashInComponent implements OnInit {
 
     calculateAmount(){
         if (!ValidationService.errorInField(this.newTransaction.amountCharged)) {
-            this.amount = parseInt(this.newTransaction.amountCharged.toString());
+            this.amount = parseFloat(this.newTransaction.amountCharged.toString());
         }
         else{
             this.amount = 0;
         }
     }
+
     calculateTotal() {
         this.validateCashCreditCheckInputsArentNull();
-        this.total = parseInt(this.cash.toString()) + parseInt(this.credit.toString()) + parseInt(this.check.toString());
+        this.total = parseFloat(this.cash.toString()) + parseFloat(this.credit.toString()) + parseFloat(this.check.toString());
     }
 
     calculateChange() {
         if (!ValidationService.errorInField(this.newTransaction.amountCharged)) {
-            this.change = this.total - this.newTransaction.amountCharged;
+            this.change = this.total - this.amount;
         }
     }
 

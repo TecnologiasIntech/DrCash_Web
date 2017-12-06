@@ -154,9 +154,9 @@
                     </div>
 
                     <div class="col-4 offset-2">
-                        <div>${{total}}</div>
-                        <div>${{amount}}</div>
-                        <div>${{change}}</div>
+                        <div>{{total | currency: 'USD':true }}</div>
+                        <div>{{amount | currency: 'USD':true}}</div>
+                        <div>{{change | currency: 'USD':true}}</div>
                     </div>
                 </div>
             </div>
