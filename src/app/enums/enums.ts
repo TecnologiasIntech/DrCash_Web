@@ -9,3 +9,8 @@ export enum TRANSACTIONTYPE{
     REFUND,
     INITIALCASH
 }
+
+export enum ERRORAUTH{
+    WRONGPASSWORD,
+    USERNOTFOUND
+}
