@@ -50,7 +50,7 @@ export class RefundComponent implements OnInit {
                             this.cadena="Labs for a total of: ";
                         } else {
                             // this.cadena=this.contenido.otherComments;
-                            this.cadena=this.contenido.comment;
+                            this.cadena=this.contenido.otherComments;
                         }
                     }
                 }
