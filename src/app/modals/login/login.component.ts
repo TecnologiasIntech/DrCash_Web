@@ -40,11 +40,12 @@ export class LoginComponent implements OnInit {
     }
 
 
+
     errorInLoginFields(user: User) {
+        this.changeBooleansUserAndErrorsInLogin();
+        this.changeBooleansPasswordAndErrorsInLogin();
         if (ValidationService.errorInField(user.username) && ValidationService.errorInField(user.password)) {
             this.errorPassAndUsername = true;
-            this.enableButton=false;
-            this.closeError(this.errorPassAndUsername,ERRORAUTH.PASSANDUSERNAME);
         } else {
             if (ValidationService.errorInField(user.username)) {
                 this.errorUserName = true;
