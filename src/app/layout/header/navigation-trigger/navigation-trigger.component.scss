@@ -84,16 +84,17 @@
 }
 
 .sidenav a {
-  padding: 8px 8px 8px 32px;
+  //padding: 8px 8px 8px 32px;
   text-decoration: none;
-  font-size: 25px;
+  font-size: 16px;
   color: #818181;
   display: block;
   transition: 0.3s;
 }
 
-.sidenav a:hover {
-  color: #f1f1f1;
+a:hover {
+  color: #707070;
+  font-weight: bold;
 }
 
 .sidenav .closebtn {
@@ -143,7 +144,7 @@
 .user__name {
   color: #707070;
   font-weight: $font-weight-bold;
-  font-size: 14px;
+  font-size: 16px;
   margin-left:10px;
 }
 
@@ -156,7 +157,35 @@
 }
 
 li:hover {
-  background-color: yellow;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.paddMenuOptions{
+  padding: 25px 0px 25px 40px;
+}
+
+.paddSubmenuOptions{
+  padding: 25px 0px 25px 40px;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.listStyleNone{
+  list-style:none;
+}
+
+.m-l-75{
+  margin-left:75px;
+}
+
+.f-s-16{
+  font-size: 16px;
+}
+
+.c-s-gray{
+  color: #707070;
 }
 
 //menu and submenus
