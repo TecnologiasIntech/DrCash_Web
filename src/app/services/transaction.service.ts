@@ -32,6 +32,7 @@ export class TransactionService {
     }
 
     setTransaction(transaction: Transaction) {
+        debugger;
         this.transactionsRef.push(transaction);
     }
 
@@ -41,6 +42,7 @@ export class TransactionService {
 
     static getDefaultValuesToTransaction() {
         //TODO Asignar valor a RegisterID
+        //TODO Asignar valor a modifiedById
         //TODO Cambiar el valor de userKey por el valor de Globals
         return {
             userKey: "carlos",
@@ -52,7 +54,8 @@ export class TransactionService {
             other: false,
             otherComments: "",
             closed: false,
-            registerId: ""
+            registerId: "",
+            modifiedById: 1
         }
     }
 }
