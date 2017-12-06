@@ -10,6 +10,7 @@ import {Globals} from "../../../statics/globals";
 export class NavigationTriggerComponent implements OnInit {
     // sidebarVisible: boolean;
     viewReportsOptions: boolean=false;
+    viewSettingsOptions: boolean=false;
     constructor(private sharedService: SharedService,
                 private _globals: Globals) {
         // sharedService.sidebarVisibilitySubject.subscribe((value) => {
@@ -29,6 +30,11 @@ export class NavigationTriggerComponent implements OnInit {
             document.getElementById("mySidenav").style.width="0";
         }
 
+    }
+
+    openNav(){
+        this.openCloseNav();
+        this.toggleSidebarVisibility();
     }
 
     ngOnInit() {
