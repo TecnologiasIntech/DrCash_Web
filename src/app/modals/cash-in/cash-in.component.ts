@@ -16,7 +16,17 @@ export class CashInComponent implements OnInit {
     }
 
     @ViewChild('otherComment')
-        otherComment: ElementRef;
+    otherComment: ElementRef;
+    @ViewChild('amountCharged')
+    amountCharged: ElementRef;
+    @ViewChild('cashInput')
+    cashInput: ElementRef;
+    @ViewChild('patientName')
+    patientName: ElementRef;
+    @ViewChild('checkNumber')
+    checkNumber: ElementRef;
+    @ViewChild('copayment')
+    copaymentInput: ElementRef;
 
     newTransaction: Transaction = {} as Transaction;
 
@@ -29,20 +39,11 @@ export class CashInComponent implements OnInit {
 
     transactionDate;
     transactionDateNumber: string;
-    transactionDateLetter:  string;
+    transactionDateLetter: string;
 
     ngOnInit() {
     }
 
-
-    focusOtherComment(){
-        if(this.newTransaction.other){
-            this.otherComment.nativeElement.removeAttribute('disabled');
-            this.otherComment.nativeElement.focus();
-        }else{
-            this.otherComment.nativeElement.setAttribute('disabled','disabled');
-        }
-    }
 
     savePrint() {
         if (this.isCashInTransactionReady()) {
@@ -53,49 +54,101 @@ export class CashInComponent implements OnInit {
             this.convertTransactionDateToNumber();
             this.printTicket();
         } else {
-            console.log("La transaccion aun no esta lista para finalizarse");
+            this.focusPaymentFirstNameInputs();
+            this.focusCheckBoxs();
         }
     }
 
-    saveTransaction(){
+    saveTransaction() {
 
     }
 
-    getTransactionDate(){
+    getTransactionDate() {
         var date = new Date();
         this.transactionDate = date;
     }
 
-    convertTransactionDateToLetter(){
-        this.transactionDateLetter = this.transactionDate.toDateString()+" ";
-        this.transactionDateLetter += this.transactionDate.getHours().toString()+":";
-        this.transactionDateLetter += this.transactionDate.getMinutes().toString()+":";
+    focusPaymentFirstNameInputs() {
+        if (ValidationService.errorInField(this.newTransaction.patientFirstName)) {
+            this.patientName.nativeElement.focus();
+        } else {
+            if (ValidationService.errorInField(this.newTransaction.amountCharged)) {
+                this.amountCharged.nativeElement.focus();
+            } else {
+                if (ValidationService.errorInField(this.newTransaction.cash) &&
+                        ValidationService.errorInField(this.newTransaction.credit) &&
+                            ValidationService.errorInField(this.newTransaction.check))
+                {
+                    this.cashInput.nativeElement.focus();
+                }else{
+                    if(ValidationService.errorInField(this.newTransaction.checkNumber) && !ValidationService.errorInField(this.newTransaction.check)){
+                        this.checkNumber.nativeElement.focus();
+                    }
+                }
+
+            }
+        }
+
+    }
+
+    unfocusCheckbox(){
+        if (!ValidationService.errorInField(this.newTransaction.copayment) ||
+            !ValidationService.errorInField(this.newTransaction.selfPay) ||
+            !ValidationService.errorInField(this.newTransaction.deductible) ||
+            !ValidationService.errorInField(this.newTransaction.labs) ||
+            !ValidationService.errorInField(this.newTransaction.other)) {
+
+            this.copaymentInput.nativeElement.removeAttribute('style');
+        }
+    }
+
+    focusCheckBoxs(){
+        if(ValidationService.errorInField(this.newTransaction.copayment) &&
+            ValidationService.errorInField(this.newTransaction.selfPay) &&
+            ValidationService.errorInField(this.newTransaction.deductible) &&
+            ValidationService.errorInField(this.newTransaction.labs) &&
+            ValidationService.errorInField(this.newTransaction.other)){
+            this.copaymentInput.nativeElement.setAttribute('style','color: red')
+        }
+    }
+
+    focusOtherComment() {
+        if (this.newTransaction.other) {
+            this.otherComment.nativeElement.removeAttribute('disabled');
+            this.unfocusCheckbox();
+            this.otherComment.nativeElement.focus();
+        } else {
+            this.otherComment.nativeElement.setAttribute('disabled', 'disabled');
+        }
+    }
+
+    convertTransactionDateToLetter() {
+        this.transactionDateLetter = this.transactionDate.toDateString() + " ";
+        this.transactionDateLetter += this.transactionDate.getHours().toString() + ":";
+        this.transactionDateLetter += this.transactionDate.getMinutes().toString() + ":";
         this.transactionDateLetter += this.transactionDate.getSeconds().toString();
     }
 
-    convertTransactionDateToNumber(){
-        this.transactionDateNumber =  this.transactionDate.getFullYear().toString();
-        console.log(this.transactionDateNumber);
+    convertTransactionDateToNumber() {
+        this.transactionDateNumber = this.transactionDate.getFullYear().toString();
         this.transactionDateNumber += this.transactionDate.getMonth().toString();
-        console.log(this.transactionDateNumber);
         this.transactionDateNumber += this.transactionDate.getDate().toString();
-        console.log(this.transactionDateNumber);
         this.transactionDateNumber += this.transactionDate.getHours().toString();
         this.transactionDateNumber += this.transactionDate.getMinutes().toString();
         this.transactionDateNumber += this.transactionDate.getSeconds().toString();
     }
 
-    showTotalAmountChange(){
+    showTotalAmountChange() {
         this.calculateAmount();
         this.calculateTotal();
         this.calculateChange();
     }
 
-    calculateAmount(){
+    calculateAmount() {
         if (!ValidationService.errorInField(this.newTransaction.amountCharged)) {
             this.amount = parseFloat(this.newTransaction.amountCharged.toString());
         }
-        else{
+        else {
             this.amount = 0;
         }
     }
@@ -138,10 +191,9 @@ export class CashInComponent implements OnInit {
             !this.isOtherCheckButOtherCommentsEmpty() &&
             !this.isPatientNameEMpty() &&
             !this.isCommentsInputEmpty()) {
-            console.log("Campos Rellenos");
             return true;
         } else {
-            console.log("Campos Vacios");
+            this.focusPaymentFirstNameInputs();
             return false;
         }
     }
@@ -244,7 +296,7 @@ export class CashInComponent implements OnInit {
         return !!/[\d\s]/.test(input);
     }
 
-
+    //TODO Falta agregar el usuario que hizo la transaccion
     printTicket() {
         let mywindow = window.open('', 'PRINT', 'height=650,width=300');
 
@@ -304,7 +356,7 @@ export class CashInComponent implements OnInit {
                 </tr>
                 <tr>
                     <td>Total Cash</td>
-                    <td>$${this.cash}</td>
+                    <td>$${this.cashInput}</td>
                 </tr>
                 <tr>
                     <td>Credit Card</td>
