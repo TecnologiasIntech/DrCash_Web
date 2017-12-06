@@ -20,7 +20,7 @@
         <div class="mt-3">
             <h5>Patient Name</h5>
             <div class="form-group">
-                <input type="text" class="form-control form-control-lg form-control-line" placeholder="Name" [(ngModel)]="newTransaction.patientFirstName">
+                <input type="text" class="form-control form-control-lg form-control-line" placeholder="Name" #patientName [(ngModel)]="newTransaction.patientFirstName">
                 <i class="form-group__bar"></i>
             </div>
         </div>
@@ -37,7 +37,7 @@
                     <div class="input-group">
                         <span class="input-group-addon">$</span>
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-line" placeholder="0.00" (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.amountCharged"
+                            <input type="text" class="form-control form-control-line" placeholder="0.00" (keypress)="restrictNumeric($event)" #amountCharged [(ngModel)]="newTransaction.amountCharged"
                                    (ngModelChange)="showTotalAmountChange()">
                             <i class="form-group__bar"></i>
                         </div>
@@ -49,7 +49,7 @@
                     <div class="input-group">
                         <span class="input-group-addon">$</span>
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-line" placeholder="0.00" (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.cash"
+                            <input type="text" class="form-control form-control-line" placeholder="0.00" (keypress)="restrictNumeric($event)" #cashInput [(ngModel)]="newTransaction.cash"
                                    (ngModelChange)="showTotalAmountChange()">
                             <i class="form-group__bar"></i>
                         </div>
@@ -85,7 +85,7 @@
                     <div class="input-group">
                         <span class="input-group-addon">#</span>
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-line" placeholder="0" (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.checkNumber"
+                            <input type="text" class="form-control form-control-line" placeholder="0" #checkNumber (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.checkNumber"
                                    (ngModelChange)="showTotalAmountChange()">
                             <i class="form-group__bar"></i>
                         </div>
@@ -99,15 +99,15 @@
                 <!-- Checkboxs-->
                 <div>
                     <label class="custom-control custom-radio">
-                        <input type="checkbox" class="custom-control-input" [(ngModel)]="newTransaction.copayment">
+                        <input type="checkbox" class="custom-control-input"  [(ngModel)]="newTransaction.copayment" >
                         <span class="custom-control-indicator"></span>
-                        <span class="custom-control-description">Copayment</span>
+                        <span class="custom-control-description" #copayment >Copayment</span>
                     </label>
 
                     <div class="clearfix mt-2"></div>
 
                     <label class="custom-control custom-radio">
-                        <input type="checkbox" class="custom-control-input" [(ngModel)]="newTransaction.selfPay">
+                        <input type="checkbox" class="custom-control-input" [(ngModel)]="newTransaction.selfPay" (ngModelChange)="unfocusCheckbox()">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">SelfPay</span>
                     </label>
@@ -115,7 +115,7 @@
                     <div class="clearfix mt-2"></div>
 
                     <label class="custom-control custom-radio">
-                        <input type="checkbox" class="custom-control-input" [(ngModel)]="newTransaction.deductible">
+                        <input type="checkbox" class="custom-control-input" [(ngModel)]="newTransaction.deductible" (ngModelChange)="unfocusCheckbox()">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Deductible</span>
                     </label>
@@ -123,7 +123,7 @@
                     <div class="clearfix mt-2"></div>
 
                     <label class="custom-control custom-radio">
-                        <input type="checkbox" class="custom-control-input" [(ngModel)]="newTransaction.labs">
+                        <input type="checkbox" class="custom-control-input"  [(ngModel)]="newTransaction.labs" (ngModelChange)="unfocusCheckbox()">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Labs</span>
                     </label>
