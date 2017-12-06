@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-refund',
@@ -7,14 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RefundComponent implements OnInit {
 
+  refound:number=0;
   transactionNumber:string;
-  constructor() { }
+  logComment:string;
+  logComment2:string;
+  constructor(private _activeModal:NgbActiveModal) { }
 
   ngOnInit() {
   }
 
   clearTransaction(){
     this.transactionNumber=null;
+  }
+
+  closeRefund(){
+    this._activeModal.dismiss();
   }
 
 }
