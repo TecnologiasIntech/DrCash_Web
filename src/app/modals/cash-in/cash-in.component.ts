@@ -4,6 +4,9 @@ import {Transaction} from "../../interfaces/transaction";
 import {isUndefined} from "util";
 import {ValidationService} from "../../services/validation.service";
 import {Globals} from "../../statics/globals";
+import {TransactionService} from "../../services/transaction.service";
+import {TRANSACTIONTYPE} from "../../enums/enums";
+import {DateService} from "../../services/date.service";
 
 @Component({
     selector: 'app-cash-in',
@@ -12,7 +15,8 @@ import {Globals} from "../../statics/globals";
 })
 export class CashInComponent implements OnInit {
 
-    constructor(private _activeModal: NgbActiveModal) {
+    constructor(private _activeModal: NgbActiveModal,
+                private _transactionService: TransactionService) {
     }
 
     @ViewChild('otherComment')
@@ -37,11 +41,11 @@ export class CashInComponent implements OnInit {
     credit: number;
     check: number;
 
-    transactionDate;
     transactionDateNumber: string;
     transactionDateLetter: string;
 
     ngOnInit() {
+        this.newTransaction = TransactionService.getDefaultValuesToTransaction();
     }
 
 
@@ -50,8 +54,7 @@ export class CashInComponent implements OnInit {
 
             this.validateCashCreditCheckInputsArentNull();
             this.getTransactionDate()
-            this.convertTransactionDateToLetter();
-            this.convertTransactionDateToNumber();
+            this.saveTransaction();
             this.printTicket();
         } else {
             this.focusPaymentFirstNameInputs();
@@ -60,12 +63,16 @@ export class CashInComponent implements OnInit {
     }
 
     saveTransaction() {
-
+        this.newTransaction.type = TRANSACTIONTYPE.CASHIN;
+        this._transactionService.setTransaction(this.newTransaction);
     }
 
     getTransactionDate() {
-        var date = new Date();
-        this.transactionDate = date;
+        this.transactionDateLetter = DateService.getDateLetter();
+        this.transactionDateNumber = DateService.getDateNumber().toString();
+
+        this.newTransaction.dateRegistered = DateService.getDateNumber();
+        this.newTransaction.modificationDate = DateService.getDateNumber();
     }
 
     focusPaymentFirstNameInputs() {
@@ -122,22 +129,6 @@ export class CashInComponent implements OnInit {
         }
     }
 
-    convertTransactionDateToLetter() {
-        this.transactionDateLetter = this.transactionDate.toDateString() + " ";
-        this.transactionDateLetter += this.transactionDate.getHours().toString() + ":";
-        this.transactionDateLetter += this.transactionDate.getMinutes().toString() + ":";
-        this.transactionDateLetter += this.transactionDate.getSeconds().toString();
-    }
-
-    convertTransactionDateToNumber() {
-        this.transactionDateNumber = this.transactionDate.getFullYear().toString();
-        this.transactionDateNumber += this.transactionDate.getMonth().toString();
-        this.transactionDateNumber += this.transactionDate.getDate().toString();
-        this.transactionDateNumber += this.transactionDate.getHours().toString();
-        this.transactionDateNumber += this.transactionDate.getMinutes().toString();
-        this.transactionDateNumber += this.transactionDate.getSeconds().toString();
-    }
-
     showTotalAmountChange() {
         this.calculateAmount();
         this.calculateTotal();
@@ -161,6 +152,7 @@ export class CashInComponent implements OnInit {
     calculateChange() {
         if (!ValidationService.errorInField(this.newTransaction.amountCharged)) {
             this.change = this.total - this.amount;
+            this.newTransaction.change = this.change;
         }
     }
 
