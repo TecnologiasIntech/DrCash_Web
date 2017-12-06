@@ -131,15 +131,15 @@
                     <div class="clearfix mt-2"></div>
 
                     <label class="custom-control custom-radio">
-                        <input type="checkbox" class="custom-control-input" [(ngModel)]="newTransaction.other">
+                        <input type="checkbox" class="custom-control-input" [(ngModel)]="newTransaction.other" (ngModelChange)="focusOtherComment()" >
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Other</span>
                     </label>
                 </div>
 
                 <!--Other Comments-->
-                <div class="form-group" *ngIf="newTransaction.other">
-                    <input type="text" class="form-control form-control-lg form-control-line" placeholder="Other" [(ngModel)]="newTransaction.otherComments" >
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-lg form-control-line" placeholder="Other" disabled #otherComment  [(ngModel)]="newTransaction.otherComments" >
                     <i class="form-group__bar"></i>
                 </div>
 
