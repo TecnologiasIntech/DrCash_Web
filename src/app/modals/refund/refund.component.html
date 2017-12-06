@@ -20,9 +20,12 @@
                     <div class="row">
                         <div class="offset-1 col-6">
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-line"
+                                <input type="number" class="form-control form-control-line"
                                        placeholder="Transaction Number" [(ngModel)]="transactionNumber"
                                        name="numberTransaction"
+                                       (keypress)="_validationService.restrictNumeric($event)"
+                                       (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                                       (keydown.ArrowDown)="_validationService.validateArrows($event)"
                                 >
                                 <i class="form-group__bar"></i>
                             </div>
@@ -31,7 +34,7 @@
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-6">
-                                    <button class="btn btn-success">Search</button>
+                                    <button class="btn btn-success" (click)="searchTransaction(transactionNumber)">Search</button>
                                 </div>
                                 <div class="col-6">
                                     <button class="btn btn-danger" (click)="clearTransaction()">Clear</button>
@@ -48,7 +51,7 @@
                     <label>Amount Charged</label>
                 </div>
                 <div class="col-8">
-                    <span>$ 0.00</span>
+                    <span>$ {{contenido?.amountCharged}}</span>
                 </div>
             </div>
 
@@ -60,8 +63,9 @@
             <div class="row mt-5">
                 <div class="offset-1 col-10">
                     <div class="form-group">
-                <textarea class="form-control form-control-line" [(ngModel)]="logComment"
-                          name="log" cols="30" rows="5" placeholder="Write a Log"></textarea>
+                        <!--Log obtenido de la base de datos-->
+                        <textarea [disabled]="!enableLog"  class="form-control form-control-line" [(ngModel)]="logComment"
+                                  name="log" cols="30" rows="5" placeholder="Log of the transaction ...">{{cadena}}{{contenido?.amountCharged}}</textarea>
                         <i class="form-group__bar"></i>
                     </div>
                 </div>
@@ -73,8 +77,12 @@
                         <div class="offset-2 col-6">
                             <label>Amount to Charge</label>
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-line t-a-c" placeholder="$0.00"
+                                <input type="number" class="form-control form-control-line t-a-c" placeholder="$0.00"
                                        [(ngModel)]="refound" name="log2"
+                                       (keyup.enter)="imprimir(transactionNumber)"
+                                       (keypress)="_validationService.restrictNumeric($event)"
+                                       (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                                       (keydown.ArrowDown)="_validationService.validateArrows($event)"
                                 >
                                 <i class="form-group__bar"></i>
                             </div>
@@ -86,10 +94,12 @@
                         <div class="col-10">
                             <label>Log</label>
                             <div class="form-group">
-                            <textarea class="form-control form-control-line" placeholder="Write a Log"
-                                      [(ngModel)]="logComment2"
-                                      name="log2" cols="30" rows="5"
-                            ><perfect-scrollbar></perfect-scrollbar></textarea>
+                                <perfect-scrollbar>
+                                    <textarea class="form-control form-control-line" placeholder="Write a Log"
+                                              [(ngModel)]="logComment2"
+                                              name="log2" cols="30" rows="5"
+                                    ></textarea>
+                                </perfect-scrollbar>
                                 <i class="form-group__bar"></i>
                             </div>
                         </div>
@@ -105,7 +115,7 @@
                     </div>
                 </div>
                 <div class="col-7">
-                    <button class="btn btn-success">Save & Print</button>
+                    <button class="btn btn-success" (click)="updateTransaction(transactionNumber,refound,logComment2)">Save & Print</button>
                 </div>
             </div>
         </div>

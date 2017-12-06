@@ -5,6 +5,7 @@ import {Observable} from "rxjs/Observable";
 import {userInfo} from "os";
 import {Globals} from "../statics/globals";
 import {DateService} from "./date.service";
+import {_catch} from "rxjs/operator/catch";
 
 @Injectable()
 export class TransactionService {
@@ -12,11 +13,11 @@ export class TransactionService {
     transactionsRef: FirebaseListObservable<Transaction[]>;
 
     constructor(private db: AngularFireDatabase) {
-        this.transactionsRef = this.db.list('transactions');
+        this.transactionsRef = this.db.list('transactions/');
     }
 
-    getTransaction() {
-        return this.db.list('')
+    getTransaction(key: number) {
+        return this.db.object('transactions/' + key)
     }
 
     getAllTransactions() {
@@ -35,8 +36,13 @@ export class TransactionService {
         this.transactionsRef.push(transaction);
     }
 
-    updateTransaction(transactionKey: string, transaction: Transaction) {
-        this.transactionsRef.update(transactionKey, transaction)
+    updateTransaction(transactionKey: string, ammount: number, transaction: Transaction) {
+
+        this.transactionsRef.update(transactionKey.toString(), {
+            amountCharged: ammount,
+            comment: transaction
+        })
+
     }
 
     static getDefaultValuesToTransaction() {
