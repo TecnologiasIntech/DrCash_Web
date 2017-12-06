@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {Transaction} from "../../interfaces/transaction";
 import {isUndefined} from "util";
@@ -14,6 +14,9 @@ export class CashInComponent implements OnInit {
 
     constructor(private _activeModal: NgbActiveModal) {
     }
+
+    @ViewChild('otherComment')
+        otherComment: ElementRef;
 
     newTransaction: Transaction = {} as Transaction;
 
@@ -31,6 +34,15 @@ export class CashInComponent implements OnInit {
     ngOnInit() {
     }
 
+
+    focusOtherComment(){
+        if(this.newTransaction.other){
+            this.otherComment.nativeElement.removeAttribute('disabled');
+            this.otherComment.nativeElement.focus();
+        }else{
+            this.otherComment.nativeElement.setAttribute('disabled','disabled');
+        }
+    }
 
     savePrint() {
         if (this.isCashInTransactionReady()) {
