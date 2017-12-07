@@ -1,11 +1,14 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {isUndefined} from "util";
 
 @Injectable()
 export class ValidationService {
 
-  constructor() { }
+    constructor() {
+    }
 
-    validateArrows(e) {
+
+    E(e) {
 
         let input;
         e = e || window.event;
@@ -53,4 +56,8 @@ export class ValidationService {
         return !!/[\d\s]/.test(input)
     }
 
+
+    static errorInField(field: any) {
+        return isUndefined(field) || field == null || field == "";
+    }
 }

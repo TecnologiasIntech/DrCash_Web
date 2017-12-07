@@ -1,8 +1,3 @@
-export enum MULTIMEDIA {
-    IMAGE,
-    VIDEO
-}
-
 export enum BILLS {
     BILLS100,
     BILLS50,
@@ -10,4 +5,16 @@ export enum BILLS {
     BILLS10,
     BILLS5,
     BILLS1
+ } 
+export enum TRANSACTIONTYPE{
+    CASHIN,
+    CASHOUT,
+    REFUND,
+    INITIALCASH
 }
+
+export enum ERRORAUTH{
+    WRONGPASSWORD,
+    USERNOTFOUND
+}
+  

@@ -2,11 +2,14 @@ import {Injectable} from '@angular/core';
 import {AngularFireDatabase, FirebaseListObservable} from "angularfire2/database";
 import {Transaction} from "../interfaces/transaction";
 import {Observable} from "rxjs/Observable";
+import {userInfo} from "os";
+import {Globals} from "../statics/globals";
+import {DateService} from "./date.service";
 
 @Injectable()
 export class TransactionService {
 
-    transactionsRef:FirebaseListObservable<Transaction[]>;
+    transactionsRef: FirebaseListObservable<Transaction[]>;
 
     constructor(private db: AngularFireDatabase) {
         this.transactionsRef = this.db.list('transactions');
@@ -20,7 +23,7 @@ export class TransactionService {
         return this.db.list('transactions')
     }
 
-    getTransactionsByRange(startAt:number, endAt) {
+    getTransactionsByRange(startAt: number, endAt) {
         //TODO verificar esta consulta
         // return this.db.list('transactions', ref => ref
         //     .orderByChild('date')
@@ -36,5 +39,20 @@ export class TransactionService {
         this.transactionsRef.update(transactionKey, transaction)
     }
 
-
+    static getDefaultValuesToTransaction() {
+        //TODO Asignar valor a RegisterID
+        //TODO Cambiar el valor de userKey por el valor de Globals
+        return {
+            userKey: "carlos",
+            type: -1,
+            copayment: false,
+            selfPay: false,
+            deductible: false,
+            labs: false,
+            other: false,
+            otherComments: "",
+            closed: false,
+            registerId: ""
+        }
+    }
 }
