@@ -1,4 +1,4 @@
-<div class="navigation-trigger" [class.toggled]="_globals.sidebarVisible" (click)="openNav()">
+<div class="navigation-trigger" [class.toggled]="_globals.sidebarVisible" (click)="sidenavAndClickIcon()">
     <div class="navigation-trigger__inner" style="cursor: pointer;">
         <i class="navigation-trigger__line"></i>
         <i class="navigation-trigger__line"></i>
@@ -21,36 +21,43 @@
             <div class="f-s-16 c-s-gray">
                 <ul class="listStyleNone p-0">
                     <!--Home-->
-                    <li class="cursor-pointer"><a [routerLink]="['/home']">
+                    <li class="cursor-pointer" (click)="sidenavAndClickIcon()"><a [routerLink]="['/home']">
                         <i class="zmdi zmdi-home m-r-10 paddMenuOptions"></i>
                         <span>Home</span></a>
                     </li>
                     <!--Reports-->
                     <li class="listStyleNone cursor-pointer" (click)="viewReportsOptions=!viewReportsOptions">
-                        <i class="zmdi zmdi-file-text m-r-10 paddMenuOptions"></i>
-                        <span>Reports</span>
+                        <a><i class="zmdi zmdi-file-text m-r-10 paddMenuOptions liStyle"></i>
+                            Reports</a>
                         <ul class="animated  fadeIn p-0 m-l-75 listStyleNone p-0" *ngIf="viewReportsOptions">
-                            <li class="p-b-5 cursor-pointer"><a [routerLink]="['/daily-transactions']">Daily
+                            <li class="p-b-5 cursor-pointer" (click)="sidenavAndClickIcon()"><a
+                                    [routerLink]="['/daily-transactions']">Daily
                                 Transactions</a></li>
-                            <li class="p-b-5 cursor-pointer"><a [routerLink]="['/logs']">Logs</a></li>
-                            <li class="p-b-5 cursor-pointer"><a [routerLink]="['/']">Receipt</a></li>
-                            <li class="p-b-5 cursor-pointer"><a [routerLink]="['/closed-statements']">Closed
+                            <li class="p-b-5 cursor-pointer" (click)="sidenavAndClickIcon()"><a
+                                    [routerLink]="['/logs']">Logs</a></li>
+                            <li class="p-b-5 cursor-pointer" (click)="sidenavAndClickIcon()"><a
+                                    [routerLink]="['/transactions']">Receipt</a></li>
+                            <li class="p-b-5 cursor-pointer" (click)="sidenavAndClickIcon()"><a
+                                    [routerLink]="['/closed-statements']">Closed
                                 Statements</a></li>
                         </ul>
                     </li>
                     <!--User-->
-                    <li class="cursor-pointer">
+                    <li class="cursor-pointer"><a [routerLink]="['/user-profile']" (click)="sidenavAndClickIcon()">
                         <i class="zmdi zmdi-account m-r-10 paddMenuOptions"></i>
-                        <span>User</span>
+                        <span>User</span></a>
                     </li>
                     <!--Settings-->
                     <li class="cursor-pointer" (click)="viewSettingsOptions=!viewSettingsOptions">
                         <i class="zmdi zmdi-settings m-r-10 paddMenuOptions"></i>
-                        <span>Settings</span>
+                        <span class="itemsList">Settings</span>
                         <ul class="animated fadeIn p-0 m-l-75 listStyleNone p-0" *ngIf="viewSettingsOptions">
-                            <li class="p-b-5 cursor-pointer"><a [routerLink]="['/register']">Register</a></li>
-                            <li class="p-b-5 cursor-pointer"><a [routerLink]="['/general']">General</a></li>
-                            <li class="p-b-5 cursor-pointer"><a [routerLink]="['/smtp']">SMTP</a></li>
+                            <li class="p-b-5 cursor-pointer" (click)="sidenavAndClickIcon()"><a
+                                    [routerLink]="['/register']">Register</a></li>
+                            <li class="p-b-5 cursor-pointer" (click)="sidenavAndClickIcon()"><a
+                                    [routerLink]="['/general']">General</a></li>
+                            <li class="p-b-5 cursor-pointer" (click)="sidenavAndClickIcon()"><a
+                                    [routerLink]="['/smtp']">SMTP</a></li>
                         </ul>
                     </li>
                 </ul>

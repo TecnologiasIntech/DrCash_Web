@@ -29,7 +29,9 @@ const LAYOUT_ROUTES: Routes = [
         {path: 'closed-statements', component: ClosedStatementsComponent},
         {path: 'register', component: RegisterComponent},
         {path: 'general', component: GeneralComponent},
-        {path: 'smtp', component: SmtpComponent}
+        {path: 'smtp', component: SmtpComponent},
+        {path: 'transactions', component: TransactionsComponent},
+        {path: 'user-profile', component: UserProfileComponent}
     ]
     }
 ];
