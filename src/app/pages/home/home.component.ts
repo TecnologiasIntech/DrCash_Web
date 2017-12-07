@@ -6,6 +6,7 @@ import {InitialCashComponent} from "../../modals/initial-cash/initial-cash.compo
 import {Globals} from "../../statics/globals";
 import {LoginComponent} from "../../modals/login/login.component";
 import {CashInComponent} from "../../modals/cash-in/cash-in.component";
+import {CloseDateComponent} from "../../modals/close-date/close-date.component";
 
 
 @Component({
