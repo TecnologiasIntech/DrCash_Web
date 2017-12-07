@@ -40,8 +40,8 @@
                                     <input type="number" class="form-control t-a-c form-control-line"
                                          min="0" [(ngModel)]="Bills100" name="Bills100"
                                            (ngModelChange)="calculateTotalCash()"
-                                           (keydown.ArrowUp)="_validationService.validateArrows($event)"
-                                           (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                           (keydown.ArrowUp)="_validationService.E($event)"
+                                           (keydown.ArrowDown)="_validationService.E($event)"
                                            (keypress)="_validationService.restrictNumeric($event)"
 
                                     >
@@ -75,8 +75,8 @@
                                     <input type="text" class="form-control t-a-c form-control-line" placeholder="50's"
                                           min="0" [(ngModel)]="Bills50" name="fiftyBills"
                                            (ngModelChange)="calculateTotalCash()"
-                                           (keydown.ArrowUp)="_validationService.validateArrows($event)"
-                                           (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                           (keydown.ArrowUp)="_validationService.E($event)"
+                                           (keydown.ArrowDown)="_validationService.E($event)"
                                            (keypress)="_validationService.restrictNumeric($event)"
                                     >
                                     <i class="form-group__bar"></i>
@@ -109,8 +109,8 @@
                                     <input type="text" class="form-control t-a-c form-control-line" placeholder="20's"
                                            [(ngModel)]="Bills20" name="twentyBills"
                                            (ngModelChange)="calculateTotalCash()"
-                                           (keydown.ArrowUp)="_validationService.validateArrows($event)"
-                                           (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                           (keydown.ArrowUp)="_validationService.E($event)"
+                                           (keydown.ArrowDown)="_validationService.E($event)"
                                            (keypress)="_validationService.restrictNumeric($event)"
                                     >
                                     <i class="form-group__bar"></i>
@@ -143,8 +143,8 @@
                                     <input type="text" class="form-control t-a-c form-control-line" placeholder="10's"
                                            [(ngModel)]="Bills10" name="tenBills"
                                            (ngModelChange)="calculateTotalCash()"
-                                           (keydown.ArrowUp)="_validationService.validateArrows($event)"
-                                           (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                           (keydown.ArrowUp)="_validationService.E($event)"
+                                           (keydown.ArrowDown)="_validationService.E($event)"
                                            (keypress)="_validationService.restrictNumeric($event)"
                                     >
                                     <i class="form-group__bar"></i>
@@ -177,8 +177,8 @@
                                     <input type="text" class="form-control t-a-c form-control-line" placeholder="5's"
                                            [(ngModel)]="Bills5" name="fiveBills"
                                            (ngModelChange)="calculateTotalCash()"
-                                           (keydown.ArrowUp)="_validationService.validateArrows($event)"
-                                           (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                           (keydown.ArrowUp)="_validationService.E($event)"
+                                           (keydown.ArrowDown)="_validationService.E($event)"
                                            (keypress)="_validationService.restrictNumeric($event)"
                                     >
                                     <i class="form-group__bar"></i>
@@ -211,8 +211,8 @@
                                     <input type="text" class="form-control t-a-c form-control-line" placeholder="1's"
                                            [(ngModel)]="Bills1" name="oneBills"
                                            (ngModelChange)="calculateTotalCash()"
-                                           (keydown.ArrowUp)="_validationService.validateArrows($event)"
-                                           (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                           (keydown.ArrowUp)="_validationService.E($event)"
+                                           (keydown.ArrowDown)="_validationService.E($event)"
                                            (keypress)="_validationService.restrictNumeric($event)"
                                     >
                                     <i class="form-group__bar"></i>
