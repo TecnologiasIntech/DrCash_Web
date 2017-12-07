@@ -348,7 +348,7 @@ export class CashInComponent implements OnInit {
                 </tr>
                 <tr>
                     <td>Total Cash</td>
-                    <td>$${this.cashInput}</td>
+                    <td>$${this.cash}</td>
                 </tr>
                 <tr>
                     <td>Credit Card</td>
