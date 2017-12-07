@@ -1,9 +1,11 @@
+
 import {Component, OnInit} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ValidationService} from "../../services/validation.service";
 import {TransactionService} from "../../services/transaction.service";
 import {Observable} from "rxjs/Observable";
 import {Transaction} from "../../interfaces/transaction";
+
 
 @Component({
     selector: 'app-refund',
@@ -19,6 +21,7 @@ export class RefundComponent implements OnInit {
     logComment2: string;
     cadena: string;
     contenido: Transaction;
+
 
     constructor(private _activeModal: NgbActiveModal,
                 public _validationService: ValidationService,
@@ -69,8 +72,6 @@ export class RefundComponent implements OnInit {
         this._activeModal.dismiss();
     }
 
-    imprimir(cadena: number) {
-        console.log(cadena)
-    }
+
 
 }
