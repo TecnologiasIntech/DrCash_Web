@@ -181,8 +181,7 @@ export class CashInComponent implements OnInit {
         if (!this.areBasicAmountInputsEmpty() &&
             this.isAtLeastOneCheckBoxChecked() &&
             !this.isOtherCheckButOtherCommentsEmpty() &&
-            !this.isPatientNameEMpty() &&
-            !this.isCommentsInputEmpty()) {
+            !this.isPatientNameEmpty()) {
             return true;
         } else {
             this.focusPaymentFirstNameInputs();
@@ -201,7 +200,7 @@ export class CashInComponent implements OnInit {
         this.amount = 0.00
     }
 
-    isPatientNameEMpty() {
+    isPatientNameEmpty() {
         if (ValidationService.errorInField(this.newTransaction.patientFirstName)) {
             return true;
         } else {
