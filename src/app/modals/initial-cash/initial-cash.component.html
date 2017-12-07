@@ -5,10 +5,15 @@
         </div>
         <div class="card-body m-b-30">
             <div class="form-group m-b-0">
-                <input type="number" min="0" step="0.01"
+                <input type="number" min="0" step="1"
                        class="form-control form-control-line text-center currency {{ errorInitialCash ? 'initialCashError' : '' }}"
                        placeholder="$0.00" [(ngModel)]="transaction.cash" (keyup)="errorInitialCash = false;"
-                       (keyup.enter)="setInitialCash(transaction.cash)" #cash autofocus>
+                       (keyup.enter)="setInitialCash(transaction.cash)" #cash autofocus
+                       (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                       (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                       (keypress)="_validationService.restrictNumeric($event)"
+                       (click)="selectAllText()"
+                >
                 <i class="form-group__bar"></i>
             </div>
 

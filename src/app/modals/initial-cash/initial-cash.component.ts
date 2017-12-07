@@ -21,7 +21,8 @@ export class InitialCashComponent implements OnInit {
     cash: any;
 
     constructor(private _transactionsService: TransactionService,
-                private _activeModal:NgbActiveModal) {
+                private _activeModal:NgbActiveModal,
+                public _validationService: ValidationService) {
     }
 
     ngOnInit() {
@@ -39,6 +40,7 @@ export class InitialCashComponent implements OnInit {
             this.cash.nativeElement.focus();
         }
     }
-
-
+    selectAllText(){
+        this.cash.nativeElement.select();
+    }
 }
