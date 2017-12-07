@@ -48,12 +48,17 @@ export class ValidationService {
         if (e.which === 0) {
             return true;
         }
+        if (e.which === 45) {
+            return false;
+        }
+        if (e.which === 46) {
+            return true;
+        }
         if (e.which < 33) {
             return true;
         }
-
         input = String.fromCharCode(e.which);
-        return !!/[\d\s]/.test(input)
+        return !!/[\d\s]/.test(input);
     }
 
 

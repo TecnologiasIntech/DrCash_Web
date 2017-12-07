@@ -32,7 +32,7 @@ export class InitialCashComponent implements OnInit {
         if(!ValidationService.errorInField(initialCash)){
             this.transaction.dateRegistered = DateService.getCurrentDate();
             this.transaction.type = TRANSACTIONTYPE.INITIALCASH;
-            this.transaction.cash = parseInt(initialCash);
+            this.transaction.cash = parseFloat(initialCash);
             this._transactionsService.setTransaction(this.transaction);
             this._activeModal.close();
         }else{
