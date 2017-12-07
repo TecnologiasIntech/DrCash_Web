@@ -24,15 +24,18 @@ export class NavigationTriggerComponent implements OnInit {
     }
 
     openCloseNav(){
+        // open
         if (this._globals.sidebarVisible==false){
             document.getElementById("mySidenav").style.width="250px";
         }else {
+            // close
             document.getElementById("mySidenav").style.width="0";
         }
 
     }
 
-    openNav(){
+
+    sidenavAndClickIcon(){
         this.openCloseNav();
         this.toggleSidebarVisibility();
     }
