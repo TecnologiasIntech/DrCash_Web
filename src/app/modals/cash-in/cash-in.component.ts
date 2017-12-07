@@ -264,7 +264,7 @@ export class CashInComponent implements OnInit {
         }
     }
 
-    restrictNumeric(e) {
+    restrictNumeric(e,field) {
         let input;
         if (e.metaKey || e.ctrlKey) {
             return true;
@@ -279,7 +279,11 @@ export class CashInComponent implements OnInit {
             return false;
         }
         if (e.which === 46) {
-            return true;
+            if(field.includes(".")){
+                return false;
+            }else{
+                return true;
+            }
         }
         if (e.which < 33) {
             return true;

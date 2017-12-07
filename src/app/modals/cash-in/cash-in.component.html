@@ -37,7 +37,7 @@
                     <div class="input-group">
                         <span class="input-group-addon">$</span>
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-line" placeholder="0.00" (keypress)="restrictNumeric($event)" #amountCharged [(ngModel)]="newTransaction.amountCharged"
+                            <input type="text" class="form-control form-control-line" placeholder="0.00" (keypress)="restrictNumeric($event,newTransaction.amountCharged)" #amountCharged [(ngModel)]="newTransaction.amountCharged"
                                    (ngModelChange)="showTotalAmountChange()">
                             <i class="form-group__bar"></i>
                         </div>
@@ -49,7 +49,7 @@
                     <div class="input-group">
                         <span class="input-group-addon">$</span>
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-line" placeholder="0.00" (keypress)="restrictNumeric($event)" #cashInput [(ngModel)]="newTransaction.cash"
+                            <input type="text" class="form-control form-control-line" placeholder="0.00" (keypress)="restrictNumeric($event,newTransaction.cash)" #cashInput [(ngModel)]="newTransaction.cash"
                                    (ngModelChange)="showTotalAmountChange()">
                             <i class="form-group__bar"></i>
                         </div>
@@ -61,7 +61,7 @@
                     <div class="input-group">
                         <span class="input-group-addon">$</span>
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-line" placeholder="0.00" (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.credit"
+                            <input type="text" class="form-control form-control-line" placeholder="0.00" (keypress)="restrictNumeric($event,newTransaction.credit)" [(ngModel)]="newTransaction.credit"
                                    (ngModelChange)="showTotalAmountChange()">
                             <i class="form-group__bar"></i>
                         </div>
@@ -73,7 +73,7 @@
                     <div class="input-group">
                         <span class="input-group-addon">$</span>
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-line" placeholder="0.00" (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.check"
+                            <input type="text" class="form-control form-control-line" placeholder="0.00" (keypress)="restrictNumeric($event,newTransaction.check)" [(ngModel)]="newTransaction.check"
                                    (ngModelChange)="showTotalAmountChange()">
                             <i class="form-group__bar"></i>
                         </div>
@@ -85,7 +85,7 @@
                     <div class="input-group">
                         <span class="input-group-addon">#</span>
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-line" placeholder="0" #checkNumber (keypress)="restrictNumeric($event)" [(ngModel)]="newTransaction.checkNumber"
+                            <input type="text" class="form-control form-control-line" placeholder="0" #checkNumber (keypress)="restrictNumeric($event,newTransaction.checkNumber)" [(ngModel)]="newTransaction.checkNumber"
                                    (ngModelChange)="showTotalAmountChange()">
                             <i class="form-group__bar"></i>
                         </div>
@@ -99,7 +99,7 @@
                 <!-- Checkboxs-->
                 <div>
                     <label class="custom-control custom-radio">
-                        <input type="checkbox" class="custom-control-input"  [(ngModel)]="newTransaction.copayment" >
+                        <input type="checkbox" class="custom-control-input"  [(ngModel)]="newTransaction.copayment" (ngModelChange)="unfocusCheckbox()">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description" #copayment >Copayment</span>
                     </label>
