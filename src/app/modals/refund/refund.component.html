@@ -23,9 +23,9 @@
                                 <input type="number" class="form-control form-control-line"
                                        placeholder="Transaction Number" [(ngModel)]="transactionNumber"
                                        name="numberTransaction"
-                                       (keypress)="_validationService.restrictNumeric($event)"
-                                       (keydown.ArrowUp)="_validationService.validateArrows($event)"
-                                       (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                       (keypress)="_validationService.E($event)"
+                                       (keydown.ArrowUp)="_validationService.E($event)"
+                                       (keydown.ArrowDown)="_validationService.E($event)"
                                 >
                                 <i class="form-group__bar"></i>
                             </div>
