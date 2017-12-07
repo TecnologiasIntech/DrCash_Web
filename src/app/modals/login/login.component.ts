@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit {
 
 
     errorInLoginFields(user: User) {
-        debugger
         if (ValidationService.errorInField(user.username) && ValidationService.errorInField(user.password)) {
             this.errorPassAndUsername = true;
         } else {
