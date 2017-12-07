@@ -17,4 +17,3 @@ export enum ERRORAUTH{
     WRONGPASSWORD,
     USERNOTFOUND
 }
-  
