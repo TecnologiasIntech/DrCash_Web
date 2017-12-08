@@ -7,6 +7,7 @@ import {Globals} from "../../statics/globals";
 import {TransactionService} from "../../services/transaction.service";
 import {TRANSACTIONTYPE} from "../../enums/enums";
 import {DateService} from "../../services/date.service";
+import {alertService} from "../../services/alert.service";
 
 @Component({
     selector: 'app-cash-in',
@@ -16,7 +17,8 @@ import {DateService} from "../../services/date.service";
 export class CashInComponent implements OnInit {
 
     constructor(private _activeModal: NgbActiveModal,
-                private _transactionService: TransactionService) {
+                private _transactionService: TransactionService,
+                private _alertService: alertService) {
     }
 
     @ViewChild('otherComment')
@@ -56,6 +58,7 @@ export class CashInComponent implements OnInit {
             this.getTransactionDate()
             this.saveTransaction();
             this.printTicket();
+            this.showSuccessfulTransactionAlert();
         } else {
             this.focusPaymentFirstNameInputs();
             this.focusCheckBoxs();
@@ -73,6 +76,13 @@ export class CashInComponent implements OnInit {
 
         this.newTransaction.dateRegistered = DateService.getDateNumber();
         this.newTransaction.modificationDate = DateService.getDateNumber();
+    }
+
+    showSuccessfulTransactionAlert(){
+        this._alertService.confirmSuccess("Successful Transaction","")
+            .then(()=>{
+                this.closeModal();
+            });
     }
 
     focusPaymentFirstNameInputs() {
@@ -390,7 +400,7 @@ export class CashInComponent implements OnInit {
             
             <div style="text-align: center">
             <br>
-            Printed By David
+            Printed By ${Globals.userInfo.username}
             <br>
             ${this.transactionDateLetter}
             <br>
