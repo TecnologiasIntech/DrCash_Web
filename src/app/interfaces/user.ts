@@ -13,5 +13,5 @@ export interface User {
     modificationDate?:string;
     createdBy:number;
     creationDate:string;
-    userId: number;
+    userId:number;
 }
