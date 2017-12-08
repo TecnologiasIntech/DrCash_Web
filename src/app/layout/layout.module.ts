@@ -99,7 +99,7 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         LogService,
         ReportService,
         UserService,
-        ValidationServie, 
+        ValidationService,
         Globals
 
     ],

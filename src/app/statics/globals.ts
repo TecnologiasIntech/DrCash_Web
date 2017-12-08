@@ -3,12 +3,12 @@ import {User} from "../interfaces/user";
 
 @Injectable()
 export class Globals {
-    optionModalSm: object = {
+    static optionModalSm: object = {
         backdrop: "static",
         keyboard: false,
         size: "sm"
     };
-    optionModalLg: object = {
+    static optionModalLg: object = {
         backdrop: "static",
         keyboard: false,
         size: "lg"
