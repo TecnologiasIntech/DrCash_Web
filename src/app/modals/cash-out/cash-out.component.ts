@@ -1,8 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {isUndefined} from "util";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {isUndefined} from "util";import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ValidationService} from "../../services/validation.service";
-import {BILLS} from "../../enums/enums";
+import {BILLS, TRANSACTIONTYPE} from "../../enums/enums";
+import {TransactionService} from "../../services/transaction.service";
+import {Transaction} from "../../interfaces/transaction";
+import {DateService} from "../../services/date.service";
+import {alertService} from "../../services/alert.service";
 
 @Component({
     selector: 'app-cash-out',
@@ -10,7 +13,7 @@ import {BILLS} from "../../enums/enums";
     styleUrls: ['./cash-out.component.scss']
 })
 export class CashOutComponent implements OnInit {
-
+    transaction:Transaction;
     comment:string;
     Bills100: number = 0;
     Bills50: number = 0;
@@ -22,7 +25,11 @@ export class CashOutComponent implements OnInit {
     BILLS: any = BILLS;
 
     constructor(private _activeModal: NgbActiveModal,
-                public _validationService: ValidationService) {
+                public _validationService: ValidationService,
+                private _transactionService:TransactionService,
+                private _alertService:alertService) {
+
+        this.transaction=TransactionService.getDefaultValuesToTransaction()
     }
 
     ngOnInit() {
@@ -112,6 +119,19 @@ export class CashOutComponent implements OnInit {
 
     closeModal() {
         this._activeModal.dismiss()
+    }
+
+    saveTransaction(){
+        if(this.totalCash!=0 ){
+            this.transaction.cash=this.totalCash;
+            this.transaction.type=TRANSACTIONTYPE.CASHOUT;
+            this.transaction.dateRegistered=DateService.getDateNumber();
+            this.transaction.modificationDate=DateService.getDateNumber();
+
+            this._transactionService.setTransaction(this.transaction);
+        }else{
+            this._alertService.error("Failed Transaction","TotalCash Field Must Have a Value ")
+        }
     }
 
 }
