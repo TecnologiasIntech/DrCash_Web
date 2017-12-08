@@ -9,7 +9,6 @@ import {FirebaseListFactoryOpts} from "angularfire2/database/interfaces";
 import {ClosedTransaction} from "../interfaces/closed-transaction";
 import {TRANSACTIONTYPE} from "../enums/enums";
 import {ValidationService} from "./validation.service";
-import {_catch} from "rxjs/operator/catch";
 
 @Injectable()
 export class TransactionService {

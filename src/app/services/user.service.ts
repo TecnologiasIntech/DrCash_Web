@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {AngularFireDatabase} from "angularfire2/database";
 import {alertService} from "./alert.service";
 import {User} from "../interfaces/user";
+import {Globals} from "../statics/globals";
 import {ERRORAUTH} from "../enums/enums";
 import {userInfo} from "os";
 
