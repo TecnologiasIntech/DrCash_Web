@@ -5,6 +5,9 @@ import {Observable} from "rxjs/Observable";
 import {userInfo} from "os";
 import {Globals} from "../statics/globals";
 import {DateService} from "./date.service";
+import {Subject} from "rxjs/Subject";
+import 'rxjs/add/operator/switchMap';
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class TransactionService {
@@ -20,7 +23,14 @@ export class TransactionService {
     }
 
     getAllTransactions() {
-        return this.db.list('transactions')
+        this.db.list('transactions')
+            .$ref
+            .orderByChild('dateRegistered')
+            .startAt(20171202000000)
+            // .endAt(20171204235959)
+            .once('value', (snapshot) => {
+                console.log(snapshot.val())
+            })
     }
 
     getTransactionsByRange(startAt: number, endAt) {

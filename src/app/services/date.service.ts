@@ -4,8 +4,9 @@ import {Injectable} from '@angular/core';
 export class DateService {
 
     constructor() {
-    }
 
+    }
+    
     static getCurrentDate(){
         return new Date().toString();
     }
