@@ -35,8 +35,7 @@ export class ValidationService {
 
     }
 
-    restrictNumeric(e) {
-
+    restrictNumeric(e, field?) {
 
         let input;
         if (e.metaKey || e.ctrlKey) {
@@ -52,7 +51,11 @@ export class ValidationService {
             return false;
         }
         if (e.which === 46) {
-            return true;
+            if(field.includes(".")){
+                return false;
+            }else{
+                return true;
+            }
         }
         if (e.which < 33) {
             return true;
