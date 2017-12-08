@@ -45,6 +45,7 @@ export class CashInComponent implements OnInit {
 
     transactionDateNumber: string;
     transactionDateLetter: string;
+    transactionId: string;
 
     ngOnInit() {
         this.newTransaction = TransactionService.getDefaultValuesToTransaction();
@@ -73,8 +74,10 @@ export class CashInComponent implements OnInit {
     getTransactionDate() {
         this.transactionDateLetter = DateService.getDateLetter();
         this.transactionDateNumber = DateService.getDateNumber().toString();
+        this.transactionId = DateService.getDateNumber().toString()+Globals.userInfo.userId.toString();
 
         this.newTransaction.dateRegistered = DateService.getDateNumber();
+        this.newTransaction.modificationDate = DateService.getDateNumber();
         this.newTransaction.modificationDate = DateService.getDateNumber();
     }
 
@@ -301,7 +304,6 @@ export class CashInComponent implements OnInit {
         return !!/[\d\s]/.test(input);
     }
 
-    //TODO Falta agregar el usuario que hizo la transaccion
     printTicket() {
         let mywindow = window.open('', 'PRINT', 'height=650,width=300');
 
@@ -394,7 +396,7 @@ export class CashInComponent implements OnInit {
             
             <script>
             $(document).ready(function(){
-                $("#barcode").JsBarcode("${this.transactionDateNumber}",{displayValue: true, fontSize: 20, width: 2, height: 50});
+                $("#barcode").JsBarcode("${this.transactionId}",{displayValue: true, fontSize: 20, width: 2, height: 50});
             })
             </script>
             

@@ -32,8 +32,7 @@ export class TransactionService {
     }
 
     setTransaction(transaction: Transaction) {
-        debugger;
-        this.transactionsRef.push(transaction);
+        this.transactionsRef.set(transaction.dateRegistered.toString()+Globals.userInfo.userId.toString(),transaction);
     }
 
     updateTransaction(transactionKey: string, transaction: Transaction) {
