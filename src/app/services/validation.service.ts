@@ -8,7 +8,7 @@ export class ValidationService {
     }
 
 
-    E(e) {
+    validateArrows(e) {
 
         let input;
         e = e || window.event;
