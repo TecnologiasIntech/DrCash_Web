@@ -10,6 +10,8 @@ import {RefundComponent} from "../../modals/refund/refund.component";
 import {SignUpComponent} from "../../modals/sign-up/sign-up.component";
 import {CloseDateComponent} from "../../modals/close-date/close-date.component";
 import {window} from "rxjs/operator/window";
+import {AngularFireDatabase} from "angularfire2/database";
+import {TransactionService} from "../../services/transaction.service";
 
 
 @Component({
@@ -19,7 +21,12 @@ import {window} from "rxjs/operator/window";
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private _modalService: NgbModal) { }
+  constructor(private db: AngularFireDatabase,
+              private _modalService: NgbModal,
+              private _transactionService: TransactionService) {
+      console.log(this._transactionService.getAllTransactions())
+      debugger
+  }
 
   ngOnInit() {
   }
