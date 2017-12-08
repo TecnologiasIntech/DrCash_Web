@@ -1,3 +1,188 @@
-<p>
-  cash-in works!
-</p>
+<div class="card" style="width: 900px; margin-bottom: 0;">
+    <div class="card-title bg-success p-10">
+        <!--Header-->
+        <div class="row mt-2">
+            <!--Down Icon-->
+            <div class="col-1 offset-1">
+                <i class="zmdi zmdi-download" style="color: white; font-size: 40px"></i>
+            </div>
+            <!--Title-->
+            <div class="col-5">
+                <h1 style="color: white">Cash In</h1>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card-body p-15">
+
+        <!--Patient Name Input-->
+        <div class="mt-3">
+            <h5>Patient Name</h5>
+            <div class="form-group">
+                <input type="text" class="form-control form-control-lg form-control-line" placeholder="Name" #patientName [(ngModel)]="newTransaction.patientFirstName">
+                <i class="form-group__bar"></i>
+            </div>
+        </div>
+
+
+        <!--Payment-->
+        <div class="row">
+
+            <!--Payments Inputs-->
+            <div class="col-3 text-center ">
+                <!--Amount Charge Input-->
+                <div class="mt-3">
+                    <span>Amount Charge</span>
+                    <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-line" placeholder="0.00" (keypress)="restrictNumeric($event,newTransaction.amountCharged)" #amountCharged [(ngModel)]="newTransaction.amountCharged"
+                                   (ngModelChange)="showTotalAmountChange()">
+                            <i class="form-group__bar"></i>
+                        </div>
+                    </div>
+                </div>
+                <!--Cash Input-->
+                <div class="mt-3">
+                    <span>Cash</span>
+                    <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-line" placeholder="0.00" (keypress)="restrictNumeric($event,newTransaction.cash)" #cashInput [(ngModel)]="newTransaction.cash"
+                                   (ngModelChange)="showTotalAmountChange()">
+                            <i class="form-group__bar"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- Credit Input-->
+                <div class="mt-3">
+                    <span>Credit</span>
+                    <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-line" placeholder="0.00" (keypress)="restrictNumeric($event,newTransaction.credit)" [(ngModel)]="newTransaction.credit"
+                                   (ngModelChange)="showTotalAmountChange()">
+                            <i class="form-group__bar"></i>
+                        </div>
+                    </div>
+                </div>
+                <!--Check Input-->
+                <div class="mt-3">
+                    <span>Check</span>
+                    <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-line" placeholder="0.00" (keypress)="restrictNumeric($event,newTransaction.check)" [(ngModel)]="newTransaction.check"
+                                   (ngModelChange)="showTotalAmountChange()">
+                            <i class="form-group__bar"></i>
+                        </div>
+                    </div>
+                </div>
+                <!--Check Number Input-->
+                <div class="mt-3">
+                    <span>Check #</span>
+                    <div class="input-group">
+                        <span class="input-group-addon">#</span>
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-line" placeholder="0" #checkNumber (keypress)="restrictNumeric($event,newTransaction.checkNumber)" [(ngModel)]="newTransaction.checkNumber"
+                                   (ngModelChange)="showTotalAmountChange()">
+                            <i class="form-group__bar"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Checkboxs And Totals-->
+            <div class="col-4 offset-1 mt-3">
+
+                <!-- Checkboxs-->
+                <div>
+                    <label class="custom-control custom-radio">
+                        <input type="checkbox" class="custom-control-input"  [(ngModel)]="newTransaction.copayment" (ngModelChange)="unfocusCheckbox()">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description" #copayment >Copayment</span>
+                    </label>
+
+                    <div class="clearfix mt-2"></div>
+
+                    <label class="custom-control custom-radio">
+                        <input type="checkbox" class="custom-control-input" [(ngModel)]="newTransaction.selfPay" (ngModelChange)="unfocusCheckbox()">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">SelfPay</span>
+                    </label>
+
+                    <div class="clearfix mt-2"></div>
+
+                    <label class="custom-control custom-radio">
+                        <input type="checkbox" class="custom-control-input" [(ngModel)]="newTransaction.deductible" (ngModelChange)="unfocusCheckbox()">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Deductible</span>
+                    </label>
+
+                    <div class="clearfix mt-2"></div>
+
+                    <label class="custom-control custom-radio">
+                        <input type="checkbox" class="custom-control-input"  [(ngModel)]="newTransaction.labs" (ngModelChange)="unfocusCheckbox()">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Labs</span>
+                    </label>
+
+                    <div class="clearfix mt-2"></div>
+
+                    <label class="custom-control custom-radio">
+                        <input type="checkbox" class="custom-control-input" [(ngModel)]="newTransaction.other" (ngModelChange)="focusOtherComment()" >
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Other</span>
+                    </label>
+                </div>
+
+                <!--Other Comments-->
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-lg form-control-line" placeholder="Other" disabled #otherComment  [(ngModel)]="newTransaction.otherComments" >
+                    <i class="form-group__bar"></i>
+                </div>
+
+                <div class="clearfix mt-5"></div>
+
+                <!--Totals-->
+                <div class="row" style="font-size: 18px">
+                    <div class="col-6">
+                        <div>Total</div>
+                        <div class="text-danger">Amount</div>
+                        <div>Change</div>
+                    </div>
+
+                    <div class="col-4 offset-2">
+                        <div>{{total | currency: 'USD':true }}</div>
+                        <div>{{amount | currency: 'USD':true}}</div>
+                        <div>{{change | currency: 'USD':true}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Comments-->
+            <div class="col-4">
+                <h6>Comments</h6>
+                <div class="form-group">
+                    <textarea class="form-control form-control-line" rows="9" placeholder="Type A Comment...." [(ngModel)]="newTransaction.comment"></textarea>
+                    <i class="form-group__bar"></i>
+                </div>
+            </div>
+
+        </div>
+
+        <!--Buttons-->
+        <div class="row mt-4">
+            <div class="col-3 offset-1">
+                <button class="btn btn-danger" (click)="clearAllInputs()">Clear all input</button>
+            </div>
+
+            <div class="col-3 offset-5">
+                <button class="btn btn-dark" (click)="closeModal()">Cancel</button>
+                <button class="btn btn-success" (click)="savePrint()">Save print</button>
+            </div>
+        </div>
+
+    </div>
+</div>
