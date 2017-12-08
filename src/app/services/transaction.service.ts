@@ -102,7 +102,14 @@ export class TransactionService {
     }
 
     getAllTransactions() {
-        return this.db.list('transactions')
+        this.db.list('transactions')
+            .$ref
+            .orderByChild('dateRegistered')
+            .startAt(20171202000000)
+            // .endAt(20171204235959)
+            .once('value', (snapshot) => {
+                console.log(snapshot.val())
+            })
     }
 
     getTransactionsByRange(startAt: number, endAt) {

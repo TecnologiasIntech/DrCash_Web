@@ -6,7 +6,6 @@ import {Globals} from "../statics/globals";
 export class DateService {
 
     constructor() {
-    }
 
     static getCurrentDate():number{
         return this.getDateNumber()

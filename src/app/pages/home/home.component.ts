@@ -9,6 +9,9 @@ import {RefundComponent} from "../../modals/refund/refund.component";
 import {SignUpComponent} from "../../modals/sign-up/sign-up.component";
 import {CloseDateComponent} from "../../modals/close-date/close-date.component";
 import {AuthorizationComponent} from "../../modals/authorization/authorization.component";
+import {window} from "rxjs/operator/window";
+import {AngularFireDatabase} from "angularfire2/database";
+import {TransactionService} from "../../services/transaction.service";
 
 
 @Component({
@@ -18,9 +21,11 @@ import {AuthorizationComponent} from "../../modals/authorization/authorization.c
 })
 export class HomeComponent implements OnInit {
 
-    constructor(private _modal: NgbModal,
-                private _globals: Globals){
-      _modal.open(LoginComponent,Globals.optionModalLg);
+  constructor(private db: AngularFireDatabase,
+              private _modalService: NgbModal,
+              private _transactionService: TransactionService) {
+      console.log(this._transactionService.getAllTransactions())
+      debugger
   }
 
   ngOnInit() {
