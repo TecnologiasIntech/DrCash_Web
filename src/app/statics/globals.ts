@@ -8,7 +8,7 @@ export class Globals {
         keyboard: false,
         size: "sm"
     };
-    optionModalLg: object = {
+    static optionModalLg: object = {
         backdrop: "static",
         keyboard: false,
         size: "lg"
