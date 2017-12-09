@@ -9,4 +9,12 @@ export class DateService {
     static getCurrentDate(){
         return new Date().toString();
     }
+
+    static getInitialCurrentDate(){
+        
+    }
+
+    static  getEndCurrentDate(){
+
+    }
 }

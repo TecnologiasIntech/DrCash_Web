@@ -32,9 +32,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group" align="center">
-                                        <input type="number" class="form-control t-a-c form-control-line text-center"
+                                        <input type="text" class="form-control t-a-c form-control-line text-center"
                                                min="0" [(ngModel)]="Bills100" name="Bills100"
-                                               (ngModelChange)="calculateTotalCash()"
+                                               (ngModelChange)="calculateTotalCash(); calculateTotalEntered()"
                                                (keydown.ArrowUp)="_validationService.validateArrows($event)"
                                                (keydown.ArrowDown)="_validationService.validateArrows($event)"
                                                (keypress)="_validationService.restrictNumeric($event)"
@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="col-2 m-t-20">
                                     <button class="btn btn-success" (click)="incrementBills(Bills100,BILLS.BILLS100)">
-                                        <i class="zmdi zmdi-plus" ></i>
+                                        <i class="zmdi zmdi-plus"></i>
                                     </button>
                                 </div>
                                 <div class="col-3 m-t-20">
@@ -69,9 +69,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group" align="center">
-                                        <input type="text" class="form-control t-a-c form-control-line text-center" placeholder="50's"
+                                        <input type="text" class="form-control t-a-c form-control-line text-center"
+                                               placeholder="50's"
                                                min="0" [(ngModel)]="Bills50" name="fiftyBills"
-                                               (ngModelChange)="calculateTotalCash()"
+                                               (ngModelChange)="calculateTotalCash(); calculateTotalEntered()"
                                                (keydown.ArrowUp)="_validationService.validateArrows($event)"
                                                (keydown.ArrowDown)="_validationService.validateArrows($event)"
                                                (keypress)="_validationService.restrictNumeric($event)"
@@ -105,9 +106,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group" align="center">
-                                        <input type="text" class="form-control t-a-c form-control-line text-center" placeholder="20's"
+                                        <input type="text" class="form-control t-a-c form-control-line text-center"
+                                               placeholder="20's"
                                                [(ngModel)]="Bills20" name="twentyBills"
-                                               (ngModelChange)="calculateTotalCash()"
+                                               (ngModelChange)="calculateTotalCash(); calculateTotalEntered()"
                                                (keydown.ArrowUp)="_validationService.validateArrows($event)"
                                                (keydown.ArrowDown)="_validationService.validateArrows($event)"
                                                (keypress)="_validationService.restrictNumeric($event)"
@@ -141,9 +143,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group" align="center">
-                                        <input type="text" class="form-control t-a-c form-control-line text-center" placeholder="10's"
+                                        <input type="text" class="form-control t-a-c form-control-line text-center"
+                                               placeholder="10's"
                                                [(ngModel)]="Bills10" name="tenBills"
-                                               (ngModelChange)="calculateTotalCash()"
+                                               (ngModelChange)="calculateTotalCash(); calculateTotalEntered()"
                                                (keydown.ArrowUp)="_validationService.validateArrows($event)"
                                                (keydown.ArrowDown)="_validationService.validateArrows($event)"
                                                (keypress)="_validationService.restrictNumeric($event)"
@@ -177,9 +180,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group" align="center">
-                                        <input type="text" class="form-control t-a-c form-control-line text-center" placeholder="5's"
+                                        <input type="text" class="form-control t-a-c form-control-line text-center"
+                                               placeholder="5's"
                                                [(ngModel)]="Bills5" name="fiveBills"
-                                               (ngModelChange)="calculateTotalCash()"
+                                               (ngModelChange)="calculateTotalCash(); calculateTotalEntered()"
                                                (keydown.ArrowUp)="_validationService.validateArrows($event)"
                                                (keydown.ArrowDown)="_validationService.validateArrows($event)"
                                                (keypress)="_validationService.restrictNumeric($event)"
@@ -213,9 +217,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group" align="center">
-                                        <input type="text" class="form-control t-a-c form-control-line text-center" placeholder="1's"
+                                        <input type="text" class="form-control t-a-c form-control-line text-center"
+                                               placeholder="1's"
                                                [(ngModel)]="Bills1" name="oneBills"
-                                               (ngModelChange)="calculateTotalCash()"
+                                               (ngModelChange)="calculateTotalCash(); calculateTotalEntered()"
                                                (keydown.ArrowUp)="_validationService.validateArrows($event)"
                                                (keydown.ArrowDown)="_validationService.validateArrows($event)"
                                                (keypress)="_validationService.restrictNumeric($event)"
@@ -262,7 +267,16 @@
                                 <div class="col-12">
                                     <span class="w-25 f-s-18">Credit:</span>
                                     <div class="form-group w-25 d-inline-block offset-4">
-                                        <input type="text" class="form-control form-control-line text-center" (click)="selectAllTextCredit('credit')" id="credit" #credit placeholder="$0.00">
+                                        <input type="text" class="form-control form-control-line text-center"
+                                               [(ngModel)]="totalCredit"
+                                               (click)="selectAllTextCredit()" #credit
+                                               (ngModelChange)="calculateTotalEntered()"
+                                               placeholder="$0.00"
+                                               (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                                               (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                               (keypress)="_validationService.restrictNumeric($event)"
+                                               min="0"
+                                        >
                                         <i class="form-group__bar"></i>
                                     </div>
                                 </div>
@@ -273,7 +287,16 @@
                                 <div class="col-12">
                                     <span class="w-25 f-s-18">Check:</span>
                                     <div class="form-group w-25 d-inline-block offset-4">
-                                        <input type="text" class="form-control form-control-line text-center" #check placeholder="$0.00">
+                                        <input type="text" class="form-control form-control-line text-center" #check
+                                               placeholder="$0.00"
+                                               [(ngModel)]="totalCheck"
+                                               (click)="selectAllTextCheck()"
+                                               (ngModelChange)="calculateTotalEntered()"
+                                               (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                                               (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                               (keypress)="_validationService.restrictNumeric($event)"
+                                               min="0"
+                                        >
                                         <i class="form-group__bar"></i>
                                     </div>
                                 </div>
@@ -284,7 +307,16 @@
                                 <div class="col-12">
                                     <span class="w-25 f-s-18 ">Left in Register:</span>
                                     <div class="form-group w-25 d-inline-block" style="margin-left: 12.666667%;">
-                                        <input type="text" class="form-control form-control-line text-center" #leftRegister placeholder="$0.00">
+                                        <input type="text" class="form-control form-control-line text-center"
+                                               #leftRegisterRef placeholder="$0.00"
+                                               [(ngModel)]="leftRegisterLabel"
+                                               (click)="selectAllTextLeft()"
+                                               (ngModelChange)="calculateTotalEntered()"
+                                               (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                                               (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                               (keypress)="_validationService.restrictNumeric($event)"
+                                               min="0"
+                                        >
                                         <i class="form-group__bar"></i>
                                     </div>
                                 </div>
@@ -299,7 +331,7 @@
                                             <label class="text-white letterStyleTotalCash">Total Entered: </label>
                                         </div>
                                         <div class="col-5">
-                                            <label class="text-white letterStyleTotalCash">${{totalCash}}</label>
+                                            <label class="text-white letterStyleTotalCash">${{ totalEntered }}</label>
                                         </div>
                                     </div>
 
@@ -315,7 +347,7 @@
                                             <label class="text-white letterStyleTotalCash">Total Registered: </label>
                                         </div>
                                         <div class="col-5">
-                                            <label class="text-white letterStyleTotalCash">${{totalCash}}</label>
+                                            <label class="text-white letterStyleTotalCash">${{ totalRegistered }}</label>
                                         </div>
                                     </div>
 
@@ -331,7 +363,7 @@
                                             <label class="text-danger letterStyleTotalCash">Short: </label>
                                         </div>
                                         <div class="col-5">
-                                            <label class="text-danger letterStyleTotalCash">${{totalCash}}</label>
+                                            <label class="text-danger letterStyleTotalCash">${{ short }}</label>
                                         </div>
                                     </div>
 
@@ -367,11 +399,8 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
         </div>
 
