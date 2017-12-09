@@ -36,4 +36,11 @@ export class DateService {
         return dateLetter;
     }
     
+    static getInitialCurrentDate(){
+        
+    }
+
+    static  getEndCurrentDate(){
+
+    }
 }
