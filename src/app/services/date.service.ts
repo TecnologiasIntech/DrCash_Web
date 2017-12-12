@@ -36,5 +36,25 @@ export class DateService {
 
         return dateLetter;
     }
+
+     getInitialCurrentDate(){
+        let date = new Date();
+        let dateNumber: string;
+        dateNumber = date.getFullYear().toString();
+        dateNumber += ("0"+(date.getMonth()+1).toString()).slice(-2);
+        dateNumber += ("0"+(date.getDate().toString())).slice(-2);
+        dateNumber += "00000"
+        return parseInt(dateNumber);
+    }
+
+      getEndCurrentDate(){
+        let date = new Date();
+        let dateNumber: string;
+        dateNumber = date.getFullYear().toString();
+        dateNumber += ("0"+(date.getMonth()+1).toString()).slice(-2);
+        dateNumber += ("0"+(date.getDate().toString())).slice(-2);
+        dateNumber += "23599"
+        return parseInt(dateNumber);
+    }
     
 }
