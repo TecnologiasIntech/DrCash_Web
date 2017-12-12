@@ -26,6 +26,7 @@
                                        (keypress)="_validationService.E($event)"
                                        (keydown.ArrowUp)="_validationService.E($event)"
                                        (keydown.ArrowDown)="_validationService.E($event)"
+                                >
                                 <i class="form-group__bar"></i>
                             </div>
                         </div>
@@ -84,10 +85,9 @@
 
                                 <input type="number" class="form-control form-control-line t-a-c" placeholder="$0.00"
                                        [(ngModel)]="refound" name="log2"
-                                       (keyup.enter)="imprimir(transactionNumber)"
                                        (keypress)="_validationService.restrictNumeric($event)"
-                                       (keydown.ArrowUp)="_validationService.validateArrows($event)"
-                                       (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                       (keydown.ArrowUp)="_validationService.E($event)"
+                                       (keydown.ArrowDown)="_validationService.E($event)"
 
                                 >
                                 <i class="form-group__bar"></i>

@@ -1,4 +1,3 @@
-
 import {Component, OnInit} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ValidationService} from "../../services/validation.service";
@@ -33,6 +32,10 @@ export class RefundComponent implements OnInit {
 
     clearTransaction() {
         this.transactionNumber = null;
+        this.contenido.amountCharged = null;
+        this.logComment = null;
+        this.logComment2=null;
+        this.refound = null;
     }
 
     searchTransaction(numberTransaction: number) {
@@ -44,16 +47,16 @@ export class RefundComponent implements OnInit {
                 this.cadena = "Copayment for a total of: ";
             } else {
                 if (this.contenido.deductible) {
-                    this.cadena="Deductible for a total of: ";
+                    this.cadena = "Deductible for a total of: ";
                 } else {
                     if (this.contenido.selfPay) {
-                        this.cadena="Selfpay for a total of: ";
+                        this.cadena = "Selfpay for a total of: ";
                     } else {
                         if (this.contenido.labs) {
-                            this.cadena="Labs for a total of: ";
+                            this.cadena = "Labs for a total of: ";
                         } else {
                             // this.cadena=this.contenido.otherComments;
-                            this.cadena=this.contenido.otherComments;
+                            this.cadena = this.contenido.otherComments;
                         }
                     }
                 }
@@ -71,7 +74,6 @@ export class RefundComponent implements OnInit {
     closeRefund() {
         this._activeModal.dismiss();
     }
-
 
 
 }
