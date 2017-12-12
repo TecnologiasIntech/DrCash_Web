@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
     userAuth(user: User) {
         this._usrService.authUser(user).then((response:User) => {
             Globals.userInfo = response;
-            this.activeModal.dismiss();
+            this.activeModal.close(true);
         }).catch((reject: any) => {
             // this._alertService.error(reject,"Try Again");
             if (reject == ERRORAUTH.USERNOTFOUND) {
