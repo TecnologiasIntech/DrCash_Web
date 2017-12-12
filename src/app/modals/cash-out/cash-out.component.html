@@ -38,7 +38,8 @@
                                 </div>
                                 <div class="form-group" align="center">
                                     <input type="number" class="form-control t-a-c form-control-line"
-                                         min="0" [(ngModel)]="Bills100" name="Bills100"
+                                         min="0" [(ngModel)]="Bills100" name="Bills100" #bills100
+                                           (click)="selectAllText(BILLS.BILLS100)"
                                            (ngModelChange)="calculateTotalCash()"
                                            (keydown.ArrowUp)="_validationService.E($event)"
                                            (keydown.ArrowDown)="_validationService.E($event)"
@@ -73,7 +74,8 @@
                                 </div>
                                 <div class="form-group" align="center">
                                     <input type="text" class="form-control t-a-c form-control-line" placeholder="50's"
-                                          min="0" [(ngModel)]="Bills50" name="fiftyBills"
+                                          min="0" [(ngModel)]="Bills50" name="fiftyBills" #bills50
+                                           (click)="selectAllText(BILLS.BILLS50)"
                                            (ngModelChange)="calculateTotalCash()"
                                            (keydown.ArrowUp)="_validationService.E($event)"
                                            (keydown.ArrowDown)="_validationService.E($event)"
@@ -107,7 +109,8 @@
                                 </div>
                                 <div class="form-group" align="center">
                                     <input type="text" class="form-control t-a-c form-control-line" placeholder="20's"
-                                           [(ngModel)]="Bills20" name="twentyBills"
+                                           [(ngModel)]="Bills20" name="twentyBills" #bills20
+                                           (click)="selectAllText(BILLS.BILLS20)"
                                            (ngModelChange)="calculateTotalCash()"
                                            (keydown.ArrowUp)="_validationService.E($event)"
                                            (keydown.ArrowDown)="_validationService.E($event)"
@@ -141,7 +144,8 @@
                                 </div>
                                 <div class="form-group" align="center">
                                     <input type="text" class="form-control t-a-c form-control-line" placeholder="10's"
-                                           [(ngModel)]="Bills10" name="tenBills"
+                                           [(ngModel)]="Bills10" name="tenBills" #bills10
+                                           (click)="selectAllText(BILLS.BILLS10)"
                                            (ngModelChange)="calculateTotalCash()"
                                            (keydown.ArrowUp)="_validationService.E($event)"
                                            (keydown.ArrowDown)="_validationService.E($event)"
@@ -175,7 +179,8 @@
                                 </div>
                                 <div class="form-group" align="center">
                                     <input type="text" class="form-control t-a-c form-control-line" placeholder="5's"
-                                           [(ngModel)]="Bills5" name="fiveBills"
+                                           [(ngModel)]="Bills5" name="fiveBills" #bills5
+                                           (click)="selectAllText(BILLS.BILLS5)"
                                            (ngModelChange)="calculateTotalCash()"
                                            (keydown.ArrowUp)="_validationService.E($event)"
                                            (keydown.ArrowDown)="_validationService.E($event)"
@@ -209,7 +214,8 @@
                                 </div>
                                 <div class="form-group" align="center">
                                     <input type="text" class="form-control t-a-c form-control-line" placeholder="1's"
-                                           [(ngModel)]="Bills1" name="oneBills"
+                                           [(ngModel)]="Bills1" name="oneBills" #bills1
+                                           (click)="selectAllText(BILLS.BILLS1)"
                                            (ngModelChange)="calculateTotalCash()"
                                            (keydown.ArrowUp)="_validationService.E($event)"
                                            (keydown.ArrowDown)="_validationService.E($event)"
