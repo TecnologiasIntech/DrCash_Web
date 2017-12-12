@@ -3,6 +3,7 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ValidationService} from "../../services/validation.service";
 import {BILLS} from "../../enums/enums";
 import {BrowserModule} from '@angular/platform-browser'
+import {TransactionService} from "../../services/transaction.service";
 
 @Component({
     selector: 'app-close-date',
@@ -37,12 +38,13 @@ export class CloseDateComponent implements OnInit, AfterViewInit {
     @ViewChild('leftRegisterRef') leftRegisterRef: ElementRef;
 
     constructor(private _activeModal: NgbActiveModal,
-                public _validationService: ValidationService) {
+                public _validationService: ValidationService,
+                private _transactionService: TransactionService) {
+        _transactionService.getTotalRegistered();
     }
 
     ngOnInit() {
     }
-
 
     incrementBills(bills: number, typeBills: number) {
         switch (typeBills) {

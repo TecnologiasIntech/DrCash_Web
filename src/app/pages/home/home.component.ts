@@ -1,4 +1,3 @@
-
 import {CashOutComponent} from "../../modals/cash-out/cash-out.component";
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -18,10 +17,18 @@ export class HomeComponent implements OnInit {
 
     constructor(private _modal: NgbModal,
                 private _globals: Globals) {
-      _modal.open(LoginComponent,Globals.optionModalLg);
-  }
+        _modal.open(CloseDateComponent, Globals.optionModalLg);
+    }
 
-  ngOnInit() {
+    ngOnInit() {
 
-  }
+    }
+
+    open(){
+        this._modal.open(InitialCashComponent, Globals.optionModalLg)
+    }
+
+    openC(){
+        this._modal.open(CloseDateComponent, Globals.optionModalLg)
+    }
 }

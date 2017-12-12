@@ -5,6 +5,7 @@ import {Observable} from "rxjs/Observable";
 import {userInfo} from "os";
 import {Globals} from "../statics/globals";
 import {DateService} from "./date.service";
+import {FirebaseListFactoryOpts} from "angularfire2/database/interfaces";
 
 @Injectable()
 export class TransactionService {
@@ -17,6 +18,27 @@ export class TransactionService {
 
     getTransaction() {
         return this.db.list('')
+    }
+
+    getCurrentTransactions() {
+        return new Promise(resolve => {
+            this.db.list('transactions', {
+                query: {
+                    orderByChild: 'dateRegistered',
+                    startAt: DateService.getInitialCurrentDate(),
+                    endAt: DateService.getEndCurrentDate()
+                }
+            }).subscribe(result => {
+                resolve(result)
+            })
+        })
+    }
+
+    getTotalRegistered() {
+        this.getCurrentTransactions()
+            .then(response => {
+                console.log(response)
+            })
     }
 
     getAllTransactions() {
@@ -32,7 +54,7 @@ export class TransactionService {
     }
 
     setTransaction(transaction: Transaction) {
-        this.transactionsRef.set(transaction.dateRegistered.toString()+Globals.userInfo.userId.toString(),transaction);
+        this.transactionsRef.set(transaction.dateRegistered.toString() + Globals.userInfo.userId.toString(), transaction);
     }
 
     updateTransaction(transactionKey: string, transaction: Transaction) {

@@ -11,8 +11,7 @@ export class DateService {
     }
 
     static getDateNumber():number {
-        var date = new Date();
-        date = date;
+        let date = new Date();
         let dateNumber: string;
         dateNumber = date.getFullYear().toString();
         dateNumber += ("0"+(date.getMonth()+1).toString()).slice(-2);
@@ -25,8 +24,7 @@ export class DateService {
     }
 
     static getDateLetter(): string {
-        var date = new Date();
-        date = date;
+        let date = new Date();
         let dateLetter: string;
         dateLetter = date.toDateString() + " ";
         dateLetter += date.getHours().toString() + ":";
@@ -37,10 +35,22 @@ export class DateService {
     }
     
     static getInitialCurrentDate(){
-        
+        let date = new Date();
+        let dateNumber: string;
+        dateNumber = date.getFullYear().toString();
+        dateNumber += ("0"+(date.getMonth()+1).toString()).slice(-2);
+        dateNumber += ("0"+(date.getDate().toString())).slice(-2);
+        dateNumber += "00000"
+        return parseInt(dateNumber);
     }
 
     static  getEndCurrentDate(){
-
+        let date = new Date();
+        let dateNumber: string;
+        dateNumber = date.getFullYear().toString();
+        dateNumber += ("0"+(date.getMonth()+1).toString()).slice(-2);
+        dateNumber += ("0"+(date.getDate().toString())).slice(-2);
+        dateNumber += "23599"
+        return parseInt(dateNumber);
     }
 }
