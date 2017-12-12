@@ -6,14 +6,17 @@ import {userInfo} from "os";
 import {Globals} from "../statics/globals";
 import {DateService} from "./date.service";
 import {FirebaseListFactoryOpts} from "angularfire2/database/interfaces";
+import {ClosedTransaction} from "../interfaces/closed-transaction";
 
 @Injectable()
 export class TransactionService {
 
     transactionsRef: FirebaseListObservable<Transaction[]>;
+    closedTransactionsRef: FirebaseListObservable<Transaction[]>;
 
     constructor(private db: AngularFireDatabase) {
         this.transactionsRef = this.db.list('transactions');
+        this.closedTransactionsRef = this.db.list('closedTransactions');
     }
 
     getTransaction() {
@@ -78,5 +81,18 @@ export class TransactionService {
             registerId: "",
             modifiedById: 1
         }
+    }
+
+    setClosedTransaction(closeTransaction:ClosedTransaction){
+        //TODO: poner bien el registerID
+        closeTransaction.datetime =
+        closeTransaction.reg_RegisterID = "1";
+        closeTransaction.username = Globals.userInfo.username;
+
+        this.closedTransactionsRef.set(closeTransaction.datetime, closeTransaction);
+    }
+
+    getInitialCash(){
+
     }
 }

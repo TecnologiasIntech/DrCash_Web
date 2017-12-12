@@ -32,13 +32,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group" align="center">
-                                        <input type="text" class="form-control t-a-c form-control-line text-center"
+                                        <input type="text" class="form-control t-a-c form-control-line text-center {{ isErrorTotalCash ? 'text-danger' : '' }}"
                                                min="0" [(ngModel)]="Bills100" name="Bills100"
-                                               (ngModelChange)="calculateTotalCash(); calculateTotalEntered()"
+                                               (ngModelChange)="calculateTotalCash(); calculateTotalEntered(); isErrorTotalCash = false;"
                                                (keydown.ArrowUp)="_validationService.validateArrows($event)"
                                                (keydown.ArrowDown)="_validationService.validateArrows($event)"
                                                (keypress)="_validationService.restrictNumeric($event)"
                                                (click)="selectAllText(BILLS.BILLS100)"
+                                               placeholder="0"
                                                #bills100
 
                                         >
@@ -70,7 +71,7 @@
                                     </div>
                                     <div class="form-group" align="center">
                                         <input type="text" class="form-control t-a-c form-control-line text-center"
-                                               placeholder="50's"
+                                               placeholder="0"
                                                min="0" [(ngModel)]="Bills50" name="fiftyBills"
                                                (ngModelChange)="calculateTotalCash(); calculateTotalEntered()"
                                                (keydown.ArrowUp)="_validationService.validateArrows($event)"
@@ -107,7 +108,7 @@
                                     </div>
                                     <div class="form-group" align="center">
                                         <input type="text" class="form-control t-a-c form-control-line text-center"
-                                               placeholder="20's"
+                                               placeholder="0"
                                                [(ngModel)]="Bills20" name="twentyBills"
                                                (ngModelChange)="calculateTotalCash(); calculateTotalEntered()"
                                                (keydown.ArrowUp)="_validationService.validateArrows($event)"
@@ -144,7 +145,7 @@
                                     </div>
                                     <div class="form-group" align="center">
                                         <input type="text" class="form-control t-a-c form-control-line text-center"
-                                               placeholder="10's"
+                                               placeholder="0"
                                                [(ngModel)]="Bills10" name="tenBills"
                                                (ngModelChange)="calculateTotalCash(); calculateTotalEntered()"
                                                (keydown.ArrowUp)="_validationService.validateArrows($event)"
@@ -181,7 +182,7 @@
                                     </div>
                                     <div class="form-group" align="center">
                                         <input type="text" class="form-control t-a-c form-control-line text-center"
-                                               placeholder="5's"
+                                               placeholder="0"
                                                [(ngModel)]="Bills5" name="fiveBills"
                                                (ngModelChange)="calculateTotalCash(); calculateTotalEntered()"
                                                (keydown.ArrowUp)="_validationService.validateArrows($event)"
@@ -218,7 +219,7 @@
                                     </div>
                                     <div class="form-group" align="center">
                                         <input type="text" class="form-control t-a-c form-control-line text-center"
-                                               placeholder="1's"
+                                               placeholder="0"
                                                [(ngModel)]="Bills1" name="oneBills"
                                                (ngModelChange)="calculateTotalCash(); calculateTotalEntered()"
                                                (keydown.ArrowUp)="_validationService.validateArrows($event)"
@@ -363,7 +364,7 @@
                                             <label class="text-danger letterStyleTotalCash">Short: </label>
                                         </div>
                                         <div class="col-5">
-                                            <label class="text-danger letterStyleTotalCash">${{ short }}</label>
+                                            <label class="text-danger letterStyleTotalCash">${{ totalEntered - totalRegistered }}</label>
                                         </div>
                                     </div>
 
@@ -392,7 +393,7 @@
                                                 <button class="btn btn-danger" (click)="closeModal()">Cancel</button>
                                             </div>
                                             <div class="col-6">
-                                                <button class="btn btn-success">Save & Print</button>
+                                                <button class="btn btn-success" (click)="verifyFields()">Save & Print</button>
                                             </div>
                                         </div>
                                     </div>

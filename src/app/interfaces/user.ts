@@ -14,4 +14,5 @@ export interface User {
     createdBy:number;
     creationDate:string;
     userId:number;
+    clinic:number
 }

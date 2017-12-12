@@ -6,8 +6,8 @@ export class DateService {
     constructor() {
     }
 
-    static getCurrentDate(){
-        return new Date().toString();
+    static getCurrentDate():number{
+        return this.getDateNumber()
     }
 
     static getDateNumber():number {
