@@ -32,9 +32,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group" align="center">
-                                        <input type="text" class="form-control t-a-c form-control-line text-center {{ isErrorTotalCash ? 'text-danger' : '' }}"
+                                        <input type="text" class="form-control t-a-c form-control-line text-center {{ isErrorTotalCash ? 'text-danger totalCashError' : '' }}"
                                                min="0" [(ngModel)]="Bills100" name="Bills100"
-                                               (ngModelChange)="calculateTotalCash(); calculateTotalEntered(); isErrorTotalCash = false;"
+                                               (ngModelChange)="calculateTotalCash(); calculateTotalEntered(); cleanErrors()"
                                                (keydown.ArrowUp)="_validationService.validateArrows($event)"
                                                (keydown.ArrowDown)="_validationService.validateArrows($event)"
                                                (keypress)="_validationService.restrictNumeric($event)"
@@ -308,8 +308,9 @@
                                 <div class="col-12">
                                     <span class="w-25 f-s-18 ">Left in Register:</span>
                                     <div class="form-group w-25 d-inline-block" style="margin-left: 12.666667%;">
-                                        <input type="text" class="form-control form-control-line text-center"
+                                        <input type="text" class="form-control form-control-line text-center {{ isErrorLeftInRegister ? 'text-danger leftRegisterError': '' }}"
                                                #leftRegisterRef placeholder="$0.00"
+                                               (ngModelChange)="cleanErrors()"
                                                [(ngModel)]="leftRegisterLabel"
                                                (click)="selectAllTextLeft()"
                                                (ngModelChange)="calculateTotalEntered()"

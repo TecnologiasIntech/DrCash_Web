@@ -29,6 +29,7 @@ export class CloseDateComponent implements OnInit {
     totalRegistered: number = 0;
     BILLS: any = BILLS;
     isErrorTotalCash = false;
+    isErrorLeftInRegister = false;
 
     // Element Ref
     @ViewChild('bills100') bills100: ElementRef;
@@ -44,9 +45,14 @@ export class CloseDateComponent implements OnInit {
     constructor(private _activeModal: NgbActiveModal,
                 public _validationService: ValidationService,
                 private _transactionService: TransactionService) {
+
     }
 
     ngOnInit() {
+        this._transactionService.getMyCurrentTransactions()
+            .then(response => {
+                this.totalRegistered = this._transactionService.getTotalRegistered()
+            });
     }
 
     incrementBills(bills: number, typeBills: number) {
@@ -195,6 +201,7 @@ export class CloseDateComponent implements OnInit {
     }
 
     setClosedTransaction() {
+        //TODO: Poner bien el registerID
         let closedTransaction: ClosedTransaction = {
             bills_100: this.Bills100,
             bills_50: this.Bills50,
@@ -208,19 +215,38 @@ export class CloseDateComponent implements OnInit {
             total_cash: this.totalCash,
             total_check: parseFloat(this.totalCheck),
             total_credit: parseFloat(this.totalCredit),
-            initial_cash: 0,
+            initial_cash: this._transactionService.initialCash,
             balance: 0,
-            transaction_count: 0,
+            transaction_count: this._transactionService.numberOfCurrentTransactions,
             reg_RegisterID: "1",
             username: Globals.userInfo.username,
             datetime: DateService.getCurrentDate().toString()
+        };
+
+        this._transactionService.setClosedTransaction(closedTransaction);
+    }
+
+    verifyFields() {
+        if (this.totalCash == 0) {
+            this.bills100.nativeElement.focus()
+            this.isErrorTotalCash = true;
+            this.selectAllText(BILLS.BILLS100);
+        } else if (ValidationService.errorInField(this.leftRegisterLabel)) {
+            this.leftRegisterRef.nativeElement.focus();
+            this.isErrorLeftInRegister = true;
+        } else {
+            if (ValidationService.errorInField(this.totalCheck)) {
+                this.totalCheck = "0";
+            }
+            if (ValidationService.errorInField(this.totalCredit)) {
+                this.totalCredit = "0";
+            }
+            this.setClosedTransaction();
         }
     }
 
-    verifyFields(){
-        if(this.totalCash == 0){
-            this.bills100.nativeElement.focus()
-            this.isErrorTotalCash = true;
-        }
+    cleanErrors() {
+        this.isErrorTotalCash = false;
+        this.isErrorLeftInRegister = false;
     }
 }

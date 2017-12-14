@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
 
     constructor(private _modal: NgbModal,
                 private _globals: Globals) {
-        _modal.open(CloseDateComponent, Globals.optionModalLg);
+        _modal.open(CloseDateComponent, Globals.optionModalLg)
     }
 
     ngOnInit() {
