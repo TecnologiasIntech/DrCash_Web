@@ -1,4 +1,3 @@
-
 import {CashOutComponent} from "../../modals/cash-out/cash-out.component";
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -6,9 +5,9 @@ import {InitialCashComponent} from "../../modals/initial-cash/initial-cash.compo
 import {Globals} from "../../statics/globals";
 import {LoginComponent} from "../../modals/login/login.component";
 import {CashInComponent} from "../../modals/cash-in/cash-in.component";
+import {CloseDateComponent} from "../../modals/close-date/close-date.component";
 import {AuthorizationComponent} from "../../modals/authorization/authorization.component";
 import {RefundComponent} from "../../modals/refund/refund.component";
-
 
 @Component({
     selector: 'app-home',
@@ -29,7 +28,14 @@ export class HomeComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+    ngOnInit() {
 
-  }
+    }
+    open(){
+        this._modal.open(InitialCashComponent, Globals.optionModalLg)
+    }
+
+    openC(){
+        this._modal.open(CloseDateComponent, Globals.optionModalLg)
+    }
 }

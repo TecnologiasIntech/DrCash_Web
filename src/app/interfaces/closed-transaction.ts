@@ -1,4 +1,4 @@
-export interface CloseTransaction {
+export interface ClosedTransaction {
     bills_100:number;
     bills_50:number;
     bills_20:number;
@@ -9,7 +9,7 @@ export interface CloseTransaction {
     credits_amount:number;
     total_charged:number;
     total_cash:number;
-    total_check:number;
+    total_check: number;
     total_credit:number;
     initial_cash:number;
     balance:number;

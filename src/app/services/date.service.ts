@@ -1,4 +1,6 @@
 import {Injectable} from '@angular/core';
+import Global = NodeJS.Global;
+import {Globals} from "../statics/globals";
 
 @Injectable()
 export class DateService {
@@ -6,27 +8,25 @@ export class DateService {
     constructor() {
     }
 
-    static getCurrentDate(){
-        return new Date().toString();
+    static getCurrentDate():number{
+        return this.getDateNumber()
     }
 
     static getDateNumber():number {
-        var date = new Date();
-        date = date;
+        let date = new Date();
         let dateNumber: string;
         dateNumber = date.getFullYear().toString();
         dateNumber += ("0"+(date.getMonth()+1).toString()).slice(-2);
         dateNumber += ("0"+(date.getDate().toString())).slice(-2);
-        dateNumber += date.getHours().toString();
-        dateNumber += date.getMinutes().toString();
-        dateNumber += date.getSeconds().toString();
+        dateNumber += ("0"+(date.getHours().toString())).slice(-2);
+        dateNumber += ("0"+(date.getMinutes().toString())).slice(-2);
+        dateNumber += ("0"+(date.getSeconds().toString())).slice(-2);
 
         return parseInt(dateNumber);
     }
 
     static getDateLetter(): string {
-        var date = new Date();
-        date = date;
+        let date = new Date();
         let dateLetter: string;
         dateLetter = date.toDateString() + " ";
         dateLetter += date.getHours().toString() + ":";
@@ -36,4 +36,23 @@ export class DateService {
         return dateLetter;
     }
     
+    static getInitialCurrentDate(){
+        let date = new Date();
+        let dateNumber: string;
+        dateNumber = date.getFullYear().toString();
+        dateNumber += ("0"+(date.getMonth()+1).toString()).slice(-2);
+        dateNumber += ("0"+(date.getDate().toString())).slice(-2);
+        dateNumber += "000000"+Globals.userInfo.userId;
+        return parseInt(dateNumber);
+    }
+
+    static  getEndCurrentDate(){
+        let date = new Date();
+        let dateNumber: string;
+        dateNumber = date.getFullYear().toString();
+        dateNumber += ("0"+(date.getMonth()+1).toString()).slice(-2);
+        dateNumber += ("0"+(date.getDate().toString())).slice(-2);
+        dateNumber += "235959"+Globals.userInfo.userId;
+        return parseInt(dateNumber);
+    }
 }

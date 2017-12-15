@@ -1,3 +1,413 @@
-<p>
-  close-date works!
-</p>
+<section style="width: 750px; height: 650px;">
+    <div class="card">
+        <div class="card-header bg-danger text-white p-t-10 p-b-10">
+            <div class="row">
+                <div class="col-1">
+                    <i class="zmdi zmdi-close zmdi-hc-3x"></i>
+                </div>
+                <div class="col-11 m-t-5 p-l-0">
+                    <h3 class="d-inline-block text-white m-l-10">Close Date</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="row m-0">
+                <div class="col-12 bodyCashOut">
+                    <div class="row">
+                        <!--bills column-->
+                        <div class="col-6 m-t-20">
+
+                            <!--100's bills-->
+                            <div class="row">
+                                <div class="offset-1 col-2 m-t-20">
+                                    <button class="btn btn-danger" (click)="decrementBills(Bills100,BILLS.BILLS100)">
+                                        <i class="zmdi zmdi-minus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <div class="row" align="center">
+                                        <div class="col-12">
+                                            <label>100's</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" align="center">
+                                        <input type="text" class="form-control t-a-c form-control-line text-center {{ isErrorTotalCash ? 'text-danger totalCashError' : '' }}"
+                                               min="0" [(ngModel)]="Bills100" name="Bills100"
+                                               (ngModelChange)="calculateTotalCash(); calculateTotalEntered(); cleanErrors()"
+                                               (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                                               (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                               (keypress)="_validationService.restrictNumeric($event)"
+                                               (click)="selectAllText(BILLS.BILLS100)"
+                                               placeholder="0"
+                                               #bills100
+
+                                        >
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                                <div class="col-2 m-t-20">
+                                    <button class="btn btn-success" (click)="incrementBills(Bills100,BILLS.BILLS100)">
+                                        <i class="zmdi zmdi-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-3 m-t-20">
+                                    <label>$ {{Bills100 * 100}}</label>
+                                </div>
+                            </div>
+
+                            <!--50's bills-->
+                            <div class="row">
+                                <div class="offset-1 col-2 m-t-20">
+                                    <button class="btn btn-danger" (click)="decrementBills(Bills50,BILLS.BILLS50)">
+                                        <i class="zmdi zmdi-minus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <div class="row" align="center">
+                                        <div class="col-12">
+                                            <label>50's</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" align="center">
+                                        <input type="text" class="form-control t-a-c form-control-line text-center"
+                                               placeholder="0"
+                                               min="0" [(ngModel)]="Bills50" name="fiftyBills"
+                                               (ngModelChange)="calculateTotalCash(); calculateTotalEntered()"
+                                               (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                                               (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                               (keypress)="_validationService.restrictNumeric($event)"
+                                               (click)="selectAllText(BILLS.BILLS50)"
+                                               #bills50
+                                        >
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                                <div class="col-2 m-t-20">
+                                    <button class="btn btn-success" (click)="incrementBills(Bills50,BILLS.BILLS50)">
+                                        <i class="zmdi zmdi-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-3 m-t-20">
+                                    <label>$ {{Bills50 * 50}}</label>
+                                </div>
+                            </div>
+
+                            <!--20's bills-->
+                            <div class="row">
+                                <div class="offset-1 col-2 m-t-20">
+                                    <button class="btn btn-danger" (click)="decrementBills(Bills20,BILLS.BILLS20)">
+                                        <i class="zmdi zmdi-minus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <div class="row" align="center">
+                                        <div class="col-12">
+                                            <label>20's</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" align="center">
+                                        <input type="text" class="form-control t-a-c form-control-line text-center"
+                                               placeholder="0"
+                                               [(ngModel)]="Bills20" name="twentyBills"
+                                               (ngModelChange)="calculateTotalCash(); calculateTotalEntered()"
+                                               (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                                               (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                               (keypress)="_validationService.restrictNumeric($event)"
+                                               (click)="selectAllText(BILLS.BILLS20)"
+                                               #bills20
+                                        >
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                                <div class="col-2 m-t-20">
+                                    <button class="btn btn-success" (click)="incrementBills(Bills20,BILLS.BILLS20)">
+                                        <i class="zmdi zmdi-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-3 m-t-20">
+                                    <label>${{Bills20 * 20}}</label>
+                                </div>
+                            </div>
+
+                            <!--10's bills-->
+                            <div class="row">
+                                <div class="offset-1 col-2 m-t-20">
+                                    <button class="btn btn-danger" (click)="decrementBills(Bills10,BILLS.BILLS10)">
+                                        <i class="zmdi zmdi-minus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <div class="row" align="center">
+                                        <div class="col-12">
+                                            <label>10's</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" align="center">
+                                        <input type="text" class="form-control t-a-c form-control-line text-center"
+                                               placeholder="0"
+                                               [(ngModel)]="Bills10" name="tenBills"
+                                               (ngModelChange)="calculateTotalCash(); calculateTotalEntered()"
+                                               (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                                               (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                               (keypress)="_validationService.restrictNumeric($event)"
+                                               (click)="selectAllText(BILLS.BILLS10)"
+                                               #bills10
+                                        >
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                                <div class="col-2 m-t-20">
+                                    <button class="btn btn-success" (click)="incrementBills(Bills10,BILLS.BILLS10)">
+                                        <i class="zmdi zmdi-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-3 m-t-20">
+                                    <label>$ {{Bills10 * 10}}</label>
+                                </div>
+                            </div>
+
+                            <!--5's bills-->
+                            <div class="row">
+                                <div class="offset-1 col-2 m-t-20">
+                                    <button class="btn btn-danger" (click)="decrementBills(Bills5,BILLS.BILLS5)">
+                                        <i class="zmdi zmdi-minus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <div class="row" align="center">
+                                        <div class="col-12">
+                                            <label>5's</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" align="center">
+                                        <input type="text" class="form-control t-a-c form-control-line text-center"
+                                               placeholder="0"
+                                               [(ngModel)]="Bills5" name="fiveBills"
+                                               (ngModelChange)="calculateTotalCash(); calculateTotalEntered()"
+                                               (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                                               (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                               (keypress)="_validationService.restrictNumeric($event)"
+                                               (click)="selectAllText(BILLS.BILLS5)"
+                                               #bills5
+                                        >
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                                <div class="col-2 m-t-20">
+                                    <button class="btn btn-success" (click)="incrementBills(Bills5,BILLS.BILLS5)">
+                                        <i class="zmdi zmdi-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-3 m-t-20">
+                                    <label>$ {{Bills5 * 5}}</label>
+                                </div>
+                            </div>
+
+                            <!--1's bills-->
+                            <div class="row">
+                                <div class="offset-1 col-2 m-t-20">
+                                    <button class="btn btn-danger" (click)="decrementBills(Bills1,BILLS.BILLS1)">
+                                        <i class="zmdi zmdi-minus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <div class="row" align="center">
+                                        <div class="col-12">
+                                            <label>1's</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" align="center">
+                                        <input type="text" class="form-control t-a-c form-control-line text-center"
+                                               placeholder="0"
+                                               [(ngModel)]="Bills1" name="oneBills"
+                                               (ngModelChange)="calculateTotalCash(); calculateTotalEntered()"
+                                               (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                                               (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                               (keypress)="_validationService.restrictNumeric($event)"
+                                               (click)="selectAllText(BILLS.BILLS1)"
+                                               #bills1
+                                        >
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                                <div class="col-2 m-t-20">
+                                    <button class="btn btn-success" (click)="incrementBills(Bills1,BILLS.BILLS1)">
+                                        <i class="zmdi zmdi-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-3 m-t-20">
+                                    <label>$ {{Bills1}} </label>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <!--Total cash & -->
+                        <div class="col-6">
+
+                            <!--Total cash-->
+                            <div class="row containerTotalCash">
+                                <div class="col-12">
+
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <label class="text-white letterStyleTotalCash">Total Cash: </label>
+                                        </div>
+                                        <div class="col-5">
+                                            <label class="text-white letterStyleTotalCash">${{totalCash}}</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!--Credit-->
+                            <div class="row m-t-20">
+                                <div class="col-12">
+                                    <span class="w-25 f-s-18">Credit:</span>
+                                    <div class="form-group w-25 d-inline-block offset-4">
+                                        <input type="text" class="form-control form-control-line text-center"
+                                               [(ngModel)]="totalCredit"
+                                               (click)="selectAllTextCredit()" #credit
+                                               (ngModelChange)="calculateTotalEntered()"
+                                               placeholder="$0.00"
+                                               (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                                               (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                               (keypress)="_validationService.restrictNumeric($event)"
+                                               min="0"
+                                        >
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Check-->
+                            <div class="row">
+                                <div class="col-12">
+                                    <span class="w-25 f-s-18">Check:</span>
+                                    <div class="form-group w-25 d-inline-block offset-4">
+                                        <input type="text" class="form-control form-control-line text-center" #check
+                                               placeholder="$0.00"
+                                               [(ngModel)]="totalCheck"
+                                               (click)="selectAllTextCheck()"
+                                               (ngModelChange)="calculateTotalEntered()"
+                                               (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                                               (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                               (keypress)="_validationService.restrictNumeric($event)"
+                                               min="0"
+                                        >
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Left in Register-->
+                            <div class="row">
+                                <div class="col-12">
+                                    <span class="w-25 f-s-18 ">Left in Register:</span>
+                                    <div class="form-group w-25 d-inline-block" style="margin-left: 12.666667%;">
+                                        <input type="text" class="form-control form-control-line text-center {{ isErrorLeftInRegister ? 'text-danger leftRegisterError': '' }}"
+                                               #leftRegisterRef placeholder="$0.00"
+                                               (ngModelChange)="cleanErrors()"
+                                               [(ngModel)]="leftRegisterLabel"
+                                               (click)="selectAllTextLeft()"
+                                               (ngModelChange)="calculateTotalEntered()"
+                                               (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                                               (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                                               (keypress)="_validationService.restrictNumeric($event)"
+                                               min="0"
+                                        >
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Total Entered-->
+                            <div class="row containerTotalEntered">
+                                <div class="col-12">
+
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <label class="text-white letterStyleTotalCash">Total Entered: </label>
+                                        </div>
+                                        <div class="col-5">
+                                            <label class="text-white letterStyleTotalCash">${{ totalEntered }}</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!--Total Registered-->
+                            <div class="row containerTotalRegistered">
+                                <div class="col-12">
+
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <label class="text-white letterStyleTotalCash">Total Registered: </label>
+                                        </div>
+                                        <div class="col-5">
+                                            <label class="text-white letterStyleTotalCash">${{ totalRegistered }}</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!--Short-->
+                            <div class="row containerShort">
+                                <div class="col-12">
+
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <label class="text-danger letterStyleTotalCash">Short: </label>
+                                        </div>
+                                        <div class="col-5">
+                                            <label class="text-danger letterStyleTotalCash">${{ totalEntered - totalRegistered }}</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--buttons-->
+                        <div class="row" style="width: 800px;">
+
+                            <!--buttons left-->
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class=" offset-3 col-4">
+                                        <button class="btn btn-danger" (click)="cleanFields()">Clear all input</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--buttons right-->
+                            <div class="offset-1 col-4">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <button class="btn btn-danger" (click)="closeModal()">Cancel</button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button class="btn btn-success" (click)="verifyFields()">Save & Print</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+
+        </div>
+    </div>
+</section>
