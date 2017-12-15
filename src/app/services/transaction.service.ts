@@ -9,6 +9,7 @@ import {FirebaseListFactoryOpts} from "angularfire2/database/interfaces";
 import {ClosedTransaction} from "../interfaces/closed-transaction";
 import {TRANSACTIONTYPE} from "../enums/enums";
 import {ValidationService} from "./validation.service";
+import {_catch} from "rxjs/operator/catch";
 
 @Injectable()
 export class TransactionService {
@@ -27,8 +28,8 @@ export class TransactionService {
         this.getCurrentTransactions();
     }
 
-    getTransaction() {
-        return this.db.list('')
+    getTransaction(key: number) {
+        return this.db.object('transactions/' + key)
     }
 
     getCurrentTransactions() {
@@ -116,8 +117,13 @@ export class TransactionService {
         this.transactionsRef.set(transaction.dateRegistered.toString() + Globals.userInfo.userId.toString(), transaction);
     }
 
-    updateTransaction(transactionKey: string, transaction: Transaction) {
-        this.transactionsRef.update(transactionKey, transaction)
+    updateTransaction(transactionKey: string, ammount: number, transaction: Transaction) {
+
+        this.transactionsRef.update(transactionKey.toString(), {
+            amountCharged: ammount,
+            comment: transaction
+        })
+
     }
 
     static getDefaultValuesToTransaction() {
