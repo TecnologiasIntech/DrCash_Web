@@ -18,9 +18,9 @@ export class DateService {
         dateNumber = date.getFullYear().toString();
         dateNumber += ("0"+(date.getMonth()+1).toString()).slice(-2);
         dateNumber += ("0"+(date.getDate().toString())).slice(-2);
-        dateNumber += date.getHours().toString();
-        dateNumber += date.getMinutes().toString();
-        dateNumber += date.getSeconds().toString();
+        dateNumber += ("0"+(date.getHours().toString())).slice(-2);
+        dateNumber += ("0"+(date.getMinutes().toString())).slice(-2);
+        dateNumber += ("0"+(date.getSeconds().toString())).slice(-2);
 
         return parseInt(dateNumber);
     }

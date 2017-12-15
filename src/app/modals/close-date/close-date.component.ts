@@ -7,6 +7,7 @@ import {TransactionService} from "../../services/transaction.service";
 import {ClosedTransaction} from "../../interfaces/closed-transaction";
 import {DateService} from "../../services/date.service";
 import {Globals} from "../../statics/globals";
+import {PrintService} from "../../services/print.service";
 
 @Component({
     selector: 'app-close-date',
@@ -224,6 +225,7 @@ export class CloseDateComponent implements OnInit {
         };
 
         this._transactionService.setClosedTransaction(closedTransaction);
+        PrintService.printClosedTransaction(closedTransaction);
     }
 
     verifyFields() {
