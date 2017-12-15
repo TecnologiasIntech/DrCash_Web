@@ -6,6 +6,7 @@ import {TransactionService} from "../../services/transaction.service";
 import {Transaction} from "../../interfaces/transaction";
 import {DateService} from "../../services/date.service";
 import {alertService} from "../../services/alert.service";
+import {PrintService} from "../../services/print.service";
 
 @Component({
     selector: 'app-cash-out',
@@ -160,6 +161,7 @@ export class CashOutComponent implements OnInit {
             this.transaction.modificationDate=DateService.getDateNumber();
 
             this._transactionService.setTransaction(this.transaction);
+            PrintService.printCashOut(this.transaction);
         }else{
             this._alertService.error("Failed Transaction","TotalCash Field Must Have a Value ")
         }
