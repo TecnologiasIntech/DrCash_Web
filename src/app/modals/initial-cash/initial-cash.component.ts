@@ -21,7 +21,8 @@ export class InitialCashComponent implements OnInit {
     cash: any;
 
     constructor(private _transactionsService: TransactionService,
-                private _activeModal:NgbActiveModal) {
+                private _activeModal:NgbActiveModal,
+                public _validationService: ValidationService) {
     }
 
     ngOnInit() {
@@ -31,7 +32,7 @@ export class InitialCashComponent implements OnInit {
         if(!ValidationService.errorInField(initialCash)){
             this.transaction.dateRegistered = DateService.getDateNumber();
             this.transaction.type = TRANSACTIONTYPE.INITIALCASH;
-            this.transaction.cash = parseInt(initialCash);
+            this.transaction.cash = parseFloat(initialCash);
             this._transactionsService.setTransaction(this.transaction);
             this._activeModal.close();
         }else{
@@ -39,6 +40,7 @@ export class InitialCashComponent implements OnInit {
             this.cash.nativeElement.focus();
         }
     }
-
-
+    selectAllText(){
+        this.cash.nativeElement.select();
+    }
 }
