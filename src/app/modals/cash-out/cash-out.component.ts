@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {isUndefined} from "util";import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ValidationService} from "../../services/validation.service";
 import {BILLS, TRANSACTIONTYPE} from "../../enums/enums";
@@ -6,6 +6,7 @@ import {TransactionService} from "../../services/transaction.service";
 import {Transaction} from "../../interfaces/transaction";
 import {DateService} from "../../services/date.service";
 import {alertService} from "../../services/alert.service";
+import {PrintService} from "../../services/print.service";
 
 @Component({
     selector: 'app-cash-out',
@@ -24,6 +25,13 @@ export class CashOutComponent implements OnInit {
     totalCash: number = 0;
     BILLS: any = BILLS;
 
+    @ViewChild('bills100') bills100: ElementRef;
+    @ViewChild('bills50') bills50: ElementRef;
+    @ViewChild('bills20') bills20: ElementRef;
+    @ViewChild('bills10') bills10: ElementRef;
+    @ViewChild('bills5') bills5: ElementRef;
+    @ViewChild('bills1') bills1: ElementRef;
+
     constructor(private _activeModal: NgbActiveModal,
                 public _validationService: ValidationService,
                 private _transactionService:TransactionService,
@@ -35,6 +43,30 @@ export class CashOutComponent implements OnInit {
     ngOnInit() {
     }
 
+    selectAllText(typeBills: number) {
+        switch (typeBills) {
+            case BILLS.BILLS100:
+                this.bills100.nativeElement.select();
+                break;
+            case BILLS.BILLS50:
+                this.bills50.nativeElement.select();
+                break;
+            case BILLS.BILLS20:
+                this.bills20.nativeElement.select();
+                break;
+            case BILLS.BILLS10:
+                this.bills10.nativeElement.select();
+                break;
+            case BILLS.BILLS5:
+                this.bills5.nativeElement.select();
+                break;
+            case BILLS.BILLS1:
+                this.bills1.nativeElement.select();
+                break;
+            default:
+                break;
+        }
+    }
 
     incrementBills(bills: number, typeBills: number) {
         switch (typeBills) {
@@ -129,6 +161,7 @@ export class CashOutComponent implements OnInit {
             this.transaction.modificationDate=DateService.getDateNumber();
 
             this._transactionService.setTransaction(this.transaction);
+            PrintService.printCashOut(this.transaction);
         }else{
             this._alertService.error("Failed Transaction","TotalCash Field Must Have a Value ")
         }
