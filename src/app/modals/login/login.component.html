@@ -7,7 +7,6 @@
             </div>
         </div>
 
-
         <div class="row">
             <div class="col-12">
                 <div class="row" style="margin-left: 20px">
@@ -40,7 +39,9 @@
 
                             <input class="form-control" type="password"
                                    [(ngModel)]="User.password" name="password" required #password
-                                   placeholder="Password" (keyup)="changeBooleansPasswordAndErrorsInLogin()"
+                                   placeholder="Password"
+                                   (keyup)="changeBooleansPasswordAndErrorsInLogin()"
+                                   (keydown.enter)="errorInLoginFields(User)"
                             >
 
                             <i class="form-group__bar"></i>
