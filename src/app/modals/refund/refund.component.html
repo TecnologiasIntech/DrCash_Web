@@ -53,7 +53,7 @@
                     <label>Amount Charged</label>
                 </div>
                 <div class="col-8">
-                    <span>$ {{contenido?.amountCharged}}</span>
+                    <span>$ {{transaction?.amountCharged}}</span>
                 </div>
             </div>
 
@@ -68,8 +68,8 @@
 
                         <!--Log obtenido de la base de datos-->
                         <textarea [disabled]="!enableLog" class="form-control form-control-line"
-                                  [(ngModel)]="logComment"
-                                  name="log" cols="30" rows="5" placeholder="Log of the transaction ...">{{cadena}}{{contenido?.amountCharged}}</textarea>
+                                  [(ngModel)]="logTransaction"
+                                  name="log" cols="30" rows="5" placeholder="Log of the transaction ...">{{cadena}}{{transaction?.amountCharged}}</textarea>
 
                         <i class="form-group__bar"></i>
                     </div>
@@ -84,7 +84,7 @@
                             <div class="form-group">
 
                                 <input type="number" class="form-control form-control-line t-a-c" placeholder="$0.00"
-                                       [(ngModel)]="refound" name="log2"
+                                       [(ngModel)]="refund" name="log2"
                                        (keypress)="_validationService.restrictNumeric($event)"
                                        (keydown.ArrowUp)="_validationService.E($event)"
                                        (keydown.ArrowDown)="_validationService.E($event)"
@@ -101,7 +101,7 @@
                             <label>Log</label>
                             <div class="form-group">
                                     <textarea class="form-control form-control-line" placeholder="Write a Log"
-                                              [(ngModel)]="logComment2"
+                                              [(ngModel)]="refundComment"
                                               name="log2" cols="30" rows="5"
                                     ></textarea>
                                 <i class="form-group__bar"></i>
@@ -119,7 +119,7 @@
                     </div>
                 </div>
                 <div class="col-7">
-                    <button class="btn btn-success" (click)="updateTransaction(transactionNumber,refound,logComment2)">
+                    <button class="btn btn-success" (click)="setTransaction()">
                         Save & Print
                     </button>
                 </div>

@@ -13,8 +13,6 @@ import {RefundComponent} from "../refund/refund.component";
   styleUrls: ['./authorization.component.scss']
 })
 export class AuthorizationComponent implements OnInit {
-
-
     // Declaracion de variables
     User: User[]=[];
     enableButton:boolean=true;
@@ -28,18 +26,13 @@ export class AuthorizationComponent implements OnInit {
     @ViewChild('username') private userRef: ElementRef;
     @ViewChild('password') private passRef: ElementRef;
 
-
     constructor(private activeModal: NgbActiveModal,
                 private _usrService: UserService,
                 private _modalService:NgbModal) {
-
-
     }
 
     ngOnInit() {
     }
-
-
 
     errorInLoginFields(user: User) {
         this.changeBooleansUserAndErrorsInLogin();
@@ -92,18 +85,5 @@ export class AuthorizationComponent implements OnInit {
         this.errorPass = false;
         this.errorPassAndUsername = false;
         this.wrongPassword = false;
-    }
-
-    closeError(error:boolean, errorAuth:any){
-
-        setTimeout(()=>{
-            this.enableButton=true;
-            // switch (errorAuth){
-            //     case ENUMS.PASSANDUSERNAME:
-            //         //code
-            //         break;
-            //
-            // }
-        },1000)
     }
 }

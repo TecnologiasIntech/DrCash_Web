@@ -24,7 +24,6 @@ export class TransactionService {
     constructor(private db: AngularFireDatabase) {
         this.transactionsRef = this.db.list('transactions');
         this.closedTransactionsRef = this.db.list('closedTransactions');
-        this.getCurrentTransactions();
     }
 
     getTransaction(key: number) {
@@ -100,27 +99,12 @@ export class TransactionService {
         return totalRegistered;
     }
 
-    getAllTransactions() {
-        this.db.list('transactions')
-            .$ref
-            .orderByChild('dateRegistered')
-            .startAt(20171202000000)
-            // .endAt(20171204235959)
-            .once('value', (snapshot) => {
-                console.log(snapshot.val())
-            })
-    }
-
-    getTransactionsByRange(startAt: number, endAt) {
-        //TODO verificar esta consulta
-        // return this.db.list('transactions', ref => ref
-        //     .orderByChild('date')
-        //     .startAt(startAt)
-        //     .end(endAt))
-    }
-
     setTransaction(transaction: Transaction) {
         this.transactionsRef.set(transaction.dateRegistered.toString() + Globals.userInfo.userId.toString(), transaction);
+    }
+
+    setClosedTransaction(closeTransaction: ClosedTransaction) {
+        this.closedTransactionsRef.set(closeTransaction.datetime, closeTransaction);
     }
 
     updateTransaction(transactionKey: string, ammount: number, transaction: Transaction) {
@@ -137,7 +121,7 @@ export class TransactionService {
         //TODO Asignar valor a modifiedById
         //TODO Cambiar el valor de userKey por el valor de Globals
         return {
-            userKey: "carlos",
+            userKey: Globals.userInfo.username,
             type: -1,
             copayment: false,
             selfPay: false,
@@ -146,30 +130,9 @@ export class TransactionService {
             other: false,
             otherComments: "",
             closed: false,
-            registerId: "",
-            modifiedById: 1
+            registerId: "1",
+            modifiedById: Globals.userInfo.userId
         }
     }
 
-    setClosedTransaction(closeTransaction: ClosedTransaction) {
-        this.closedTransactionsRef.set(closeTransaction.datetime, closeTransaction);
-    }
-
-    getCountTransactions() {
-        return new Promise(resolve => {
-            this.db.list('transactions', {
-                query: {
-                    orderByChild: 'dateRegistered',
-                    startAt: DateService.getInitialCurrentDate(),
-                    endAt: DateService.getEndCurrentDate()
-                }
-            }).subscribe((snapshot: Transaction[]) => {
-                for (let item in snapshot) {
-                    if (snapshot[item].userKey == Globals.userInfo.username && snapshot[item].type == TRANSACTIONTYPE.INITIALCASH) {
-                        resolve(snapshot[item].cash);
-                    }
-                }
-            });
-        })
-    }
 }
