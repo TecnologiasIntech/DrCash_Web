@@ -16,6 +16,8 @@ import {FirebaseObjectFactoryOpts} from "angularfire2/database/interfaces";
 import {DateService} from "../../services/date.service";
 import {Credentials} from "crypto";
 import {CredentialsComponent} from "../../modals/credentials/credentials.component";
+import {TRANSACTIONTYPE, USERTYPE} from "../../enums/enums";
+import {Transaction} from "../../interfaces/transaction";
 
 
 @Component({
@@ -25,38 +27,20 @@ import {CredentialsComponent} from "../../modals/credentials/credentials.compone
 })
 export class HomeComponent implements OnInit {
 
+    currentTransactions: Transaction[] = [];
 
     constructor(private _modal: NgbModal,
                 private _globals: Globals,
                 private db: AngularFireDatabase,
-                private  _dateService: DateService) {
-        _modal.open(LoginComponent, Globals.optionModalLg).result.then((result) => {
-            let typeUser: any = Globals.userInfo.securityLevel;
-            if (typeUser == 0) {
-                db.list('clinicas/' + Globals.userInfo.clinic + '/' + Globals.userInfo.username, {
-                    query: {
-                        orderByChild: 'dateRegistered',
-                        startAt: this._dateService.getInitialCurrentDate(),
-                        endAt: this._dateService.getEndCurrentDate()
-                    }
-                }).subscribe((result: any) => {
-                    console.log(result);
-                })
-            } else {
-                if (typeUser == 1 || typeUser == 2) {
-                    db.list('clinicas/' + Globals.userInfo.clinic, {
-                        query: {}
-                    }).subscribe((result: any) => {
-                        debugger
-                        for (let i = 0; i < result.length; i++) {
-                            for (let j = 0; j < result[i].length; j++) {
-                                console.log(result[i][j]);
-                            }
-                        }
+                public  _dateService: DateService,
+                private  _transactionService: TransactionService) {
+        _modal.open(LoginComponent, Globals.optionModalLg).result
+            .then((response) => {
+                _modal.open(InitialCashComponent, Globals.optionModalSm).result
+                    .then(() => {
+                        this.loadTransactions();
                     })
-                }
-            }
-        })
+            })
     }
 
     ngOnInit() {
@@ -78,11 +62,59 @@ export class HomeComponent implements OnInit {
         })
     }
 
-    openSignUp() {
+    openCredentials() {
         this._modal.open(CredentialsComponent, Globals.optionModalLg);
     }
 
     openCloseDate() {
         this._modal.open(CloseDateComponent, Globals.optionModalLg);
+    }
+
+    getLogTransaction(transaction: Transaction) {
+        let logTransaction: string = "";
+
+        switch (transaction.type) {
+            case TRANSACTIONTYPE.CASHIN:
+                if (transaction.copayment) {
+                    logTransaction = "Copayment for total amount: $";
+                } else if (transaction.deductible) {
+                    logTransaction = "Deductible for total amount: $";
+                } else if (transaction.selfPay) {
+                    logTransaction = "Selfpay for total amount: $";
+                } else if (transaction.labs) {
+                    logTransaction = "Labs for total amount: $";
+                } else {
+                    logTransaction = transaction.otherComments;
+                }
+
+                logTransaction = logTransaction + (transaction.amountCharged - transaction.change);
+                break;
+
+            case TRANSACTIONTYPE.CASHOUT:
+                logTransaction = "Cash Out for total amount: $" + transaction.cash;
+                break;
+
+            case TRANSACTIONTYPE.REFUND:
+                logTransaction = "Refund for total amount: $" + transaction.amountCharged;
+                break;
+
+            case TRANSACTIONTYPE.INITIALCASH:
+                logTransaction = "Initial Cash for total amount: $" + transaction.cash;
+                break;
+        }
+        return logTransaction;
+    }
+
+    loadTransactions() {
+        if (Globals.userInfo.securityLevel == USERTYPE.USER) {
+            this._transactionService.getMyCurrentTransactions()
+                .then((response: Transaction[]) => {
+                    this.currentTransactions = response;
+                });
+        } else {
+            this._transactionService.getCurrentTransactions().then((response: Transaction[]) => {
+                this.currentTransactions = response;
+            })
+        }
     }
 }

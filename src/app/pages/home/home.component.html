@@ -12,10 +12,10 @@
                     </thead>
                     <tbody style="width: 847.5px; height: 390px; overflow-y: auto">
 
-                    <tr>
-                        <td class="w-282">Initial Cash</td>
-                        <td class="w-282">Carlos Alatorre</td>
-                        <td class="w-282">21/11/2017 01:12:32 p.m.</td>
+                    <tr *ngFor="let transaction of currentTransactions">
+                        <td class="w-282">{{ getLogTransaction(transaction) }}</td>
+                        <td class="w-282">{{ transaction.userKey }}</td>
+                        <td class="w-282">{{ _dateService.convertDateToDD_MM_YYYY_HH_MM(transaction.dateRegistered) }}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -37,7 +37,7 @@
                             <i class="zmdi zmdi-inbox zmdi-hc-5x" style="color: white"></i>
                         </button>
                         <!--sign up-->
-                        <button class="btn br-button size-button m-l-20" style="background-color: #5B9F9E" (click)="openSignUp()">
+                        <button class="btn br-button size-button m-l-20" style="background-color: #5B9F9E" (click)="openCredentials()">
                             <i class="zmdi zmdi-square-right zmdi-hc-5x" style="color: white"></i>
                         </button>
                         <!--close date-->

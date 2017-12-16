@@ -17,3 +17,9 @@ export enum ERRORAUTH{
     WRONGPASSWORD,
     USERNOTFOUND
 }
+
+export enum USERTYPE{
+    USER,
+    SUPERVISOR,
+    ADMINISTRATOR
+}

@@ -37,6 +37,17 @@ export class DateService {
         return dateLetter;
     }
 
+    convertDateToDD_MM_YYYY_HH_MM(date:string){
+        let newDate:string = "";
+        newDate += date.substr(6, 2)+"/";
+        newDate += date.substr(4, 2)+"/";
+        newDate += date.substr(0, 4)+" ";
+        newDate += date.substr(8, 2)+":";
+        newDate += date.substr(10, 2);
+
+        return newDate;
+    }
+
      getInitialCurrentDate(){
         let date = new Date();
         let dateNumber: string;

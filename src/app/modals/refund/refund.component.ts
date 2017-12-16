@@ -61,7 +61,7 @@ export class RefundComponent implements OnInit {
                     }
                 }
             }
-            this.logTransaction = this.cadena + "$" + this.transaction.amountCharged;
+            this.logTransaction = this.cadena + "$" + (this.transaction.amountCharged - this.transaction.change);
         })
     }
 
@@ -82,6 +82,7 @@ export class RefundComponent implements OnInit {
         this._transactionService.setTransaction(this.refundTransaction);
         this._activeModal.dismiss();
     }
+
 
     closeRefund() {
         this._activeModal.dismiss();
