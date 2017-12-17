@@ -1,28 +1,28 @@
 .profilePicture {
-  position: absolute;
-  left: 41.5%;
-  top: 11%;
-  z-index: 1;
+  position: relative;
+  left: 369px;
+  top: 47px;
+  z-index: 2;
 }
 
 .profilePictureBackground {
-  position: absolute;
-  left: 40.63%;
-  top: 9%;
-  z-index: 0;
+  position: relative;
+  left: 361.3px;
+  top: -109px;
+  z-index: 1;
 }
 
 .editButton{
-    position: absolute;
-    left: 86.5%;
-    top: 28%;
-    z-index: 3;
+    position: relative;
+    left: 701px;
+    top: -205px;
+    z-index: 4;
 }
 .editButtonBackground{
-  position: absolute;
-  left: 85.92%;
-  top: 26.7%;
-  z-index: 2;
+  position: relative;
+  left: 696px;
+  top: -251px;
+  z-index: 3;
 }
 
 .profileImage{
@@ -32,4 +32,30 @@
   -webkit-box-shadow: 6px 15px 4px -15px rgba(176,170,176,1);
   -moz-box-shadow: 6px 15px 4px -15px rgba(176,170,176,1);
   box-shadow: 6px 15px 4px -15px rgba(176,170,176,1);
+}
+
+.finishEditButton{
+  position: relative;
+  left: 701px;
+  top: -300px;
+  z-index: 8;
+}
+.finishEditButtonBackground{
+  position: relative;
+  left: 696px;
+  top: -347px;
+  z-index: 5;
+}
+
+.cancelEditButton{
+  position: relative;
+  left: 635px;
+  top: -206px;
+  z-index: 8;
+}
+.cancelEditButtonBackground{
+  position: relative;
+  left: 628px;
+  top: -252px;
+  z-index: 7;
 }

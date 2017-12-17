@@ -12,4 +12,14 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
   }
 
+  editProfile: boolean = false;
+
+  cancelEditProfile(){
+    this.editProfile = false;
+  }
+
+  finishEditProfile(){
+    this.editProfile = false;
+  }
+
 }
