@@ -1,27 +1,27 @@
 .profilePicture {
   position: absolute;
-  left: 47%;
-  top: 35%;
+  left: 41.5%;
+  top: 11%;
   z-index: 1;
 }
 
 .profilePictureBackground {
   position: absolute;
-  left: 46.57%;
-  top: 34%;
+  left: 40.63%;
+  top: 9%;
   z-index: 0;
 }
 
 .editButton{
     position: absolute;
-    left: 74.5%;
-    top: 45.5%;
+    left: 86.5%;
+    top: 28%;
     z-index: 3;
 }
 .editButtonBackground{
   position: absolute;
-  left: 74.2%;
-  top: 44.7%;
+  left: 85.92%;
+  top: 26.7%;
   z-index: 2;
 }
 
@@ -29,7 +29,7 @@
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  -webkit-border-radius: 50%;
-  -webkit-box-shadow: 9px 9px 16px -10px rgba(0,0,0,0.75);
-  -moz-box-shadow: 9px 9px 16px -10px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 6px 15px 4px -15px rgba(176,170,176,1);
+  -moz-box-shadow: 6px 15px 4px -15px rgba(176,170,176,1);
+  box-shadow: 6px 15px 4px -15px rgba(176,170,176,1);
 }
