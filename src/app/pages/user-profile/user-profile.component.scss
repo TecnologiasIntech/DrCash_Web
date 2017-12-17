@@ -1,0 +1,35 @@
+.profilePicture {
+  position: absolute;
+  left: 47%;
+  top: 35%;
+  z-index: 1;
+}
+
+.profilePictureBackground {
+  position: absolute;
+  left: 46.2%;
+  top: 33%;
+  z-index: 0;
+}
+
+.editButton{
+    position: absolute;
+    left: 74.5%;
+    top: 45.5%;
+    z-index: 3;
+}
+.editButtonBackground{
+  position: absolute;
+  left: 74%;
+  top: 44%;
+  z-index: 2;
+}
+
+.profileImage{
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -webkit-box-shadow: 9px 9px 16px -10px rgba(0,0,0,0.75);
+  -moz-box-shadow: 9px 9px 16px -10px rgba(0,0,0,0.75);
+}
