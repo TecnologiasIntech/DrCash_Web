@@ -15,9 +15,9 @@ export class TransactionService {
 
     transactionsRef: FirebaseListObservable<Transaction[]>;
     closedTransactionsRef: FirebaseListObservable<Transaction[]>;
-    numberOfCurrentTransactions:number = 0;
+    numberOfCurrentTransactions: number = 0;
     currentTransactions: Transaction[] = [];
-    initialCash:number;
+    initialCash: number;
 
     public myCurrentTransactions: Transaction[] = [];
 
@@ -57,7 +57,7 @@ export class TransactionService {
                 this.numberOfCurrentTransactions = snapshot.length;
                 for (let item in snapshot) {
                     this.db.object(`transactions/${snapshot[item].keyTransaction}`)
-                        .subscribe(snapshotTrn => {
+                        .subscribe((snapshotTrn: Transaction) => {
                             this.myCurrentTransactions.push(snapshotTrn);
                             if (item == (snapshot.length - 1).toString()) {
                                 resolve(this.myCurrentTransactions);
@@ -92,7 +92,7 @@ export class TransactionService {
                         }
                         break;
                 }
-            }else{
+            } else {
                 this.initialCash = this.myCurrentTransactions[item].cash;
             }
         }

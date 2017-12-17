@@ -18,6 +18,7 @@ import {Credentials} from "crypto";
 import {CredentialsComponent} from "../../modals/credentials/credentials.component";
 import {TRANSACTIONTYPE, USERTYPE} from "../../enums/enums";
 import {Transaction} from "../../interfaces/transaction";
+import {BrowserError} from "protractor/built/exitCodes";
 
 
 @Component({
@@ -28,6 +29,7 @@ import {Transaction} from "../../interfaces/transaction";
 export class HomeComponent implements OnInit {
 
     currentTransactions: Transaction[] = [];
+    showTransactions: boolean = false;
 
     constructor(private _modal: NgbModal,
                 private _globals: Globals,
@@ -36,10 +38,7 @@ export class HomeComponent implements OnInit {
                 private  _transactionService: TransactionService) {
         _modal.open(LoginComponent, Globals.optionModalLg).result
             .then((response) => {
-                _modal.open(InitialCashComponent, Globals.optionModalSm).result
-                    .then(() => {
-                        this.loadTransactions();
-                    })
+                this.loadTransactions();
             })
     }
 
@@ -106,10 +105,26 @@ export class HomeComponent implements OnInit {
     }
 
     loadTransactions() {
+        //TODO: Verificar si despues de obtener el Initial Cash se agrega a Current Transactions
         if (Globals.userInfo.securityLevel == USERTYPE.USER) {
             this._transactionService.getMyCurrentTransactions()
                 .then((response: Transaction[]) => {
                     this.currentTransactions = response;
+                    let existInitialCash: boolean = false;
+                    for (let item in response) {
+                        if (response[item].type == TRANSACTIONTYPE.INITIALCASH) {
+                            existInitialCash = true;
+                            break;
+                        }
+                    }
+                    if (!existInitialCash) {
+                        this._modal.open(InitialCashComponent, Globals.optionModalSm).result
+                            .then(() => {
+                                this.showTransactions = true;
+                            })
+                    } else {
+                        this.showTransactions = true;
+                    }
                 });
         } else {
             this._transactionService.getCurrentTransactions().then((response: Transaction[]) => {
