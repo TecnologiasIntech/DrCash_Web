@@ -57,6 +57,8 @@ export class TransactionService {
                     endAt: DateService.getEndCurrentDate()
                 }
             }).subscribe(snapshot => {
+                this.myCurrentTransactions = [];
+                this.currentTransactions = [];
                 this.numberOfCurrentTransactions = snapshot.length;
                 if (snapshot.length > 0) {
                     for (let item in snapshot) {

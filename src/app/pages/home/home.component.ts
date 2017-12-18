@@ -113,12 +113,11 @@ export class HomeComponent implements OnInit {
         if (Globals.userInfo.securityLevel == USERTYPE.USER) {
             this._transactionService.getMyCurrentTransactions()
                 .then((response: Transaction[]) => {
-                    debugger
+                    this.currentTransactions = [];
                     this.currentTransactions = response;
                     this.showTransactions = true;
                 })
                 .catch(error => {
-                    debugger
                     this.openInitialCash();
                 })
         } else {
@@ -134,12 +133,11 @@ export class HomeComponent implements OnInit {
             .then(() => {
                 this._transactionService.getMyCurrentTransactions()
                     .then((response: Transaction[]) => {
-                        debugger
+                        this.currentTransactions = [];
                         this.currentTransactions = response;
                         this.showTransactions = true;
                     })
                     .catch(error => {
-                        debugger
                         this.openInitialCash();
                     })
                 this.showTransactions = true;
