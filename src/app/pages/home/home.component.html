@@ -15,7 +15,7 @@
                     <tr *ngFor="let transaction of currentTransactions">
                         <td class="w-282">{{ getLogTransaction(transaction) }}</td>
                         <td class="w-282">{{ transaction.userKey }}</td>
-                        <td class="w-282">{{ _dateService.convertDateToDD_MM_YYYY_HH_MM(transaction.dateRegistered) }}</td>
+                        <td class="w-282">{{ _dateService.convertDateToDD_MM_YYYY_HH_MM(transaction.dateRegistered.toString()) }}</td>
                     </tr>
                     </tbody>
                 </table>

@@ -93,17 +93,4 @@ export class LoginComponent implements OnInit {
         this.errorPassAndUsername = false;
         this.wrongPassword = false;
     }
-
-    closeError(error:boolean, errorAuth:any){
-        debugger
-        setTimeout(()=>{
-            this.enableButton=true;
-            // switch (errorAuth){
-            //     case ENUMS.PASSANDUSERNAME:
-            //         //code
-            //         break;
-            //
-            // }
-        },1000)
-    }
 }

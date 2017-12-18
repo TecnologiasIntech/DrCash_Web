@@ -9,11 +9,13 @@ import {FirebaseListFactoryOpts} from "angularfire2/database/interfaces";
 import {ClosedTransaction} from "../interfaces/closed-transaction";
 import {TRANSACTIONTYPE} from "../enums/enums";
 import {ValidationService} from "./validation.service";
+import {reject} from "q";
 
 @Injectable()
 export class TransactionService {
 
     transactionsRef: FirebaseListObservable<Transaction[]>;
+    myTransactionsRef: FirebaseListObservable<Transaction[]>;
     closedTransactionsRef: FirebaseListObservable<Transaction[]>;
     numberOfCurrentTransactions: number = 0;
     currentTransactions: Transaction[] = [];
@@ -23,6 +25,7 @@ export class TransactionService {
 
     constructor(private db: AngularFireDatabase) {
         this.transactionsRef = this.db.list('transactions');
+        this.myTransactionsRef = this.db.list('clinicas');
         this.closedTransactionsRef = this.db.list('closedTransactions');
     }
 
@@ -46,7 +49,7 @@ export class TransactionService {
     }
 
     getMyCurrentTransactions() {
-        return new Promise(resolve => {
+        return new Promise((resolve, reject) => {
             this.db.list(`clinicas/${Globals.userInfo.clinic}/${Globals.userInfo.username}`, {
                 query: {
                     orderByChild: 'keyTransaction',
@@ -55,14 +58,18 @@ export class TransactionService {
                 }
             }).subscribe(snapshot => {
                 this.numberOfCurrentTransactions = snapshot.length;
-                for (let item in snapshot) {
-                    this.db.object(`transactions/${snapshot[item].keyTransaction}`)
-                        .subscribe((snapshotTrn: Transaction) => {
-                            this.myCurrentTransactions.push(snapshotTrn);
-                            if (item == (snapshot.length - 1).toString()) {
-                                resolve(this.myCurrentTransactions);
-                            }
-                        })
+                if (snapshot.length > 0) {
+                    for (let item in snapshot) {
+                        this.db.object(`transactions/${snapshot[item].keyTransaction}`)
+                            .subscribe((snapshotTrn: Transaction) => {
+                                this.myCurrentTransactions.push(snapshotTrn);
+                                if (item == (snapshot.length - 1).toString()) {
+                                    resolve(this.myCurrentTransactions);
+                                }
+                            })
+                    }
+                } else {
+                    reject();
                 }
             })
         })
@@ -101,6 +108,9 @@ export class TransactionService {
 
     setTransaction(transaction: Transaction) {
         this.transactionsRef.set(transaction.dateRegistered.toString() + Globals.userInfo.userId.toString(), transaction);
+        this.myTransactionsRef.set(Globals.userInfo.clinic + "/" + Globals.userInfo.username + "/" + transaction.dateRegistered + Globals.userInfo.userId, {
+            keyTransaction: parseInt(transaction.dateRegistered + Globals.userInfo.userId.toString())
+        });
     }
 
     setClosedTransaction(closeTransaction: ClosedTransaction) {

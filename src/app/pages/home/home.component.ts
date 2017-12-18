@@ -19,6 +19,7 @@ import {CredentialsComponent} from "../../modals/credentials/credentials.compone
 import {TRANSACTIONTYPE, USERTYPE} from "../../enums/enums";
 import {Transaction} from "../../interfaces/transaction";
 import {BrowserError} from "protractor/built/exitCodes";
+import {userInfo} from "os";
 
 
 @Component({
@@ -36,10 +37,13 @@ export class HomeComponent implements OnInit {
                 private db: AngularFireDatabase,
                 public  _dateService: DateService,
                 private  _transactionService: TransactionService) {
-        _modal.open(LoginComponent, Globals.optionModalLg).result
-            .then((response) => {
-                this.loadTransactions();
-            })
+        if (Globals.userInfo == null) {
+            _modal.open(LoginComponent, Globals.optionModalLg).result
+                .then((response) => {
+                    debugger
+                    this.loadTransactions();
+                })
+        }
     }
 
     ngOnInit() {
@@ -109,27 +113,36 @@ export class HomeComponent implements OnInit {
         if (Globals.userInfo.securityLevel == USERTYPE.USER) {
             this._transactionService.getMyCurrentTransactions()
                 .then((response: Transaction[]) => {
+                    debugger
                     this.currentTransactions = response;
-                    let existInitialCash: boolean = false;
-                    for (let item in response) {
-                        if (response[item].type == TRANSACTIONTYPE.INITIALCASH) {
-                            existInitialCash = true;
-                            break;
-                        }
-                    }
-                    if (!existInitialCash) {
-                        this._modal.open(InitialCashComponent, Globals.optionModalSm).result
-                            .then(() => {
-                                this.showTransactions = true;
-                            })
-                    } else {
-                        this.showTransactions = true;
-                    }
-                });
+                    this.showTransactions = true;
+                })
+                .catch(error => {
+                    debugger
+                    this.openInitialCash();
+                })
         } else {
             this._transactionService.getCurrentTransactions().then((response: Transaction[]) => {
                 this.currentTransactions = response;
+                this.showTransactions = true;
             })
         }
+    }
+
+    openInitialCash() {
+        this._modal.open(InitialCashComponent, Globals.optionModalSm).result
+            .then(() => {
+                this._transactionService.getMyCurrentTransactions()
+                    .then((response: Transaction[]) => {
+                        debugger
+                        this.currentTransactions = response;
+                        this.showTransactions = true;
+                    })
+                    .catch(error => {
+                        debugger
+                        this.openInitialCash();
+                    })
+                this.showTransactions = true;
+            })
     }
 }
