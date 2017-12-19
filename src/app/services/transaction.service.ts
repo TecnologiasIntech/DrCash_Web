@@ -1,68 +1,59 @@
 import {Injectable} from '@angular/core';
-import {AngularFireDatabase, FirebaseListObservable} from "angularfire2/database";
+import {
+    AngularFireDatabase, DatabaseQuery, DatabaseReference,
+    QueryFn
+} from "angularfire2/database";
 import {Transaction} from "../interfaces/transaction";
 import {Observable} from "rxjs/Observable";
 import {userInfo} from "os";
 import {Globals} from "../statics/globals";
 import {DateService} from "./date.service";
-import {FirebaseListFactoryOpts} from "angularfire2/database/interfaces";
 import {ClosedTransaction} from "../interfaces/closed-transaction";
 import {TRANSACTIONTYPE} from "../enums/enums";
 import {ValidationService} from "./validation.service";
-import {reject} from "q";
+import 'rxjs/add/operator/take'
 
 @Injectable()
 export class TransactionService {
 
-    transactionsRef: FirebaseListObservable<Transaction[]>;
-    myTransactionsRef: FirebaseListObservable<Transaction[]>;
-    closedTransactionsRef: FirebaseListObservable<Transaction[]>;
     numberOfCurrentTransactions: number = 0;
-    currentTransactions: Transaction[] = [];
+    currentTransactions: Observable<Transaction[]>;
     initialCash: number;
 
     public myCurrentTransactions: Transaction[] = [];
 
     constructor(private db: AngularFireDatabase) {
-        this.transactionsRef = this.db.list('transactions');
-        this.myTransactionsRef = this.db.list('clinicas');
-        this.closedTransactionsRef = this.db.list('closedTransactions');
     }
 
     getTransaction(key: number) {
-        return this.db.object('transactions/' + key)
+        return this.db.object('transactions/' + key).valueChanges()
     }
 
     getCurrentTransactions() {
         return new Promise(resolve => {
-            this.db.list('transactions', {
-                query: {
-                    orderByChild: 'dateRegistered',
-                    startAt: DateService.getInitialCurrentDate(),
-                    endAt: DateService.getEndCurrentDate()
-                }
-            }).subscribe(result => {
-                this.currentTransactions = result;
-                resolve(result)
+
+            this.db.list('transactions', ref => ref
+                .orderByChild('dateRegistered')
+                .startAt(DateService.getInitialCurrentDate())
+                .endAt(DateService.getEndCurrentDate())
+            ).valueChanges().take(1).subscribe((snapshot: Transaction[]) => {
+                // debugger
+                this.myCurrentTransactions = snapshot;
+                console.log(snapshot)
             })
         })
     }
 
     getMyCurrentTransactions() {
         return new Promise((resolve, reject) => {
-            this.db.list(`clinicas/${Globals.userInfo.clinic}/${Globals.userInfo.username}`, {
-                query: {
-                    orderByChild: 'keyTransaction',
-                    startAt: DateService.getInitialCurrentDate(),
-                    endAt: DateService.getEndCurrentDate()
-                }
-            }).subscribe(snapshot => {
-                this.myCurrentTransactions = [];
-                this.currentTransactions = [];
-                this.numberOfCurrentTransactions = snapshot.length;
+            this.db.list(`clinicas/${Globals.userInfo.clinic}/${Globals.userInfo.username}`, ref => ref
+                .orderByChild('keyTransaction')
+                .startAt(DateService.getInitialCurrentDate())
+                .endAt(DateService.getEndCurrentDate())
+            ).valueChanges().subscribe((snapshot: any) => {
                 if (snapshot.length > 0) {
                     for (let item in snapshot) {
-                        this.db.object(`transactions/${snapshot[item].keyTransaction}`)
+                        this.db.object(`transactions/${snapshot[item].keyTransaction}`).valueChanges()
                             .subscribe((snapshotTrn: Transaction) => {
                                 this.myCurrentTransactions.push(snapshotTrn);
                                 if (item == (snapshot.length - 1).toString()) {
@@ -109,23 +100,21 @@ export class TransactionService {
     }
 
     setTransaction(transaction: Transaction) {
-        this.transactionsRef.set(transaction.dateRegistered.toString() + Globals.userInfo.userId.toString(), transaction);
-        this.myTransactionsRef.set(Globals.userInfo.clinic + "/" + Globals.userInfo.username + "/" + transaction.dateRegistered + Globals.userInfo.userId, {
+        this.db.list('transactions').update(transaction.dateRegistered.toString() + Globals.userInfo.userId.toString(), transaction);
+        this.db.list('clinicas').update(Globals.userInfo.clinic + "/" + Globals.userInfo.username + "/" + transaction.dateRegistered + Globals.userInfo.userId, {
             keyTransaction: parseInt(transaction.dateRegistered + Globals.userInfo.userId.toString())
         });
     }
 
     setClosedTransaction(closeTransaction: ClosedTransaction) {
-        this.closedTransactionsRef.set(closeTransaction.datetime, closeTransaction);
+        this.db.list('closedTransactions').update(closeTransaction.datetime, closeTransaction);
     }
 
     updateTransaction(transactionKey: string, ammount: number, transaction: Transaction) {
-
-        this.transactionsRef.update(transactionKey.toString(), {
+        this.db.list('transactions').update(transactionKey.toString(), {
             amountCharged: ammount,
             comment: transaction
         })
-
     }
 
     static getDefaultValuesToTransaction() {

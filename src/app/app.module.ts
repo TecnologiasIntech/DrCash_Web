@@ -40,7 +40,5 @@ import {alertService} from "./services/alert.service";
     bootstrap: [AppComponent]
 })
 
-
-
 export class AppModule {
 }

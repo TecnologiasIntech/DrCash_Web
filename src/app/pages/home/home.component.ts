@@ -12,7 +12,6 @@ import {AuthorizationComponent} from "../../modals/authorization/authorization.c
 import {window} from "rxjs/operator/window";
 import {AngularFireDatabase} from "angularfire2/database";
 import {TransactionService} from "../../services/transaction.service";
-import {FirebaseObjectFactoryOpts} from "angularfire2/database/interfaces";
 import {DateService} from "../../services/date.service";
 import {Credentials} from "crypto";
 import {CredentialsComponent} from "../../modals/credentials/credentials.component";
@@ -40,7 +39,6 @@ export class HomeComponent implements OnInit {
         if (Globals.userInfo == null) {
             _modal.open(LoginComponent, Globals.optionModalLg).result
                 .then((response) => {
-                    debugger
                     this.loadTransactions();
                 })
         }
