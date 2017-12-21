@@ -43,6 +43,8 @@ export class HomeComponent implements OnInit {
                 .then((response) => {
                     this.loadTransactions();
                 })
+        }else{
+            this.loadTransactions();
         }
     }
 
