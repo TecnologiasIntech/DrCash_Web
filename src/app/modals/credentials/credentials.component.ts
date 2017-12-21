@@ -53,7 +53,7 @@ export class CredentialsComponent implements OnInit {
     userAuth(user: User) {
         this._usrService.authUser(user).then((response: User) => {
             Globals.userInfo = response;
-            this.activeModal.dismiss();
+            this.activeModal.close();
         }).catch((reject: any) => {
             // this._alertService.error(reject,"Try Again");
             if (reject == ERRORAUTH.USERNOTFOUND) {

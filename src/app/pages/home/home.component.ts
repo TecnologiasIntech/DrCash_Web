@@ -48,27 +48,43 @@ export class HomeComponent implements OnInit {
     }
 
     openCashIn() {
-        this._modal.open(CashInComponent, Globals.optionModalLg);
+        this._modal.open(CashInComponent, Globals.optionModalLg).result
+            .then((result)=>{
+                this.loadTransactions();
+            }, (reason)=>{})
     }
 
     openCashOut() {
-        this._modal.open(CashOutComponent, Globals.optionModalLg);
+        this._modal.open(CashOutComponent, Globals.optionModalLg).result
+            .then((result)=>{
+                this.loadTransactions();
+            }, (reason)=>{})
     }
 
     openRefund() {
         this._modal.open(AuthorizationComponent, Globals.optionModalLg).result.then((result) => {
             if (result) {
-                this._modal.open(RefundComponent, Globals.optionModalLg);
+                this._modal.open(RefundComponent, Globals.optionModalLg).result
+                    .then(response=>{
+                        this.loadTransactions();
+                    }, (reason)=>{})
             }
         })
     }
 
     openCredentials() {
-        this._modal.open(CredentialsComponent, Globals.optionModalLg);
+        this.currentTransactions = [];
+        this._modal.open(CredentialsComponent, Globals.optionModalLg).result
+            .then(response=>{
+                this.loadTransactions();
+            }, (reason)=>{})
     }
 
     openCloseDate() {
-        this._modal.open(CloseDateComponent, Globals.optionModalLg);
+        this._modal.open(CloseDateComponent, Globals.optionModalLg).result
+            .then(response=>{
+                this.loadTransactions();
+            }, (reason)=>{})
     }
 
     getLogTransaction(transaction: Transaction) {
@@ -111,7 +127,6 @@ export class HomeComponent implements OnInit {
         if (Globals.userInfo.securityLevel == USERTYPE.USER) {
             this._transactionService.getMyCurrentTransactions()
                 .then((response: Transaction[]) => {
-                    this.currentTransactions = [];
                     this.currentTransactions = response;
                     this.showTransactions = true;
                 })
@@ -131,7 +146,6 @@ export class HomeComponent implements OnInit {
             .then(() => {
                 this._transactionService.getMyCurrentTransactions()
                     .then((response: Transaction[]) => {
-                        this.currentTransactions = [];
                         this.currentTransactions = response;
                         this.showTransactions = true;
                     })

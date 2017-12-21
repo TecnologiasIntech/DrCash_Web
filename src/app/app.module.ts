@@ -26,7 +26,7 @@ import {alertService} from "./services/alert.service";
         HttpModule,
         routing,
         AngularFireModule.initializeApp(environment.firebase),
-        AngularFireDatabaseModule, // imports firebase/database, only needed for database features
+        AngularFireDatabaseModule,
         AngularFireAuthModule
     ],
     providers: [

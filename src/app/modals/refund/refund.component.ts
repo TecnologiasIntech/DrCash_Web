@@ -75,12 +75,12 @@ export class RefundComponent implements OnInit {
         this.refundTransaction.amountCharged = parseFloat(this.refund);
         this.refundTransaction.type = TRANSACTIONTYPE.REFUND;
         this.refundTransaction.modificationDate = DateService.getCurrentDate();
-        if(ValidationService.errorInField(this.refundComment)){
+        if(!ValidationService.errorInField(this.refundComment)){
             this.refundTransaction.comment = this.refundComment;
         }
 
         this._transactionService.setTransaction(this.refundTransaction);
-        this._activeModal.dismiss();
+        this._activeModal.close();
     }
 
 

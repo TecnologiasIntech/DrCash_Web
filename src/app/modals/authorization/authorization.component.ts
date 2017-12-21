@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {User} from "../../interfaces/user";
 import {Globals} from "../../statics/globals";
-import {ERRORAUTH} from "../../enums/enums";
+import {ERRORAUTH, USERTYPE} from "../../enums/enums";
 import {UserService} from "../../services/user.service";
 import {ValidationService} from "../../services/validation.service";
 import {RefundComponent} from "../refund/refund.component";
@@ -21,6 +21,7 @@ export class AuthorizationComponent implements OnInit {
     errorPassAndUsername: boolean = false;
     userNotFound: boolean = false;
     wrongPassword: boolean = false;
+    invalidUser:boolean = false;
 
     // Referencias al DOM
     @ViewChild('username') private userRef: ElementRef;
@@ -56,8 +57,11 @@ export class AuthorizationComponent implements OnInit {
 
     userAuth(user: User) {
         this._usrService.authUser(user).then((response:User) => {
-            Globals.userInfo = response;
-            this.activeModal.close(true);
+            if(response.securityLevel == USERTYPE.SUPERVISOR || response.securityLevel == USERTYPE.ADMINISTRATOR){
+                this.activeModal.close(true);
+            }else{
+                this.invalidUser = true;
+            }
         }).catch((reject: any) => {
             // this._alertService.error(reject,"Try Again");
             if (reject == ERRORAUTH.USERNOTFOUND) {
@@ -79,6 +83,7 @@ export class AuthorizationComponent implements OnInit {
         this.errorUserName = false;
         this.errorPassAndUsername = false;
         this.userNotFound = false;
+        this.invalidUser = false;
     }
 
     changeBooleansPasswordAndErrorsInLogin() {

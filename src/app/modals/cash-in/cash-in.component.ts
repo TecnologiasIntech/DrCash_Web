@@ -68,23 +68,39 @@ export class CashInComponent implements OnInit {
 
     saveTransaction() {
         this.newTransaction.type = TRANSACTIONTYPE.CASHIN;
+        this.parserFields();
         this._transactionService.setTransaction(this.newTransaction);
+    }
+
+    parserFields() {
+        if (!ValidationService.errorInField(this.newTransaction.cash)) {
+            this.newTransaction.cash = parseFloat(this.newTransaction.cash.toString());
+        }
+        if (!ValidationService.errorInField(this.newTransaction.credit)) {
+        this.newTransaction.credit = parseFloat(this.newTransaction.credit.toString());
+        }
+        if (!ValidationService.errorInField(this.newTransaction.check)) {
+        this.newTransaction.check = parseFloat(this.newTransaction.check.toString());
+        }
+        if (!ValidationService.errorInField(this.newTransaction.amountCharged)) {
+        this.newTransaction.amountCharged = parseFloat(this.newTransaction.amountCharged.toString());
+        }
     }
 
     getTransactionDate() {
         this.transactionDateLetter = DateService.getDateLetter();
         this.transactionDateNumber = DateService.getDateNumber().toString();
-        this.transactionId = DateService.getDateNumber().toString()+Globals.userInfo.userId.toString();
+        this.transactionId = DateService.getDateNumber().toString() + Globals.userInfo.userId.toString();
 
         this.newTransaction.dateRegistered = DateService.getDateNumber();
         this.newTransaction.modificationDate = DateService.getDateNumber();
         this.newTransaction.modificationDate = DateService.getDateNumber();
     }
 
-    showSuccessfulTransactionAlert(){
-        this._alertService.confirmSuccess("Successful Transaction","")
-            .then(()=>{
-                this.closeModal();
+    showSuccessfulTransactionAlert() {
+        this._alertService.confirmSuccess("Successful Transaction", "")
+            .then(() => {
+                this._activeModal.close();
             });
     }
 
@@ -96,12 +112,11 @@ export class CashInComponent implements OnInit {
                 this.amountCharged.nativeElement.focus();
             } else {
                 if (ValidationService.errorInField(this.newTransaction.cash) &&
-                        ValidationService.errorInField(this.newTransaction.credit) &&
-                            ValidationService.errorInField(this.newTransaction.check))
-                {
+                    ValidationService.errorInField(this.newTransaction.credit) &&
+                    ValidationService.errorInField(this.newTransaction.check)) {
                     this.cashInput.nativeElement.focus();
-                }else{
-                    if(ValidationService.errorInField(this.newTransaction.checkNumber) && !ValidationService.errorInField(this.newTransaction.check)){
+                } else {
+                    if (ValidationService.errorInField(this.newTransaction.checkNumber) && !ValidationService.errorInField(this.newTransaction.check)) {
                         this.checkNumber.nativeElement.focus();
                     }
                 }
@@ -111,7 +126,7 @@ export class CashInComponent implements OnInit {
 
     }
 
-    unfocusCheckbox(){
+    unfocusCheckbox() {
         if (!ValidationService.errorInField(this.newTransaction.copayment) ||
             !ValidationService.errorInField(this.newTransaction.selfPay) ||
             !ValidationService.errorInField(this.newTransaction.deductible) ||
@@ -122,13 +137,13 @@ export class CashInComponent implements OnInit {
         }
     }
 
-    focusCheckBoxs(){
-        if(ValidationService.errorInField(this.newTransaction.copayment) &&
+    focusCheckBoxs() {
+        if (ValidationService.errorInField(this.newTransaction.copayment) &&
             ValidationService.errorInField(this.newTransaction.selfPay) &&
             ValidationService.errorInField(this.newTransaction.deductible) &&
             ValidationService.errorInField(this.newTransaction.labs) &&
-            ValidationService.errorInField(this.newTransaction.other)){
-            this.copaymentInput.nativeElement.setAttribute('style','color: red')
+            ValidationService.errorInField(this.newTransaction.other)) {
+            this.copaymentInput.nativeElement.setAttribute('style', 'color: red')
         }
     }
 
@@ -203,7 +218,7 @@ export class CashInComponent implements OnInit {
     }
 
     closeModal() {
-        this._activeModal.close();
+        this._activeModal.dismiss();
     }
 
     clearAllInputs() {
@@ -276,7 +291,7 @@ export class CashInComponent implements OnInit {
         }
     }
 
-    restrictNumeric(e,field) {
+    restrictNumeric(e, field) {
         let input;
         if (e.metaKey || e.ctrlKey) {
             return true;
@@ -291,9 +306,9 @@ export class CashInComponent implements OnInit {
             return false;
         }
         if (e.which === 46) {
-            if(field.includes(".")){
+            if (field.includes(".")) {
                 return false;
-            }else{
+            } else {
                 return true;
             }
         }

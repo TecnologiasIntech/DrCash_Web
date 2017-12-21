@@ -12,6 +12,7 @@ import {ClosedTransaction} from "../interfaces/closed-transaction";
 import {TRANSACTIONTYPE} from "../enums/enums";
 import {ValidationService} from "./validation.service";
 import 'rxjs/add/operator/take'
+import {onChildAdded} from "angularfire2/database-deprecated";
 
 @Injectable()
 export class TransactionService {
@@ -37,7 +38,6 @@ export class TransactionService {
                 .startAt(DateService.getInitialCurrentDate())
                 .endAt(DateService.getEndCurrentDate())
             ).valueChanges().take(1).subscribe((snapshot: Transaction[]) => {
-                // debugger
                 this.myCurrentTransactions = snapshot;
                 console.log(snapshot)
             })
@@ -50,10 +50,11 @@ export class TransactionService {
                 .orderByChild('keyTransaction')
                 .startAt(DateService.getInitialCurrentDate())
                 .endAt(DateService.getEndCurrentDate())
-            ).valueChanges().subscribe((snapshot: any) => {
+            ).valueChanges().take(1).subscribe((snapshot: any) => {
+                this.myCurrentTransactions = [];
                 if (snapshot.length > 0) {
                     for (let item in snapshot) {
-                        this.db.object(`transactions/${snapshot[item].keyTransaction}`).valueChanges()
+                        this.db.object(`transactions/${snapshot[item].keyTransaction}`).valueChanges().take(1)
                             .subscribe((snapshotTrn: Transaction) => {
                                 this.myCurrentTransactions.push(snapshotTrn);
                                 if (item == (snapshot.length - 1).toString()) {
@@ -71,6 +72,7 @@ export class TransactionService {
     getTotalRegistered(): number {
         let totalRegistered: number = 0;
         for (let item in this.myCurrentTransactions) {
+            debugger
             if (this.myCurrentTransactions[item].type != TRANSACTIONTYPE.INITIALCASH) {
                 switch (this.myCurrentTransactions[item].type) {
 

@@ -159,9 +159,15 @@ export class CashOutComponent implements OnInit {
             this.transaction.type=TRANSACTIONTYPE.CASHOUT;
             this.transaction.dateRegistered=DateService.getDateNumber();
             this.transaction.modificationDate=DateService.getDateNumber();
+            this.transaction.cash = parseFloat(this.transaction.cash.toString());
 
             this._transactionService.setTransaction(this.transaction);
             PrintService.printCashOut(this.transaction);
+
+            this._alertService.confirmSuccess("Successful Transaction","")
+                .then(()=>{
+                    this._activeModal.close();
+                });
         }else{
             this._alertService.error("Failed Transaction","TotalCash Field Must Have a Value ")
         }
