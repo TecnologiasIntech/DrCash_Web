@@ -7,29 +7,43 @@ import {User} from "../../interfaces/user";
 import {forEach} from "@angular/router/src/utils/collection";
 import {FirebaseListObservable} from "angularfire2/database-deprecated";
 import {ValidationService} from "../../services/validation.service";
+import {USERTYPE} from "../../enums/enums";
 
 @Component({
-  selector: 'app-manage-users',
-  templateUrl: './manage-users.component.html',
-  styleUrls: ['./manage-users.component.scss']
+    selector: 'app-manage-users',
+    templateUrl: './manage-users.component.html',
+    styleUrls: ['./manage-users.component.scss']
 })
 export class ManageUsersComponent implements OnInit {
 
-  constructor(private _activeModal: NgbActiveModal,
-              private _modal: NgbModal,
-              private _usersService: UserService) { }
+    constructor(private _activeModal: NgbActiveModal,
+                private _modal: NgbModal,
+                private _usersService: UserService) {
+    }
 
-  ngOnInit() {
-      this._usersService.getUsers().then(response=>{
-        this.users = response;
-        console.log(this.users);
-      })
-  }
+    ngOnInit() {
+        this.loadUsers();
+    }
 
-  users;
+    loadUsers(){
+        if(Globals.userInfo.securityLevel == USERTYPE.SUPERVISOR){
+            this._usersService.getUsersByMyClinic().then(response => {
+                this.users = response;
+                console.log(this.users);
+            })
+        }else if(Globals.userInfo.securityLevel == USERTYPE.ADMINISTRATOR){
+            this._usersService.getAllUsers().then(response => {
+                this.users = response;
+                console.log(this.users);
+            })
+        }
 
-  editableUser: User = {} as User;
-  securityLevel: string;
+    }
+
+    users;
+
+    editableUser: User = {} as User;
+    securityLevel: string;
 
     @ViewChild('firstName')
     firstName: ElementRef;
@@ -38,49 +52,58 @@ export class ManageUsersComponent implements OnInit {
     @ViewChild('email')
     email: ElementRef;
 
-  sendUserToEdit(  _user: User){
-    this.editableUser = _user;
-    this.securityLevel = this.editableUser.securityLevel.toString();
-    console.log(this.editableUser.securityLevel);
-  }
-
-    saveUser(){
-    debugger;
-        if(!this.areEmptyFields()){
-            this._usersService.updateUser(this.editableUser);
-            this.resetEditableUser();
-        }
+    sendUserToEdit(_user: User) {
+        this.editableUser = _user;
+        this.securityLevel = this.editableUser.securityLevel.toString();
+        console.log(this.editableUser.securityLevel);
     }
 
-    areEmptyFields(){
-        if(ValidationService.errorInField(this.editableUser.firstName)){
+    saveUser() {
+        if(!this.isUsernameUndefined()){
+            if (!this.areEmptyFields()) {
+                this._usersService.updateUser(this.editableUser);
+                this.resetEditableUser();
+            }
+        }
+        else{
+            this.resetEditableUser();
+        }
+
+    }
+
+    areEmptyFields() {
+        if (ValidationService.errorInField(this.editableUser.firstName)) {
             this.firstName.nativeElement.focus();
             return true;
-        }else{
-            if(ValidationService.errorInField(this.editableUser.lastName)){
+        } else {
+            if (ValidationService.errorInField(this.editableUser.lastName)) {
                 this.lastName.nativeElement.focus();
                 return true;
-            }else{
-                if(ValidationService.errorInField(this.editableUser.email)){
+            } else {
+                if (ValidationService.errorInField(this.editableUser.email)) {
                     this.email.nativeElement.focus();
                     return true;
-                }else{
+                } else {
                     return false;
                 }
             }
         }
     }
 
-    resetEditableUser(){
+    resetEditableUser() {
         this.editableUser = {} as User;
     }
 
-  closeModal(){
-    this._activeModal.close();
-  }
+    isUsernameUndefined(){
+        return(ValidationService.errorInField(this.editableUser.username));
+    }
 
-  openSignUpModal(){
-      this._modal.open(SignUpComponent, Globals.optionModalLg);
-  }
+    closeModal() {
+        this._activeModal.close();
+    }
+
+    openSignUpModal() {
+        this._modal.open(SignUpComponent, Globals.optionModalLg);
+    }
 
 }

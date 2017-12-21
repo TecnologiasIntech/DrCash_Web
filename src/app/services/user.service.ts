@@ -3,6 +3,7 @@ import {AngularFireDatabase} from "angularfire2/database";
 import {alertService} from "./alert.service";
 import {User} from "../interfaces/user";
 import {ERRORAUTH} from "../enums/enums";
+import {Globals} from "../statics/globals";
 
 @Injectable()
 export class UserService {
@@ -32,7 +33,19 @@ export class UserService {
         this.db.object('users/' + user.username).update(user);
     }
 
-    getUsers() {
+    getUsersByMyClinic(){
+        return new Promise(resolve=>{
+            this.db.list('users', ref => ref
+                .orderByChild("clinic")
+                .equalTo(Globals.userInfo.clinic)
+            ).valueChanges().take(1)
+                .subscribe(snapshot=>{
+                    resolve(snapshot);
+                })
+        })
+    }
+
+    getAllUsers() {
         return new Promise(resolve => {
             this.db.list('users').valueChanges().take(1).subscribe(snapshot => {
                 resolve(snapshot);
