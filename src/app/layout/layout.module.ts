@@ -45,6 +45,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {ValidationService} from "../services/validation.service";
 import {InitialCashComponent} from "../modals/initial-cash/initial-cash.component";
 import {Globals} from "../statics/globals";
+import {DateService} from "../services/date.service";
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -100,7 +101,8 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         ReportService,
         UserService,
         ValidationService,
-        Globals
+        Globals,
+        DateService
 
     ],
     entryComponents: [

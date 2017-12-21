@@ -157,7 +157,6 @@ export class CloseDateComponent implements OnInit {
         this.totalCheck = null;
         this.leftRegisterLabel = null;
         this.totalEntered = 0;
-        this.totalRegistered = 0;
     }
 
     closeModal() {

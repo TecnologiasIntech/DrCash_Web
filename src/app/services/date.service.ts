@@ -6,6 +6,7 @@ import {Globals} from "../statics/globals";
 export class DateService {
 
     constructor() {
+
     }
 
     static getCurrentDate():number{
@@ -34,6 +35,37 @@ export class DateService {
         dateLetter += date.getSeconds().toString();
 
         return dateLetter;
+    }
+
+    convertDateToDD_MM_YYYY_HH_MM(date:string){
+        let newDate:string = "";
+        newDate += date.substr(6, 2)+"/";
+        newDate += date.substr(4, 2)+"/";
+        newDate += date.substr(0, 4)+" ";
+        newDate += date.substr(8, 2)+":";
+        newDate += date.substr(10, 2);
+
+        return newDate;
+    }
+
+     getInitialCurrentDate(){
+        let date = new Date();
+        let dateNumber: string;
+        dateNumber = date.getFullYear().toString();
+        dateNumber += ("0"+(date.getMonth()+1).toString()).slice(-2);
+        dateNumber += ("0"+(date.getDate().toString())).slice(-2);
+        dateNumber += "00000"
+        return parseInt(dateNumber);
+    }
+
+      getEndCurrentDate(){
+        let date = new Date();
+        let dateNumber: string;
+        dateNumber = date.getFullYear().toString();
+        dateNumber += ("0"+(date.getMonth()+1).toString()).slice(-2);
+        dateNumber += ("0"+(date.getDate().toString())).slice(-2);
+        dateNumber += "23599"
+        return parseInt(dateNumber);
     }
     
     static getInitialCurrentDate(){

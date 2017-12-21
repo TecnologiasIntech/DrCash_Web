@@ -1,70 +1,74 @@
 import {Injectable} from '@angular/core';
-import {AngularFireDatabase, FirebaseListObservable} from "angularfire2/database";
+import {
+    AngularFireDatabase, DatabaseQuery, DatabaseReference,
+    QueryFn
+} from "angularfire2/database";
 import {Transaction} from "../interfaces/transaction";
 import {Observable} from "rxjs/Observable";
 import {userInfo} from "os";
 import {Globals} from "../statics/globals";
 import {DateService} from "./date.service";
-import {FirebaseListFactoryOpts} from "angularfire2/database/interfaces";
 import {ClosedTransaction} from "../interfaces/closed-transaction";
 import {TRANSACTIONTYPE} from "../enums/enums";
 import {ValidationService} from "./validation.service";
-import {_catch} from "rxjs/operator/catch";
+import 'rxjs/add/operator/take'
+import {onChildAdded} from "angularfire2/database-deprecated";
+import {reject} from "q";
 
 @Injectable()
 export class TransactionService {
 
-    transactionsRef: FirebaseListObservable<Transaction[]>;
-    closedTransactionsRef: FirebaseListObservable<Transaction[]>;
-    numberOfCurrentTransactions:number = 0;
-    currentTransactions: Transaction[] = [];
-    initialCash:number;
+    numberOfCurrentTransactions: number = 0;
+    currentTransactions: Observable<Transaction[]>;
+    initialCash: number;
 
     public myCurrentTransactions: Transaction[] = [];
 
     constructor(private db: AngularFireDatabase) {
-        this.transactionsRef = this.db.list('transactions');
-        this.closedTransactionsRef = this.db.list('closedTransactions');
-        this.getCurrentTransactions();
     }
 
     getTransaction(key: number) {
-        return this.db.object('transactions/' + key)
+        return this.db.object('transactions/' + key).valueChanges()
     }
 
     getCurrentTransactions() {
-        return new Promise(resolve => {
-            this.db.list('transactions', {
-                query: {
-                    orderByChild: 'dateRegistered',
-                    startAt: DateService.getInitialCurrentDate(),
-                    endAt: DateService.getEndCurrentDate()
+        return new Promise((resolve, reject) => {
+
+            this.db.list('transactions', ref => ref
+                .orderByChild('dateRegistered')
+                .startAt(DateService.getInitialCurrentDate())
+                .endAt(DateService.getEndCurrentDate())
+            ).valueChanges().take(1).subscribe((snapshot: Transaction[]) => {
+                if(snapshot.length > 0){
+                    this.myCurrentTransactions = snapshot;
+                    resolve(snapshot);
+                }else{
+                    reject();
                 }
-            }).subscribe(result => {
-                this.currentTransactions = result;
-                resolve(result)
             })
         })
     }
 
     getMyCurrentTransactions() {
-        return new Promise(resolve => {
-            this.db.list(`clinicas/${Globals.userInfo.clinic}/${Globals.userInfo.username}`, {
-                query: {
-                    orderByChild: 'keyTransaction',
-                    startAt: DateService.getInitialCurrentDate(),
-                    endAt: DateService.getEndCurrentDate()
-                }
-            }).subscribe(snapshot => {
-                this.numberOfCurrentTransactions = snapshot.length;
-                for (let item in snapshot) {
-                    this.db.object(`transactions/${snapshot[item].keyTransaction}`)
-                        .subscribe(snapshotTrn => {
-                            this.myCurrentTransactions.push(snapshotTrn);
-                            if (item == (snapshot.length - 1).toString()) {
-                                resolve(this.myCurrentTransactions);
-                            }
-                        })
+        return new Promise((resolve, reject) => {
+            this.db.list(`clinicas/${Globals.userInfo.clinic}/${Globals.userInfo.username}`, ref => ref
+                .orderByChild('keyTransaction')
+                .startAt(DateService.getInitialCurrentDate())
+                .endAt(DateService.getEndCurrentDate())
+            ).valueChanges().take(1).subscribe((snapshot: any) => {
+                this.myCurrentTransactions = [];
+                if (snapshot.length > 0) {
+                    for (let item in snapshot) {
+                        this.db.object(`transactions/${snapshot[item].keyTransaction}`).valueChanges().take(1)
+                            .subscribe((snapshotTrn: Transaction) => {
+                                this.myCurrentTransactions.push(snapshotTrn);
+                                if (item == (snapshot.length - 1).toString()) {
+                                    resolve(this.myCurrentTransactions);
+                                }
+                            })
+                    }
+                } else {
+                    reject();
                 }
             })
         })
@@ -73,6 +77,7 @@ export class TransactionService {
     getTotalRegistered(): number {
         let totalRegistered: number = 0;
         for (let item in this.myCurrentTransactions) {
+            debugger
             if (this.myCurrentTransactions[item].type != TRANSACTIONTYPE.INITIALCASH) {
                 switch (this.myCurrentTransactions[item].type) {
 
@@ -83,47 +88,47 @@ export class TransactionService {
                         if (!ValidationService.errorInField(this.myCurrentTransactions[item].credit)) {
                             totalRegistered += this.myCurrentTransactions[item].credit;
                         }
-                        if (!ValidationService.errorInField(this.myCurrentTransactions[item].credit)) {
+                        if (!ValidationService.errorInField(this.myCurrentTransactions[item].check)) {
                             totalRegistered += this.myCurrentTransactions[item].check;
                         }
                         break;
 
-                    case TRANSACTIONTYPE.CASHOUT || TRANSACTIONTYPE.REFUND:
+                    case TRANSACTIONTYPE.CASHOUT:
+                        if (!ValidationService.errorInField(this.myCurrentTransactions[item].cash)) {
+                            totalRegistered -= this.myCurrentTransactions[item].cash;
+                        }
+                        break;
+
+                    case TRANSACTIONTYPE.REFUND:
                         if (!ValidationService.errorInField(this.myCurrentTransactions[item].cash)) {
                             totalRegistered -= this.myCurrentTransactions[item].cash;
                         }
                         break;
                 }
-            }else{
+            } else {
                 this.initialCash = this.myCurrentTransactions[item].cash;
+                totalRegistered += this.myCurrentTransactions[item].cash;
             }
         }
         return totalRegistered;
     }
 
-    getAllTransactions() {
-        return this.db.list('transactions')
-    }
-
-    getTransactionsByRange(startAt: number, endAt) {
-        //TODO verificar esta consulta
-        // return this.db.list('transactions', ref => ref
-        //     .orderByChild('date')
-        //     .startAt(startAt)
-        //     .end(endAt))
-    }
-
     setTransaction(transaction: Transaction) {
-        this.transactionsRef.set(transaction.dateRegistered.toString() + Globals.userInfo.userId.toString(), transaction);
+        this.db.list('transactions').update(transaction.dateRegistered.toString() + Globals.userInfo.userId.toString(), transaction);
+        this.db.list('clinicas').update(Globals.userInfo.clinic + "/" + Globals.userInfo.username + "/" + transaction.dateRegistered + Globals.userInfo.userId, {
+            keyTransaction: parseInt(transaction.dateRegistered + Globals.userInfo.userId.toString())
+        });
+    }
+
+    setClosedTransaction(closeTransaction: ClosedTransaction) {
+        this.db.list('closedTransactions').update(closeTransaction.datetime, closeTransaction);
     }
 
     updateTransaction(transactionKey: string, ammount: number, transaction: Transaction) {
-
-        this.transactionsRef.update(transactionKey.toString(), {
+        this.db.list('transactions').update(transactionKey.toString(), {
             amountCharged: ammount,
             comment: transaction
         })
-
     }
 
     static getDefaultValuesToTransaction() {
@@ -131,7 +136,7 @@ export class TransactionService {
         //TODO Asignar valor a modifiedById
         //TODO Cambiar el valor de userKey por el valor de Globals
         return {
-            userKey: "carlos",
+            userKey: Globals.userInfo.username,
             type: -1,
             copayment: false,
             selfPay: false,
@@ -140,30 +145,8 @@ export class TransactionService {
             other: false,
             otherComments: "",
             closed: false,
-            registerId: "",
-            modifiedById: 1
+            registerId: "1",
+            modifiedById: Globals.userInfo.userId
         }
-    }
-
-    setClosedTransaction(closeTransaction: ClosedTransaction) {
-        this.closedTransactionsRef.set(closeTransaction.datetime, closeTransaction);
-    }
-
-    getCountTransactions() {
-        return new Promise(resolve => {
-            this.db.list('transactions', {
-                query: {
-                    orderByChild: 'dateRegistered',
-                    startAt: DateService.getInitialCurrentDate(),
-                    endAt: DateService.getEndCurrentDate()
-                }
-            }).subscribe((snapshot: Transaction[]) => {
-                for (let item in snapshot) {
-                    if (snapshot[item].userKey == Globals.userInfo.username && snapshot[item].type == TRANSACTIONTYPE.INITIALCASH) {
-                        resolve(snapshot[item].cash);
-                    }
-                }
-            });
-        })
     }
 }

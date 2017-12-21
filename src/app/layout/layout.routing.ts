@@ -24,7 +24,14 @@ const LAYOUT_ROUTES: Routes = [
         {path: 'smtp', component: SmtpComponent},
         {path: 'transactions', component: TransactionsComponent},
         {path: 'userProfile', component: UserProfileComponent},
-        {path: 'closedStatements', component: ClosedStatementsComponent}
+        {path: 'closedStatements', component: ClosedStatementsComponent},
+        {path: 'daily-transactions', component: DailyTransactionsComponent},
+        {path: 'closed-statements', component: ClosedStatementsComponent},
+        {path: 'register', component: RegisterComponent},
+        {path: 'general', component: GeneralComponent},
+        {path: 'smtp', component: SmtpComponent},
+        {path: 'transactions', component: TransactionsComponent},
+        {path: 'user-profile', component: UserProfileComponent}
     ]
     }
 ];

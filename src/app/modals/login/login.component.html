@@ -7,18 +7,18 @@
             </div>
         </div>
 
-
         <div class="row">
             <div class="col-12">
                 <div class="row" style="margin-left: 20px">
 
                     <div class="col-10">
-                        <i class="zmdi zmdi-account {{errorUserName? 'errorColor':''}} " ></i>
+                        <i class="zmdi zmdi-account {{errorUserName? 'errorColor':''}} "></i>
                         <div class="form-group form-group--float inputFieldStyle d-ilb">
 
                             <input class="form-control" type="text"
                                    [(ngModel)]="User.username" name="username" required #username
-                                   placeholder="UserName" (keyup)="changeBooleansUserAndErrorsInLogin()"
+                                   placeholder="Username" (keyup)="changeBooleansUserAndErrorsInLogin()"
+                                   autofocus
                             >
 
                             <i class="form-group__bar"></i>
@@ -40,7 +40,9 @@
 
                             <input class="form-control" type="password"
                                    [(ngModel)]="User.password" name="password" required #password
-                                   placeholder="Password" (keyup)="changeBooleansPasswordAndErrorsInLogin()"
+                                   placeholder="Password"
+                                   (keyup)="changeBooleansPasswordAndErrorsInLogin()"
+                                   (keyup.enter)="errorInLoginFields(User)"
                             >
 
                             <i class="form-group__bar"></i>
@@ -59,7 +61,7 @@
         <div class="button-container" style="margin-top: 20px">
             <div class="row">
                 <div class="offset-1 col-10">
-                    <button class="btn btn-success btn-block" (click)="errorInLoginFields(User)" >Login</button>
+                    <button class="btn btn-success btn-block" (click)="errorInLoginFields(User)">Login</button>
                 </div>
             </div>
 
@@ -70,37 +72,37 @@
             </div>
         </div>
         <div class="row">
-          <div class="col-12">
+            <div class="col-12">
 
-              <div class="row" align="center" style="margin-top: 10px;">
-                  <div class="col-12">
-                      <span  class="errorColor" *ngIf="errorUserName">UserName Field is Empty</span>
-                  </div>
-              </div>
-              <div class="row" align="center">
-                  <div class="col-12">
-                      <span  class="errorColor" *ngIf="errorPass">Password Field is Empty</span>
-                  </div>
-              </div>
-              <div class="row" align="center" >
-                  <div class="col-12">
-                      <span  class="errorColor" *ngIf="errorPassAndUsername">UserName and Password Fields is empty</span>
-                  </div>
-              </div>
-              <div class="row" align="center" >
-                  <div class="col-12">
-                      <span  class="errorColor" *ngIf="userNotFound">User Not Found</span>
-                  </div>
-              </div>
-              <div class="row" align="center" >
-                  <div class="col-12">
-                      <span  class="errorColor" *ngIf="wrongPassword">Wrong Password</span>
-                  </div>
-              </div>
+                <div class="row" align="center" style="margin-top: 10px;">
+                    <div class="col-12">
+                        <span class="errorColor" *ngIf="errorUserName">UserName Field is Empty</span>
+                    </div>
+                </div>
+                <div class="row" align="center">
+                    <div class="col-12">
+                        <span class="errorColor" *ngIf="errorPass">Password Field is Empty</span>
+                    </div>
+                </div>
+                <div class="row" align="center">
+                    <div class="col-12">
+                        <span class="errorColor"
+                              *ngIf="errorPassAndUsername">UserName and Password Fields is empty</span>
+                    </div>
+                </div>
+                <div class="row" align="center">
+                    <div class="col-12">
+                        <span class="errorColor" *ngIf="userNotFound">User Not Found</span>
+                    </div>
+                </div>
+                <div class="row" align="center">
+                    <div class="col-12">
+                        <span class="errorColor" *ngIf="wrongPassword">Wrong Password</span>
+                    </div>
+                </div>
 
-          </div>
+            </div>
         </div>
-
 
 
     </div>

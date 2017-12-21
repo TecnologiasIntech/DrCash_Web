@@ -3,7 +3,6 @@ import {AngularFireDatabase} from "angularfire2/database";
 import {alertService} from "./alert.service";
 import {User} from "../interfaces/user";
 import {ERRORAUTH} from "../enums/enums";
-import {userInfo} from "os";
 
 @Injectable()
 export class UserService {
@@ -14,7 +13,7 @@ export class UserService {
 
     authUser(user: User) {
         return new Promise((resolve, reject) => {
-            this.db.object('users/' + user.username).subscribe((result: User) => {
+            this.db.object('users/' + user.username).valueChanges().subscribe((result: User) => {
                 if (result.username != null) {
                     if(result.password==user.password){
                         resolve(result);

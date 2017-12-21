@@ -13,8 +13,6 @@ export class Globals {
         keyboard: false,
         size: "lg"
     };
-
-
-
+    sidebarVisible: boolean = false;
     static userInfo: User;
 }

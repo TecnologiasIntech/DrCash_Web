@@ -1,25 +1,52 @@
 <section class="content">
-    <button (click)="open()"></button>
-    <button (click)="openC()"></button>
     <div class="row">
         <div class="col-9">
-            <div class="card">
-                <table class="table">
+            <div class="card m-b-30 h-436">
+                <table class="table header_fijo" *ngIf="showTransactions">
                     <thead>
-                    <tr>
-                        <th>Transactions</th>
-                        <th>Processed By</th>
-                        <th>Date</th>
+                    <tr class="w-847_5">
+                        <th class="w-282">Transactions</th>
+                        <th class="w-282">Processed By</th>
+                        <th class="w-282">Date</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>Initial Cash</td>
-                        <td>Carlos Alatorre</td>
-                        <td>21/11/2017 01:12:32 p.m.</td>
+                    <tbody style="width: 847.5px; height: 390px; overflow-y: auto">
+
+                    <tr *ngFor="let transaction of currentTransactions">
+                        <td class="w-282">{{ getLogTransaction(transaction) }}</td>
+                        <td class="w-282">{{ transaction.userKey }}</td>
+                        <td class="w-282">{{ _dateService.convertDateToDD_MM_YYYY_HH_MM(transaction.dateRegistered.toString()) }}</td>
                     </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card" style="height: 120px">
+                        <div class="m-t-20 m-l-20" >
+                        <!--cash in-->
+                        <button class="btn br-button size-button" style="background-color: #6BA751" (click)="openCashIn()">
+                            <i class="zmdi zmdi-download zmdi-hc-5x" style="color: white"></i>
+                        </button>
+                        <!--cash out-->
+                        <button class="btn br-button size-button m-l-20" style="background-color: #5B7EA8" (click)="openCashOut()">
+                            <i class="zmdi zmdi-upload zmdi-hc-5x" style="color: white"></i>
+                        </button>
+                        <!--refund-->
+                        <button class="btn br-button size-button m-l-20" style="background-color: #F1C334" (click)="openRefund()">
+                            <i class="zmdi zmdi-inbox zmdi-hc-5x" style="color: white"></i>
+                        </button>
+                        <!--sign up-->
+                        <button class="btn br-button size-button m-l-20" style="background-color: #5B9F9E" (click)="openCredentials()">
+                            <i class="zmdi zmdi-square-right zmdi-hc-5x" style="color: white"></i>
+                        </button>
+                        <!--close date-->
+                        <button class="btn br-button size-button m-l-20" style="background-color: #CE0001" (click)="openCloseDate()">
+                            <i class="zmdi zmdi-close-circle-o zmdi-hc-5x" style="color: white"></i>
+                        </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -37,7 +64,7 @@
                         </thead>
                         <tbody>
                         <tr align="right">
-                            <td>$120.00</td>
+                            <td>${{ totalsTransactions.initialCash }}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -57,17 +84,17 @@
                         <tbody>
                         <tr>
                             <td align="left" class="p-b-0">Cash</td>
-                            <td align="right" class="p-b-0">$120.00</td>
+                            <td align="right" class="p-b-0">${{ totalsTransactions.totalCashIn}}</td>
                         </tr>
 
                         <tr>
                             <td align="left" class="p-b-0">Credit Card</td>
-                            <td align="right" class="p-b-0">$120.00</td>
+                            <td align="right" class="p-b-0">${{ totalsTransactions.totalCredit }}</td>
                         </tr>
 
                         <tr>
                             <td align="left" class="p-b-0">Checks</td>
-                            <td align="right" class="p-b-0">$120.00</td>
+                            <td align="right" class="p-b-0">${{ totalsTransactions.totalCheck }}</td>
                         </tr>
 
                         <tr>
@@ -75,7 +102,7 @@
                                 <strong>Total In</strong>
                             </td>
                             <td align="right">
-                                <strong>$120.00</strong>
+                                <strong>${{ totalsTransactions.totalIn }}</strong>
                             </td>
                         </tr>
 
@@ -97,20 +124,20 @@
                         <tbody>
                         <tr>
                             <td align="left" class="p-b-0">Cash</td>
-                            <td align="right" class="p-b-0">$120.00</td>
+                            <td align="right" class="p-b-0">${{ totalsTransactions.totalCashOut }}</td>
                         </tr>
 
                         <tr>
                             <td align="left" class="p-b-0">Refunds</td>
-                            <td align="right" class="p-b-0">$120.00</td>
+                            <td align="right" class="p-b-0">${{ totalsTransactions.totalRefund }}</td>
                         </tr>
 
                         <tr>
                             <td align="left">
-                                <strong>Total Ou</strong>
+                                <strong>Total Out</strong>
                             </td>
                             <td align="right">
-                                <strong>$120.00</strong>
+                                <strong>${{ totalsTransactions.totalOut }}</strong>
                             </td>
                         </tr>
 
@@ -131,7 +158,7 @@
                         <tbody>
                         <tr>
                             <td align="right" class="p-b-0">
-                                <strong>$120.00</strong>
+                                <strong>${{ totalsTransactions.Balance }}</strong>
                             </td>
                         </tr>
                         </tbody>
