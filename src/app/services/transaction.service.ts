@@ -13,6 +13,7 @@ import {TRANSACTIONTYPE} from "../enums/enums";
 import {ValidationService} from "./validation.service";
 import 'rxjs/add/operator/take'
 import {onChildAdded} from "angularfire2/database-deprecated";
+import {reject} from "q";
 
 @Injectable()
 export class TransactionService {
@@ -31,15 +32,19 @@ export class TransactionService {
     }
 
     getCurrentTransactions() {
-        return new Promise(resolve => {
+        return new Promise((resolve, reject) => {
 
             this.db.list('transactions', ref => ref
                 .orderByChild('dateRegistered')
                 .startAt(DateService.getInitialCurrentDate())
                 .endAt(DateService.getEndCurrentDate())
             ).valueChanges().take(1).subscribe((snapshot: Transaction[]) => {
-                this.myCurrentTransactions = snapshot;
-                console.log(snapshot)
+                if(snapshot.length > 0){
+                    this.myCurrentTransactions = snapshot;
+                    resolve(snapshot);
+                }else{
+                    reject();
+                }
             })
         })
     }

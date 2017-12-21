@@ -148,15 +148,19 @@ export class HomeComponent implements OnInit {
                     this.calculateTotalsTransactions(response);
                     this.showTransactions = true;
                 })
-                .catch(error => {
+                .catch(() => {
                     this.openInitialCash();
                 })
         } else {
-            this._transactionService.getCurrentTransactions().then((response: Transaction[]) => {
-                this.currentTransactions = response;
-                this.calculateTotalsTransactions(response);
-                this.showTransactions = true;
-            })
+            this._transactionService.getCurrentTransactions()
+                .then((response: Transaction[]) => {
+                    this.currentTransactions = response;
+                    this.calculateTotalsTransactions(response);
+                    this.showTransactions = true;
+                })
+                .catch(() => {
+                    this.openInitialCash();
+                })
         }
     }
 
@@ -176,7 +180,7 @@ export class HomeComponent implements OnInit {
             })
     }
 
-    calculateTotalsTransactions(currentTransactions:Transaction[]) {
+    calculateTotalsTransactions(currentTransactions: Transaction[]) {
         for (let item in currentTransactions) {
             switch (currentTransactions[item].type) {
                 case TRANSACTIONTYPE.INITIALCASH:
