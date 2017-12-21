@@ -31,17 +31,7 @@ export class HomeComponent implements OnInit {
 
     currentTransactions: Transaction[] = [];
     showTransactions: boolean = false;
-    totalsTransactions: any = {
-        initialCash: 0,
-        totalCashIn: 0,
-        totalCredit: 0,
-        totalCheck: 0,
-        totalIn: 0,
-        totalCashOut: 0,
-        totalRefund: 0,
-        totalOut: 0,
-        Balance: 0
-    };
+    totalsTransactions: any;
 
     constructor(private _modal: NgbModal,
                 private _globals: Globals,
@@ -57,6 +47,7 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.cleanTotalsTransactions();
     }
 
     openCashIn() {
@@ -89,6 +80,7 @@ export class HomeComponent implements OnInit {
 
     openCredentials() {
         this.currentTransactions = [];
+        this.cleanTotalsTransactions();
         this._modal.open(CredentialsComponent, Globals.optionModalLg).result
             .then(response => {
                 this.loadTransactions();
@@ -162,6 +154,20 @@ export class HomeComponent implements OnInit {
                     this.openInitialCash();
                 })
         }
+    }
+
+    cleanTotalsTransactions(){
+        this.totalsTransactions = {
+            initialCash: 0,
+            totalCashIn: 0,
+            totalCredit: 0,
+            totalCheck: 0,
+            totalIn: 0,
+            totalCashOut: 0,
+            totalRefund: 0,
+            totalOut: 0,
+            Balance: 0
+        };
     }
 
     openInitialCash() {
