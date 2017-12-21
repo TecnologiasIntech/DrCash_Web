@@ -13,19 +13,8 @@ export class Globals {
         keyboard: false,
         size: "lg"
     };
-    static userInfo: User = {
-        username: "carlos",
-        firstName: "carlos",
-        lastName: "alatorre",
-        password: "carlos",
-        securityQuestion: "asd",
-        securityAnswer: "asd",
-        securityLevel: 2,
-        activeAccount: true,
-        passwordReset: false,
-        createdBy: 2,
-        creationDate: "asd",
-        userId: 1,
-        clinic: 0
-    }
+
+
+
+    static userInfo: User;
 }
