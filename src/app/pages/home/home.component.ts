@@ -187,6 +187,7 @@ export class HomeComponent implements OnInit {
     }
 
     calculateTotalsTransactions(currentTransactions: Transaction[]) {
+        this.cleanTotalsTransactions();
         for (let item in currentTransactions) {
             switch (currentTransactions[item].type) {
                 case TRANSACTIONTYPE.INITIALCASH:

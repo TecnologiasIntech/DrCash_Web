@@ -88,12 +88,18 @@ export class TransactionService {
                         if (!ValidationService.errorInField(this.myCurrentTransactions[item].credit)) {
                             totalRegistered += this.myCurrentTransactions[item].credit;
                         }
-                        if (!ValidationService.errorInField(this.myCurrentTransactions[item].credit)) {
+                        if (!ValidationService.errorInField(this.myCurrentTransactions[item].check)) {
                             totalRegistered += this.myCurrentTransactions[item].check;
                         }
                         break;
 
-                    case TRANSACTIONTYPE.CASHOUT || TRANSACTIONTYPE.REFUND:
+                    case TRANSACTIONTYPE.CASHOUT:
+                        if (!ValidationService.errorInField(this.myCurrentTransactions[item].cash)) {
+                            totalRegistered -= this.myCurrentTransactions[item].cash;
+                        }
+                        break;
+
+                    case TRANSACTIONTYPE.REFUND:
                         if (!ValidationService.errorInField(this.myCurrentTransactions[item].cash)) {
                             totalRegistered -= this.myCurrentTransactions[item].cash;
                         }
@@ -101,6 +107,7 @@ export class TransactionService {
                 }
             } else {
                 this.initialCash = this.myCurrentTransactions[item].cash;
+                totalRegistered += this.myCurrentTransactions[item].cash;
             }
         }
         return totalRegistered;
