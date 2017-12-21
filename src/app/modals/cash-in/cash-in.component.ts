@@ -47,6 +47,8 @@ export class CashInComponent implements OnInit {
     transactionDateLetter: string;
     transactionId: string;
 
+    transactionType: string;
+
     ngOnInit() {
         this.newTransaction = TransactionService.getDefaultValuesToTransaction();
     }
@@ -58,6 +60,7 @@ export class CashInComponent implements OnInit {
             this.validateCashCreditCheckInputsArentNull();
             this.getTransactionDate()
             this.saveTransaction();
+            this.saveTransactionType();
             this.printTicket();
             this.showSuccessfulTransactionAlert();
         } else {
@@ -70,6 +73,18 @@ export class CashInComponent implements OnInit {
         this.newTransaction.type = TRANSACTIONTYPE.CASHIN;
         this.parserFields();
         this._transactionService.setTransaction(this.newTransaction);
+    }
+
+    saveTransactionType(){
+        this.transactionType = this.whatKindOfTransactionIs();
+    }
+
+    whatKindOfTransactionIs(){
+        if(this.newTransaction.copayment) return "Copayment";
+        if(this.newTransaction.selfPay) return "SelfPay";
+        if(this.newTransaction.deductible) return "Deductible";
+        if(this.newTransaction.labs) return "Labs";
+        if(this.newTransaction.other) return this.newTransaction.otherComments;
     }
 
     parserFields() {
@@ -358,7 +373,7 @@ export class CashInComponent implements OnInit {
                 <tbody>
                 <tr>
                     <td></td>
-                    <td>Payment</td>
+                    <td>${this.transactionType}</td>
                 </tr>
                 <tr>
                     <td>Total Cash</td>
