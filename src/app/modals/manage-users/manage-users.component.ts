@@ -61,6 +61,7 @@ export class ManageUsersComponent implements OnInit {
     saveUser() {
         if(!this.isUsernameUndefined()){
             if (!this.areEmptyFields()) {
+                this.saveSecurityLevel();
                 this._usersService.updateUser(this.editableUser);
                 this.resetEditableUser();
             }
@@ -69,6 +70,10 @@ export class ManageUsersComponent implements OnInit {
             this.resetEditableUser();
         }
 
+    }
+
+    saveSecurityLevel(){
+        this.editableUser.securityLevel = parseInt(this.securityLevel);
     }
 
     areEmptyFields() {
