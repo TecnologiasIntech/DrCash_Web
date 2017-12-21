@@ -27,4 +27,8 @@ export class UserService {
             })
         })
     }
+
+    updateUser(user:User){
+        this.db.object('users/'+user.username).update(user);
+    }
 }
