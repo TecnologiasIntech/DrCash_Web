@@ -214,19 +214,11 @@ export class CashInComponent implements OnInit {
     }
 
     isPatientNameEmpty() {
-        if (ValidationService.errorInField(this.newTransaction.patientFirstName)) {
-            return true;
-        } else {
-            return false;
-        }
+        return (ValidationService.errorInField(this.newTransaction.patientFirstName));
     }
 
     isCommentsInputEmpty() {
-        if (ValidationService.errorInField(this.newTransaction.comment)) {
-            return true;
-        } else {
-            return false;
-        }
+        return (ValidationService.errorInField(this.newTransaction.comment));
     }
 
     areBasicAmountInputsEmpty() {
@@ -237,11 +229,7 @@ export class CashInComponent implements OnInit {
                 !ValidationService.errorInField(this.newTransaction.credit) ||
                 !ValidationService.errorInField(this.newTransaction.check)) {
                 if (!ValidationService.errorInField(this.newTransaction.check)) {
-                    if (!ValidationService.errorInField(this.newTransaction.checkNumber)) {
-                        return false;
-                    } else {
-                        return true;
-                    }
+                    return (!ValidationService.errorInField(this.newTransaction.checkNumber));
                 } else {
                     return false;
                 }
@@ -253,15 +241,11 @@ export class CashInComponent implements OnInit {
     }
 
     isAtLeastOneCheckBoxChecked() {
-        if (!ValidationService.errorInField(this.newTransaction.copayment) ||
+        return (!ValidationService.errorInField(this.newTransaction.copayment) ||
             !ValidationService.errorInField(this.newTransaction.selfPay) ||
             !ValidationService.errorInField(this.newTransaction.deductible) ||
             !ValidationService.errorInField(this.newTransaction.labs) ||
-            !ValidationService.errorInField(this.newTransaction.other)) {
-            return true;
-        } else {
-            return false;
-        }
+            !ValidationService.errorInField(this.newTransaction.other));
     }
 
     isOtherCheckButOtherCommentsEmpty() {
