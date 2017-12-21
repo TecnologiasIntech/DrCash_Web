@@ -4,6 +4,9 @@ import {alertService} from "./alert.service";
 import {User} from "../interfaces/user";
 import {ERRORAUTH} from "../enums/enums";
 import {Globals} from "../statics/globals";
+import {DateService} from "./date.service";
+import {reject} from "q";
+import {ValidationService} from "./validation.service";
 
 @Injectable()
 export class UserService {
@@ -33,13 +36,13 @@ export class UserService {
         this.db.object('users/' + user.username).update(user);
     }
 
-    getUsersByMyClinic(){
-        return new Promise(resolve=>{
+    getUsersByMyClinic() {
+        return new Promise(resolve => {
             this.db.list('users', ref => ref
                 .orderByChild("clinic")
                 .equalTo(Globals.userInfo.clinic)
             ).valueChanges().take(1)
-                .subscribe(snapshot=>{
+                .subscribe(snapshot => {
                     resolve(snapshot);
                 })
         })
@@ -49,6 +52,22 @@ export class UserService {
         return new Promise(resolve => {
             this.db.list('users').valueChanges().take(1).subscribe(snapshot => {
                 resolve(snapshot);
+            })
+        })
+    }
+
+    setUser(user: User) {
+        this.db.object('users/' + user.username).set(user);
+    }
+
+    existUser(username: string) {
+        return new Promise(resolve => {
+            this.db.list('users/' + username).valueChanges().take(1).subscribe(snapshot => {
+                if (snapshot.length > 0) {
+                    resolve(true)
+                } else {
+                    resolve(false);
+                }
             })
         })
     }
