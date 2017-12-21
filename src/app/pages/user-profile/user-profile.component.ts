@@ -4,6 +4,9 @@ import {Globals} from "../../statics/globals";
 import {ValidationService} from "../../services/validation.service";
 import {setTimeout} from "timers";
 import {UserService} from "../../services/user.service";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ManageUsersComponent} from "../../modals/manage-users/manage-users.component";
+import {USERTYPE} from "../../enums/enums";
 
 @Component({
     selector: 'app-user-profile',
@@ -12,7 +15,8 @@ import {UserService} from "../../services/user.service";
 })
 export class UserProfileComponent implements OnInit {
 
-    constructor(private _userService: UserService) {
+    constructor(private _userService: UserService,
+                private _modal: NgbModal) {
         // setTimeout(()=>{
         // }, 5000)
         this.editableUser = Globals.userInfo;
@@ -28,9 +32,18 @@ export class UserProfileComponent implements OnInit {
     showSuccessAlert: boolean = false;
 
     ngOnInit() {
+        if(Globals.userInfo.securityLevel == USERTYPE.SUPERVISOR ||
+            Globals.userInfo.securityLevel == USERTYPE.ADMINISTRATOR){
+            this.showManageUsers = true;
+        }
     }
 
     editProfile: boolean = false;
+    showManageUsers: boolean = false;
+
+    openManageUsersModal(){
+        this._modal.open(ManageUsersComponent, Globals.optionModalLg);
+    }
 
     areBasicFieldsEmpty() {
         return (ValidationService.errorInField(this.editableUser.firstName) ||
