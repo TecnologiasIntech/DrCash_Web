@@ -19,6 +19,7 @@ import {TRANSACTIONTYPE, USERTYPE} from "../../enums/enums";
 import {Transaction} from "../../interfaces/transaction";
 import {BrowserError} from "protractor/built/exitCodes";
 import {userInfo} from "os";
+import {ValidationService} from "../../services/validation.service";
 
 
 @Component({
@@ -30,6 +31,17 @@ export class HomeComponent implements OnInit {
 
     currentTransactions: Transaction[] = [];
     showTransactions: boolean = false;
+    totalsTransactions: any = {
+        initialCash: 0,
+        totalCashIn: 0,
+        totalCredit: 0,
+        totalCheck: 0,
+        totalIn: 0,
+        totalCashOut: 0,
+        totalRefund: 0,
+        totalOut: 0,
+        Balance: 0
+    };
 
     constructor(private _modal: NgbModal,
                 private _globals: Globals,
@@ -49,25 +61,28 @@ export class HomeComponent implements OnInit {
 
     openCashIn() {
         this._modal.open(CashInComponent, Globals.optionModalLg).result
-            .then((result)=>{
+            .then((result) => {
                 this.loadTransactions();
-            }, (reason)=>{})
+            }, (reason) => {
+            })
     }
 
     openCashOut() {
         this._modal.open(CashOutComponent, Globals.optionModalLg).result
-            .then((result)=>{
+            .then((result) => {
                 this.loadTransactions();
-            }, (reason)=>{})
+            }, (reason) => {
+            })
     }
 
     openRefund() {
         this._modal.open(AuthorizationComponent, Globals.optionModalLg).result.then((result) => {
             if (result) {
                 this._modal.open(RefundComponent, Globals.optionModalLg).result
-                    .then(response=>{
+                    .then(response => {
                         this.loadTransactions();
-                    }, (reason)=>{})
+                    }, (reason) => {
+                    })
             }
         })
     }
@@ -75,16 +90,18 @@ export class HomeComponent implements OnInit {
     openCredentials() {
         this.currentTransactions = [];
         this._modal.open(CredentialsComponent, Globals.optionModalLg).result
-            .then(response=>{
+            .then(response => {
                 this.loadTransactions();
-            }, (reason)=>{})
+            }, (reason) => {
+            })
     }
 
     openCloseDate() {
         this._modal.open(CloseDateComponent, Globals.optionModalLg).result
-            .then(response=>{
+            .then(response => {
                 this.loadTransactions();
-            }, (reason)=>{})
+            }, (reason) => {
+            })
     }
 
     getLogTransaction(transaction: Transaction) {
@@ -128,6 +145,7 @@ export class HomeComponent implements OnInit {
             this._transactionService.getMyCurrentTransactions()
                 .then((response: Transaction[]) => {
                     this.currentTransactions = response;
+                    this.calculateTotalsTransactions(response);
                     this.showTransactions = true;
                 })
                 .catch(error => {
@@ -136,6 +154,7 @@ export class HomeComponent implements OnInit {
         } else {
             this._transactionService.getCurrentTransactions().then((response: Transaction[]) => {
                 this.currentTransactions = response;
+                this.calculateTotalsTransactions(response);
                 this.showTransactions = true;
             })
         }
@@ -147,12 +166,50 @@ export class HomeComponent implements OnInit {
                 this._transactionService.getMyCurrentTransactions()
                     .then((response: Transaction[]) => {
                         this.currentTransactions = response;
+                        this.calculateTotalsTransactions(response);
                         this.showTransactions = true;
                     })
                     .catch(error => {
                         this.openInitialCash();
-                    })
+                    });
                 this.showTransactions = true;
             })
+    }
+
+    calculateTotalsTransactions(currentTransactions:Transaction[]) {
+        for (let item in currentTransactions) {
+            switch (currentTransactions[item].type) {
+                case TRANSACTIONTYPE.INITIALCASH:
+                    this.totalsTransactions.initialCash = currentTransactions[item].cash;
+                    break;
+
+                case TRANSACTIONTYPE.CASHIN:
+                    if (!ValidationService.errorInField(currentTransactions[item].cash)) {
+                        this.totalsTransactions.totalCashIn += currentTransactions[item].cash;
+                    }
+                    if (!ValidationService.errorInField(currentTransactions[item].credit)) {
+                        this.totalsTransactions.totalCredit += currentTransactions[item].credit;
+                    }
+                    if (!ValidationService.errorInField(currentTransactions[item].check)) {
+                        this.totalsTransactions.totalCheck += currentTransactions[item].check;
+                    }
+                    break;
+
+                case TRANSACTIONTYPE.CASHOUT:
+                    if (!ValidationService.errorInField(currentTransactions[item].cash)) {
+                        this.totalsTransactions.totalCashOut += currentTransactions[item].cash;
+                    }
+                    break;
+
+                case TRANSACTIONTYPE.REFUND:
+                    if (!ValidationService.errorInField(currentTransactions[item].cash)) {
+                        this.totalsTransactions.totalRefund += currentTransactions[item].cash;
+                    }
+                    break;
+            }
+        }
+        this.totalsTransactions.totalIn = this.totalsTransactions.totalCashIn + this.totalsTransactions.totalCredit + this.totalsTransactions.totalCheck;
+        this.totalsTransactions.totalOut = this.totalsTransactions.totalCashOut + this.totalsTransactions.totalRefund;
+        this.totalsTransactions.Balance = (this.totalsTransactions.totalIn + this.totalsTransactions.initialCash) - this.totalsTransactions.totalOut;
     }
 }

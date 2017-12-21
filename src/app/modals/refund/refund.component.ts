@@ -72,7 +72,7 @@ export class RefundComponent implements OnInit {
 
     setTransaction() {
         this.refundTransaction.dateRegistered = DateService.getCurrentDate();
-        this.refundTransaction.amountCharged = parseFloat(this.refund);
+        this.refundTransaction.cash = parseFloat(this.refund);
         this.refundTransaction.type = TRANSACTIONTYPE.REFUND;
         this.refundTransaction.modificationDate = DateService.getCurrentDate();
         if(!ValidationService.errorInField(this.refundComment)){

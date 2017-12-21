@@ -137,5 +137,4 @@ export class TransactionService {
             modifiedById: Globals.userInfo.userId
         }
     }
-
 }
