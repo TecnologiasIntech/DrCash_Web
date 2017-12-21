@@ -39,10 +39,11 @@ export class TransactionService {
                 .startAt(DateService.getInitialCurrentDate())
                 .endAt(DateService.getEndCurrentDate())
             ).valueChanges().take(1).subscribe((snapshot: Transaction[]) => {
-                if(snapshot.length > 0){
+                // debugger
+                if (snapshot.length > 0) {
                     this.myCurrentTransactions = snapshot;
                     resolve(snapshot);
-                }else{
+                } else {
                     reject();
                 }
             })
@@ -53,8 +54,8 @@ export class TransactionService {
         return new Promise((resolve, reject) => {
             this.db.list(`clinicas/${Globals.userInfo.clinic}/${Globals.userInfo.username}`, ref => ref
                 .orderByChild('keyTransaction')
-                .startAt(DateService.getInitialCurrentDate())
-                .endAt(DateService.getEndCurrentDate())
+                .startAt(parseInt(DateService.getInitialCurrentDate().toString() + Globals.userInfo.userId))
+                .endAt(parseInt(DateService.getEndCurrentDate().toString() + Globals.userInfo.userId))
             ).valueChanges().take(1).subscribe((snapshot: any) => {
                 this.myCurrentTransactions = [];
                 if (snapshot.length > 0) {
@@ -133,8 +134,6 @@ export class TransactionService {
 
     static getDefaultValuesToTransaction() {
         //TODO Asignar valor a RegisterID
-        //TODO Asignar valor a modifiedById
-        //TODO Cambiar el valor de userKey por el valor de Globals
         return {
             userKey: Globals.userInfo.username,
             type: -1,
