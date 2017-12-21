@@ -6,6 +6,7 @@ import {setTimeout} from "timers";
 import {UserService} from "../../services/user.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ManageUsersComponent} from "../../modals/manage-users/manage-users.component";
+import {USERTYPE} from "../../enums/enums";
 
 @Component({
     selector: 'app-user-profile',
@@ -31,9 +32,14 @@ export class UserProfileComponent implements OnInit {
     showSuccessAlert: boolean = false;
 
     ngOnInit() {
+        if(Globals.userInfo.securityLevel == USERTYPE.SUPERVISOR ||
+            Globals.userInfo.securityLevel == USERTYPE.ADMINISTRATOR){
+            this.showManageUsers = true;
+        }
     }
 
     editProfile: boolean = false;
+    showManageUsers: boolean = false;
 
     openManageUsersModal(){
         this._modal.open(ManageUsersComponent, Globals.optionModalLg);

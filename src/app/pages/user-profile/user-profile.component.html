@@ -6,7 +6,7 @@
         </div>
 
         <div class="col-3 offset-3">
-            <button class="btn btn-success ml-5" (click)="openManageUsersModal()">
+            <button *ngIf="showManageUsers" class="btn btn-success ml-5" (click)="openManageUsersModal()">
                 Manage Users
             </button>
         </div>
