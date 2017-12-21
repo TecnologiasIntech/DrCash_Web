@@ -15,10 +15,10 @@ export class UserService {
         return new Promise((resolve, reject) => {
             this.db.object('users/' + user.username).valueChanges().subscribe((result: User) => {
                 if (result.username != null) {
-                    if(result.password==user.password){
+                    if (result.password == user.password) {
                         resolve(result);
 
-                    }else{
+                    } else {
                         reject(ERRORAUTH.WRONGPASSWORD);
                     }
                 } else {
@@ -28,7 +28,15 @@ export class UserService {
         })
     }
 
-    updateUser(user:User){
-        this.db.object('users/'+user.username).update(user);
+    updateUser(user: User) {
+        this.db.object('users/' + user.username).update(user);
+    }
+
+    getUsers() {
+        return new Promise(resolve => {
+            this.db.list('users').valueChanges().take(1).subscribe(snapshot => {
+                resolve(snapshot);
+            })
+        })
     }
 }
