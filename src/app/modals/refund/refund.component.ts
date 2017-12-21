@@ -6,6 +6,7 @@ import {Observable} from "rxjs/Observable";
 import {Transaction} from "../../interfaces/transaction";
 import {DateService} from "../../services/date.service";
 import {TRANSACTIONTYPE} from "../../enums/enums";
+import {PrintService} from "../../services/print.service";
 
 
 @Component({
@@ -80,6 +81,7 @@ export class RefundComponent implements OnInit {
         }
 
         this._transactionService.setTransaction(this.refundTransaction);
+        PrintService.printRefund(this.refundTransaction);
         this._activeModal.close();
     }
 
