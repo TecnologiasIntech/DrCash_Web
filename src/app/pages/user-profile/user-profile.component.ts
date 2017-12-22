@@ -49,6 +49,7 @@ export class UserProfileComponent implements OnInit {
         return (ValidationService.errorInField(this.editableUser.firstName) ||
             ValidationService.errorInField(this.editableUser.lastName) ||
             ValidationService.errorInField(this.editableUser.email) ||
+            ValidationService.errorInField(this.editableUser.securityQuestion) ||
             ValidationService.errorInField(this.editableUser.securityAnswer))
     }
 
