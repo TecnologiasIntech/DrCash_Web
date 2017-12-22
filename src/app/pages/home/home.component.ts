@@ -134,7 +134,6 @@ export class HomeComponent implements OnInit {
     }
 
     loadTransactions() {
-        //TODO: Verificar si despues de obtener el Initial Cash se agrega a Current Transactions
         if (Globals.userInfo.securityLevel == USERTYPE.USER) {
             this._transactionService.getMyCurrentTransactions()
                 .then((response: Transaction[]) => {

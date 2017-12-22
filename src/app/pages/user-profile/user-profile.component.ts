@@ -7,6 +7,7 @@ import {UserService} from "../../services/user.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ManageUsersComponent} from "../../modals/manage-users/manage-users.component";
 import {USERTYPE} from "../../enums/enums";
+import {SignUpComponent} from "../../modals/sign-up/sign-up.component";
 
 @Component({
     selector: 'app-user-profile',
@@ -42,13 +43,22 @@ export class UserProfileComponent implements OnInit {
     showManageUsers: boolean = false;
 
     openManageUsersModal(){
-        this._modal.open(ManageUsersComponent, Globals.optionModalLg);
+        this._modal.open(ManageUsersComponent, Globals.optionModalLg).result.then(
+            (result)=>{
+                this._modal.open(SignUpComponent, Globals.optionModalLg).result.then(
+                    result=>{
+                        this.openManageUsersModal();
+                    }, reason => {}
+                )
+            }, (reason)=>{}
+        )
     }
 
     areBasicFieldsEmpty() {
         return (ValidationService.errorInField(this.editableUser.firstName) ||
             ValidationService.errorInField(this.editableUser.lastName) ||
             ValidationService.errorInField(this.editableUser.email) ||
+            ValidationService.errorInField(this.editableUser.securityQuestion) ||
             ValidationService.errorInField(this.editableUser.securityAnswer))
     }
 

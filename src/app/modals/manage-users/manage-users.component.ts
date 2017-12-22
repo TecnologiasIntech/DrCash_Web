@@ -104,11 +104,11 @@ export class ManageUsersComponent implements OnInit {
     }
 
     closeModal() {
-        this._activeModal.close();
+        this._activeModal.dismiss();
     }
 
     openSignUpModal() {
-        this._modal.open(SignUpComponent, Globals.optionModalLg);
+        this._activeModal.close();
     }
 
 }
