@@ -37,12 +37,7 @@
       <div class="form-group form-group--select">
         <div class="select">
           <select class="form-control">
-            <option>Select an Option</option>
-            <option>Option 1</option>
-            <option>Option 2</option>
-            <option>Option 3</option>
-            <option>Option 4</option>
-            <option>Option 5</option>
+            <option *ngFor="let question of securityQuestions">{{question}}</option>
           </select>
         </div>
       </div>

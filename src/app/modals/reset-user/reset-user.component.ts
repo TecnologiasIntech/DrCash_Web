@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Globals} from "../../statics/globals";
 
 @Component({
   selector: 'app-reset-user',
@@ -8,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 export class ResetUserComponent implements OnInit {
 
   constructor() { }
+
+  securityQuestions: string[] = Globals.securityQuestions;
 
   ngOnInit() {
   }
