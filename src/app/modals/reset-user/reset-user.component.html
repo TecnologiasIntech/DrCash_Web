@@ -20,12 +20,13 @@
     <div>
       <!--New Password-->
       <div class="form-group">
-        <input type="password" class="form-control form-control-line" placeholder="New Password">
+        <input type="text" class="form-control form-control-line" placeholder="New Password" [(ngModel)]="editableUser.password"
+        (ngModelChange)="displayPasswordLevel()">
         <i class="form-group__bar"></i>
       </div>
 
       <!--Level of security of the password-->
-      <span class="text-danger">Poor</span>
+      <span  #securityLevel class="text-danger">{{passwordStregth}}</span>
 
       <!--Confirm Password-->
       <div class="form-group mt-3">
