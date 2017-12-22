@@ -25,6 +25,8 @@ export class UserProfileComponent implements OnInit {
 
     editableUser: User;
 
+    securityQuestions: string[] = Globals.securityQuestions;
+
     newPassword: string;
     confirmPassword: string;
     showWarning = false;

@@ -15,4 +15,13 @@ export class Globals {
     };
     sidebarVisible: boolean = false;
     static userInfo: User;
+
+    static securityQuestions: string[] = [
+        "What was your childhood nickname?",
+        "What school did you attend for sixth grade?",
+        "In what town was your firs job?",
+        "Where does your youngest brother birthday?",
+        "What is your maternal grandmother maiden name?",
+        "What street did you live on in third grade?",
+    ]
 }

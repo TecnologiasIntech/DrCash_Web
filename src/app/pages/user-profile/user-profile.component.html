@@ -123,12 +123,7 @@
                                     <div class="select">
                                         <select class="form-control" [(ngModel)]="editableUser.securityQuestion"
                                                 (ngModelChange)="disableWarnings()">
-                                            <option>What was your childhood nickname</option>
-                                            <option>What school did you attend for sixth grade</option>
-                                            <option>In what town was your firs job</option>
-                                            <option>Where does your youngest brother birthday</option>
-                                            <option>What is your maternal grandmother maiden name</option>
-                                            <option>What street did you live on in third grade</option>
+                                            <option *ngFor="let question of securityQuestions">{{question}}</option>
                                         </select>
                                     </div>
                                 </div>
