@@ -45,8 +45,7 @@ export class SignUpComponent implements OnInit {
             this.setUserClinic();
             this._usersService.updateUser(this.newUser);
             this.resetNewUser();
-            this.enableSuccesfullyAlert();
-
+            this.closeModal();
         }
     }
 
