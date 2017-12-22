@@ -41,8 +41,7 @@ export class SignUpComponent implements OnInit {
     saveUser() {
         if (!this.areEmptyFields()) {
             this.updateSecurityLevel();
-            this.setActiveUser();
-            this.setPasswordReset();
+            this.loadUserDefaultData();
             this.setUserClinic();
             this._usersService.updateUser(this.newUser);
             this.resetNewUser();
@@ -57,14 +56,6 @@ export class SignUpComponent implements OnInit {
 
     updateSecurityLevel() {
         this.newUser.securityLevel = parseInt(this.securityLevel);
-    }
-
-    setActiveUser() {
-        this.newUser.activeAccount = true;
-    }
-
-    setPasswordReset() {
-        this.newUser.passwordReset = true;
     }
 
     resetNewUser() {
