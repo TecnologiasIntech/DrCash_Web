@@ -1,0 +1,169 @@
+        <div class="col-3 offset-3">
+            <button *ngIf="showManageUsers" class="btn btn-success ml-5" (click)="openManageUsersModal()">
+                Manage Users
+            </button>
+        </div>
+    </div>
+
+    <!--Card-->
+    <div class="row mt-3">
+        <div class="col-9 offset-1">
+            <div class="card" style="width: 100%">
+                <!--Blue Background And Buttons-->
+                <div class="card-title bg-primary" style="width: 100%;height: 130px">
+                    <!--Profile Picture And Profile Picture Background -->
+                    <div class="profilePicture">
+                        <img class="profileImage img-circle"
+                             src="https://www.colourbox.com/preview/10831733-tablet-user-flat-icon.jpg" alt="">
+                    </div>
+                    <div class="profilePictureBackground">
+                        <div style="width: 165px;height: 165px;background-color: #FFFFFF; border-radius: 50%"></div>
+                    </div>
+
+                    <!--Profile Edit Button -->
+                    <div *ngIf="!editProfile" class="editButton">
+                        <button class="btn btn-warning" style="font-size: 25px; border-radius: 47%"
+                                (click)="editProfile = true"><i class="zmdi zmdi-edit"></i></button>
+                    </div>
+                    <div *ngIf="!editProfile" class="editButtonBackground">
+                        <div style="width: 55px;height: 55px;background-color: #FFFFFF; border-radius: 50%"></div>
+                    </div>
+
+                    <!--Cancel Edit Button -->
+                    <div *ngIf="editProfile" class="cancelEditButton">
+                        <button class="btn btn-danger" style="font-size: 25px; border-radius: 47%"
+                                (click)="cancelEditProfile()">
+                            <i class="zmdi zmdi-close"></i>
+                        </button>
+                    </div>
+                    <div *ngIf="editProfile" class="cancelEditButtonBackground">
+                        <div style="width: 55px;height: 55px;background-color: #FFFFFF; border-radius: 50%"></div>
+                    </div>
+
+                    <!--Finish Edit Button -->
+                    <div *ngIf="editProfile" class="finishEditButton">
+                        <button class="btn btn-success" style="font-size: 25px; border-radius: 47%"
+                                (click)="finishEditProfile()">
+                            <i class="zmdi zmdi-check"></i>
+                        </button>
+                    </div>
+                    <div *ngIf="editProfile" class="finishEditButtonBackground">
+                        <div style="width: 55px;height: 55px;background-color: #FFFFFF; border-radius: 50%"></div>
+                    </div>
+                </div>
+
+                <div class="card-body" style="font-size: 15px">
+
+
+                    <!--UserName-->
+                    <div class="row ml-4">
+                        <div class="col-2 offset-4">
+                            <div style="margin-top: 90px; margin-left: 49%">
+                                {{editableUser.username}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Not Editable Profile Fields-->
+                    <div *ngIf="!editProfile">
+                        <div class="row mt-3">
+                            <div class="col-3 offset-2">
+                                <p>First Name</p>
+                                <p>Last Name</p>
+                                <p>Email</p>
+                                <p>Security Question</p>
+                            </div>
+                            <div class="col-3 offset-2">
+                                <p>{{editableUser.firstName}}</p>
+                                <p>{{editableUser.lastName}}</p>
+                                <p>{{editableUser.email}}</p>
+                                <p>{{editableUser.securityQuestion}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Editable Profile Fields-->
+                    <div *ngIf="editProfile">
+                        <div class="row mt-3">
+                            <div class="col-3 offset-2">
+                                <!--First Name Input-->
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-line"
+                                           [(ngModel)]="editableUser.firstName" (ngModelChange)="disableWarnings()"
+                                           placeholder="First Name">
+                                    <i class="form-group__bar"></i>
+                                </div>
+
+                                <!--Last Name Input-->
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-line"
+                                           [(ngModel)]="editableUser.lastName" (ngModelChange)="disableWarnings()"
+                                           placeholder="Last Name">
+                                    <i class="form-group__bar"></i>
+                                </div>
+
+                                <!--Email Input-->
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-line"
+                                           [(ngModel)]="editableUser.email" (ngModelChange)="disableWarnings()"
+                                           placeholder="Email">
+                                    <i class="form-group__bar"></i>
+                                </div>
+                            </div>
+                            <div class="col-3 offset-2">
+                                <!--Security Question Input-->
+                                <div class="form-group form-group--select">
+                                    <div class="select">
+                                        <select class="form-control" [(ngModel)]="editableUser.securityQuestion"
+                                                (ngModelChange)="disableWarnings()">
+                                            <option *ngFor="let question of securityQuestions">{{question}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <!--Security Question Answer Input-->
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-line"
+                                           [(ngModel)]="editableUser.securityAnswer" (ngModelChange)="disableWarnings()"
+                                           placeholder="Answer">
+                                    <i class="form-group__bar"></i>
+                                </div>
+                                <!--New Password Input-->
+                                <div class="form-group">
+                                    <input type="password" class="form-control form-control-line"
+                                           [(ngModel)]="newPassword" (ngModelChange)="disableWarnings()"
+                                           placeholder="New Password">
+                                    <i class="form-group__bar"></i>
+                                </div>
+                                <!--Confirm Password Input-->
+                                <div class="form-group">
+                                    <input type="password" class="form-control form-control-line"
+                                           [(ngModel)]="confirmPassword" (ngModelChange)="disableWarnings()"
+                                           placeholder="Confirm Password">
+                                    <i class="form-group__bar"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--Alerts -->
+                    <div class="row">
+                        <div class="col-8 offset-2">
+                            <div *ngIf="showWarning" class="alert alert-danger animated shake" role="alert">
+                                <strong>Warning</strong> {{warning}}
+                            </div>
+                            <div *ngIf="showSuccessAlert" class="alert alert-success animated shake" role="alert">
+                                Succesfully updated user
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
