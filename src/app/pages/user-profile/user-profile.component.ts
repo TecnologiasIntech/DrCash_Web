@@ -26,6 +26,8 @@ export class UserProfileComponent implements OnInit {
 
     editableUser: User;
 
+    securityQuestions: string[] = Globals.securityQuestions;
+
     newPassword: string;
     confirmPassword: string;
     showWarning = false;
@@ -58,7 +60,6 @@ export class UserProfileComponent implements OnInit {
         return (ValidationService.errorInField(this.editableUser.firstName) ||
             ValidationService.errorInField(this.editableUser.lastName) ||
             ValidationService.errorInField(this.editableUser.email) ||
-            ValidationService.errorInField(this.editableUser.securityQuestion) ||
             ValidationService.errorInField(this.editableUser.securityAnswer))
     }
 

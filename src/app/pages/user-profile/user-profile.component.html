@@ -1,10 +1,3 @@
-<section class="content">
-    <!--Header-->
-    <div class="row">
-        <div class="col-4 offset-1">
-            <h3 class="font-weight-bold">User Profile</h3>
-        </div>
-
         <div class="col-3 offset-3">
             <button *ngIf="showManageUsers" class="btn btn-success ml-5" (click)="openManageUsersModal()">
                 Manage Users
@@ -123,12 +116,7 @@
                                     <div class="select">
                                         <select class="form-control" [(ngModel)]="editableUser.securityQuestion"
                                                 (ngModelChange)="disableWarnings()">
-                                            <option>What was your childhood nickname</option>
-                                            <option>What school did you attend for sixth grade</option>
-                                            <option>In what town was your firs job</option>
-                                            <option>Where does your youngest brother birthday</option>
-                                            <option>What is your maternal grandmother maiden name</option>
-                                            <option>What street did you live on in third grade</option>
+                                            <option *ngFor="let question of securityQuestions">{{question}}</option>
                                         </select>
                                     </div>
                                 </div>
