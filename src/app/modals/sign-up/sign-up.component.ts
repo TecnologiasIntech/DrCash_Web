@@ -5,6 +5,8 @@ import {User} from "../../interfaces/user";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ValidationService} from "../../services/validation.service";
 import {UserService} from "../../services/user.service";
+import {forEach} from "@angular/router/src/utils/collection";
+import {FirebaseListObservable} from "angularfire2/database-deprecated";
 
 @Component({
     selector: 'app-sign-up',
@@ -13,11 +15,12 @@ import {UserService} from "../../services/user.service";
 })
 export class SignUpComponent implements OnInit {
 
-    newUser:User = {} as User;
+    newUser: User = {} as User;
 
     constructor(private _activeModal: NgbActiveModal,
-                private _userService: UserService) {
+                private _usersService: UserService) {
     }
+
     @ViewChild('username')
     username: ElementRef;
     @ViewChild('firstName')
@@ -27,71 +30,83 @@ export class SignUpComponent implements OnInit {
     @ViewChild('email')
     email: ElementRef;
 
-    securityLevel:string = "0";
+    securityLevel: string = "0";
+
+    users;
+    showSuccessAlert: boolean = false;
 
     ngOnInit() {
     }
 
-    saveUser(){
-        if(!this.areEmptyFields()){
+    saveUser() {
+        if (!this.areEmptyFields()) {
             this.updateSecurityLevel();
             this.setActiveUser();
             this.setPasswordReset();
             this.setUserClinic();
-            this._userService.updateUser(this.newUser);
+            this._usersService.updateUser(this.newUser);
             this.resetNewUser();
+            this.enableSuccesfullyAlert();
 
         }
     }
 
-    setUserClinic(){
+    setUserClinic() {
         this.newUser.clinic = Globals.userInfo.clinic;
     }
 
-    updateSecurityLevel(){
+    updateSecurityLevel() {
         this.newUser.securityLevel = parseInt(this.securityLevel);
     }
 
-    setActiveUser(){
+    setActiveUser() {
         this.newUser.activeAccount = true;
     }
 
-    setPasswordReset(){
+    setPasswordReset() {
         this.newUser.passwordReset = true;
     }
 
-    resetNewUser(){
+    resetNewUser() {
         this.newUser = {} as User;
     }
 
-    areEmptyFields(){
-        if(ValidationService.errorInField(this.newUser.username)){
+    areEmptyFields() {
+        if (ValidationService.errorInField(this.newUser.username)) {
             this.username.nativeElement.focus();
             return true;
         }
-        if(ValidationService.errorInField(this.newUser.firstName)){
+        if (ValidationService.errorInField(this.newUser.firstName)) {
             this.firstName.nativeElement.focus();
             return true;
         }
-        if(ValidationService.errorInField(this.newUser.lastName)){
+        if (ValidationService.errorInField(this.newUser.lastName)) {
             this.lastName.nativeElement.focus();
             return true;
         }
-        if(ValidationService.errorInField(this.newUser.email)){
+        if (ValidationService.errorInField(this.newUser.email)) {
             this.email.nativeElement.focus();
             return true;
         }
-        else{
+        else {
             return false;
         }
 
     }
 
-    closeModal(){
+    closeModal() {
         this._activeModal.close();
     }
 
-    loadUserDefaultData(){
+    enableSuccesfullyAlert() {
+        this.showSuccessAlert = true;
+
+        setTimeout(() => {
+            this.showSuccessAlert = false;
+        }, 3000);
+    }
+
+    loadUserDefaultData() {
         // TODO: Verificar si es de utilidad el userID y si no entonces eliminarlo
         this.newUser.activeAccount = true;
         this.newUser.passwordReset = true;
