@@ -108,7 +108,10 @@ export class ManageUsersComponent implements OnInit {
     }
 
     openSignUpModal() {
-        this._modal.open(SignUpComponent, Globals.optionModalLg);
+        this._modal.open(SignUpComponent, Globals.optionModalLg).result.then(()=>{
+            this.loadUsers();
+            }
+        );
     }
 
 }
