@@ -40,12 +40,18 @@ export class SignUpComponent implements OnInit {
 
     saveUser() {
         if (!this.areEmptyFields()) {
-            this.updateSecurityLevel();
-            this.loadUserDefaultData();
-            this.setUserClinic();
-            this._usersService.updateUser(this.newUser);
-            this.resetNewUser();
-            this.closeModal();
+            this._usersService.existUser(this.newUser.username).then(exist=>{
+                if(!exist){
+                    this.updateSecurityLevel();
+                    this.loadUserDefaultData();
+                    this.setUserClinic();
+                    this._usersService.updateUser(this.newUser);
+                    this.resetNewUser();
+                    this.closeModal();
+                }else{
+                    this.enableSuccesfullyAlert();
+                }
+            })
         }
     }
 
