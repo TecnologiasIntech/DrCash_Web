@@ -21,19 +21,22 @@
             <div class="col-6">
                 <!--UserName-->
                 <div class="form-group">
-                    <input type="text" class="form-control form-control-line" #username placeholder="UserName">
+                    <input type="text" class="form-control form-control-line" #username placeholder="UserName"
+                    [(ngModel)]="newUser.username">
                     <i class="form-group__bar"></i>
                 </div>
 
                 <!--First Name-->
                 <div class="form-group">
-                    <input type="text" class="form-control form-control-line" #firstName placeholder="First Name">
+                    <input type="text" class="form-control form-control-line" #firstName placeholder="First Name"
+                           [(ngModel)]="newUser.firstName">
                     <i class="form-group__bar"></i>
                 </div>
 
                 <!--Last Name-->
                 <div class="form-group">
-                    <input type="text" class="form-control form-control-line" #lastName placeholder="Last Name">
+                    <input type="text" class="form-control form-control-line" #lastName placeholder="Last Name"
+                           [(ngModel)]="newUser.lastName">
                     <i class="form-group__bar"></i>
                 </div>
             </div>
@@ -42,7 +45,8 @@
             <div class="col-6">
                 <!--Email-->
                 <div class="form-group">
-                    <input type="text" class="form-control form-control-line" #email placeholder="Email">
+                    <input type="text" class="form-control form-control-line" #email placeholder="Email"
+                           [(ngModel)]="newUser.email">
                     <i class="form-group__bar"></i>
                 </div>
 
@@ -50,21 +54,21 @@
                 <h4>Security Level</h4>
                 <div>
                     <label class="custom-control custom-radio">
-                        <input type="radio" name="radio-inline" class="custom-control-input" value="0" checked>
+                        <input type="radio" name="securityLevel" class="custom-control-input" value="0" [(ngModel)]="securityLevel">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">User</span>
                     </label>
 
                     <label class="custom-control custom-radio">
-                        <input type="radio" name="radio-inline" class="custom-control-input" value="1">
+                        <input type="radio" name="securityLevel" class="custom-control-input" value="1" [(ngModel)]="securityLevel">
                         <span class="custom-control-indicator"></span>
-                        <span class="custom-control-description">Sup</span>
+                        <span class="custom-control-description">Supervisor</span>
                     </label>
 
                     <label class="custom-control custom-radio">
-                        <input type="radio" name="radio-inline" class="custom-control-input" value="2">
+                        <input type="radio" name="securityLevel" class="custom-control-input" value="2" [(ngModel)]="securityLevel">
                         <span class="custom-control-indicator"></span>
-                        <span class="custom-control-description">Admin</span>
+                        <span class="custom-control-description">Administrator</span>
                     </label>
                 </div>
 
@@ -73,11 +77,11 @@
         <!--Buttons-->
         <div class="row mt-4">
             <div class="col-4 offset-3">
-                <button class="btn btn-dark">Cancel</button>
+                <button class="btn btn-dark" (click)="closeModal()">Cancel</button>
             </div>
 
             <div class="col-4">
-                <button class="btn btn-success">Approve</button>
+                <button class="btn btn-success" (click)="saveUser()">Approve</button>
             </div>
         </div>
 
