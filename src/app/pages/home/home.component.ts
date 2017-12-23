@@ -20,6 +20,7 @@ import {Transaction} from "../../interfaces/transaction";
 import {BrowserError} from "protractor/built/exitCodes";
 import {userInfo} from "os";
 import {ValidationService} from "../../services/validation.service";
+import {ResetUserComponent} from "../../modals/reset-user/reset-user.component";
 
 
 @Component({
@@ -41,7 +42,11 @@ export class HomeComponent implements OnInit {
         if (Globals.userInfo == null) {
             _modal.open(LoginComponent, Globals.optionModalLg).result
                 .then((response) => {
+                if(Globals.userInfo.passwordReset){
+                    this.openResetUser();
+                }else{
                     this.loadTransactions();
+                }
                 })
         }else{
             this.loadTransactions();
@@ -50,6 +55,13 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         this.cleanTotalsTransactions();
+    }
+
+    openResetUser(){
+        this._modal.open(ResetUserComponent, Globals.optionModalSm).result
+            .then(()=>{
+            this.loadTransactions();
+            })
     }
 
     openCashIn() {
