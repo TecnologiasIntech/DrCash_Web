@@ -1,27 +1,103 @@
-<div class="card m-b-10" style="    width: 900px !important;">
-    <div class="card-header bg-primary p-10">
-        <div class="row mt-2">
-            <!--Down Icon-->
-            <div class="col-1 offset-1">
-                <i class="zmdi zmdi-file" style="color: white; font-size: 35px"></i>
+<section class="content">
+    <div class="card m-b-10">
+        <div class="card-body p-15">
+            <!--Filters-->
+            <div class="row">
+                <div class="col-2 offset-1">
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-line" placeholder="Transaction Number"
+                        [(ngModel)]="transactionNumber"
+                        >
+                        <i class="form-group__bar"></i>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-line" placeholder="Comment"
+                        [(ngModel)]="comment"
+                        >
+                        <i class="form-group__bar"></i>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-line" placeholder="Patient Name"
+                        [(ngModel)]="patientName"
+                        >
+                        <i class="form-group__bar"></i>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-line" placeholder="Date From"
+                        [(ngModel)]="dateFrom"
+                        >
+                        <i class="form-group__bar"></i>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-line" placeholder="Date To"
+                        [(ngModel)]="dateTo"
+                        >
+                        <i class="form-group__bar"></i>
+                    </div>
+                </div>
+                <div class="col-1 p-r-0">
+                    <button class="btn btn-danger" (click)="cleanFields()">Clear</button>
+                </div>
+                <div class="col-1 p-l-0">
+                    <button class="btn btn-primary" (click)="searchTransactions()">Search</button>
+                </div>
             </div>
-            <!--Title-->
-            <div class="col-5 p-t-5">
-                <h2 style="color: white">Daily Transactions</h2>
+
+            <!--Transactions-->
+            <div class="row" style="height: 50vh; max-height: 50vh; overflow-y: auto">
+                <div class="col-12">
+                    <table class="table header_fijo">
+                        <thead>
+                        <tr class="w-847_5">
+                            <th class="w-282">Transaction ID</th>
+                            <th class="w-282">User</th>
+                            <th class="w-282">Date</th>
+                            <th class="w-282">Patient Name</th>
+                            <th class="w-282">Type</th>
+                            <th class="w-282">Charge</th>
+                            <th class="w-282">Cash</th>
+                            <th class="w-282">Credit</th>
+                            <th class="w-282">Check</th>
+                            <th class="w-282">Check #</th>
+                            <th class="w-282">Closed</th>
+                            <th class="w-282">Register</th>
+                        </tr>
+                        </thead>
+                        <tbody style="overflow-y: auto">
+
+                        <tr *ngFor="let transaction of transactions">
+                            <td class="w-282">{{ transaction.dateRegistered }}</td>
+                            <td class="w-282">{{ transaction.userKey }}</td>
+                            <td class="w-282">{{ transaction.dateRegistered }}</td>
+                            <td class="w-282">{{ transaction.patientFirstName }}</td>
+                            <td class="w-282">{{ getTypeTransaction(transaction.type) }}</td>
+                            <td class="w-282">${{ transaction.amountCharged ? transaction.amountCharged : '0.00' }}</td>
+                            <td class="w-282">${{ transaction.cash ? transaction.cash : '0.00'}}</td>
+                            <td class="w-282">${{ transaction.credit ? transaction.credit : '0.00'}}</td>
+                            <td class="w-282">${{ transaction.check ? transaction.check : '0.00'}}</td>
+                            <td class="w-282">{{ transaction.checkNumber ? transaction.checkNumber : '0'}}</td>
+                            <td class="w-282">
+                                <input type="checkbox" value="{{ transaction.closed ? transaction.closed : false }}" disabled>
+                            </td>
+                            <td class="w-282">{{ transaction.registerId }}</td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
+        </div>
+        <div class="card-footer text-right p-b-10 p-t-20">
+            <button class="btn btn-success" style="width: 100px;">Print</button>
         </div>
     </div>
-    <div class="card-body">
-
-        <!--Filters-->
-        <div class="row">
-
-        </div>
-
-        <!--Transactions-->
-    </div>
-    <div class="card-footer text-right p-b-10 p-t-20">
-        <button class="btn btn-danger m-r-15">Close</button>
-        <button class="btn btn-success">Print</button>
-    </div>
-</div>
+</section>
