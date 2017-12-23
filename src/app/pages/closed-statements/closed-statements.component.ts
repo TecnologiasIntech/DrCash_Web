@@ -1,15 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-closed-statements',
-  templateUrl: './closed-statements.component.html',
-  styleUrls: ['./closed-statements.component.scss']
+    selector: 'app-closed-statements',
+    templateUrl: './closed-statements.component.html',
+    styleUrls: ['./closed-statements.component.scss']
 })
 export class ClosedStatementsComponent implements OnInit {
 
-  constructor() { }
+    transactionNumber: number;
+    dateTo: string;
+    dateFrom:string;
 
-  ngOnInit() {
-  }
+    constructor() {
+    }
+
+    ngOnInit() {
+    }
+
+    cleanFields(){
+
+    }
+
+    searchTransactions(){
+        
+    }
 
 }
