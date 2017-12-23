@@ -39,15 +39,15 @@ export class HomeComponent implements OnInit {
                 private db: AngularFireDatabase,
                 public  _dateService: DateService,
                 private  _transactionService: TransactionService) {
-        // if (Globals.userInfo == null) {
-        //     _modal.open(LoginComponent, Globals.optionModalLg).result
-        //         .then((response) => {
-        //             this.loadTransactions();
-        //         })
-        // }else{
-        //     this.loadTransactions();
-        // }
-        this._modal.open(DailyTransactionsComponent, Globals.optionModalLg);
+         if (Globals.userInfo == null) {
+             _modal.open(LoginComponent, Globals.optionModalLg).result
+                 .then((response) => {
+                     this.loadTransactions();
+                 })
+         }else{
+             this.loadTransactions();
+         }
+       //this._modal.open(DailyTransactionsComponent, Globals.optionModalLg);
     }
 
     ngOnInit() {

@@ -9,39 +9,27 @@
             <div class="col-9">
                 <!--Filters-->
                 <div class="row offset-1 mt-5">
-                    <div class="col-2 p-l-30">
+                    <div class="col-5 p-l-30">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-line" placeholder="Transaction Number">
+                            <input type="text" class="form-control form-control-line" [(ngModel)]="transactionNumber" placeholder="Transaction Number">
                             <i class="form-group__bar"></i>
                         </div>
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-line" placeholder="Comment">
+                            <input type="text" class="form-control form-control-line" [(ngModel)]="dateFrom" placeholder="Date From">
                             <i class="form-group__bar"></i>
                         </div>
                     </div>
                     <div class="col-2">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-line" placeholder="Patient Name">
-                            <i class="form-group__bar"></i>
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-line" placeholder="Date From">
-                            <i class="form-group__bar"></i>
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-line" placeholder="Date To">
+                            <input type="text" class="form-control form-control-line" [(ngModel)]="dateTo" placeholder="Date To">
                             <i class="form-group__bar"></i>
                         </div>
                     </div>
                     <div class="col-3">
                         <button class="btn btn-danger">Clear</button>
-                        <button class="btn btn-primary">Search</button>
+                        <button class="btn btn-primary" (click)="searchTransactions()">Search</button>
                     </div>
                 </div>
 
@@ -58,11 +46,11 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="cursor-pointer">
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>@mdo</td>
+                            <tr *ngFor="let transaction of transactions" class="cursor-pointer">
+                                <td>{{transaction.key}}</td>
+                                <td>{{transaction.patientFirstName}}</td>
+                                <td>{{transaction.userKey}}</td>
+                                <td>{{transaction.dateRegistered}}</td>
                             </tr>
                             <tr>
                                 <th scope="row">2</th>
