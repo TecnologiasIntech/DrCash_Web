@@ -139,8 +139,7 @@ export class TransactionService {
                 this.getTransaction(transactionNumber).take(1).subscribe(snapshot => {
                     resolve(snapshot);
                 })
-            }
-            if (!ValidationService.errorInField(dateFrom) && ValidationService.errorInField(dateTo)) {
+            } else if (!ValidationService.errorInField(dateFrom) && ValidationService.errorInField(dateTo)) {
                 this.db.list('transactions', ref => ref
                     .orderByChild('dateRegistered')
                     .startAt(dateFrom)

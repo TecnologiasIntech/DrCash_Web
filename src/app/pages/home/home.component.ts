@@ -20,6 +20,7 @@ import {Transaction} from "../../interfaces/transaction";
 import {BrowserError} from "protractor/built/exitCodes";
 import {userInfo} from "os";
 import {ValidationService} from "../../services/validation.service";
+import {DailyTransactionsComponent} from "../daily-transactions/daily-transactions.component";
 
 
 @Component({
@@ -38,14 +39,15 @@ export class HomeComponent implements OnInit {
                 private db: AngularFireDatabase,
                 public  _dateService: DateService,
                 private  _transactionService: TransactionService) {
-        if (Globals.userInfo == null) {
-            _modal.open(LoginComponent, Globals.optionModalLg).result
-                .then((response) => {
-                    this.loadTransactions();
-                })
-        }else{
-            this.loadTransactions();
-        }
+        // if (Globals.userInfo == null) {
+        //     _modal.open(LoginComponent, Globals.optionModalLg).result
+        //         .then((response) => {
+        //             this.loadTransactions();
+        //         })
+        // }else{
+        //     this.loadTransactions();
+        // }
+        this._modal.open(DailyTransactionsComponent, Globals.optionModalLg);
     }
 
     ngOnInit() {
