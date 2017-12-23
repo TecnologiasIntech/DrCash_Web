@@ -64,7 +64,7 @@ export class DailyTransactionsComponent implements OnInit {
     }
 
     printTransactionsTable(){
-        let columns: string[] = ["id","nombre"];
+        let columns: string[] = ["Transaction","User", "Date", "Patient Name", "Type", "Charge", "Cash", "Credit", "Check", "Change", "Check #", "Closed", "Register"];
         let rows = this._transactionService.convertTransactionsToPrintPDF(this.transactions);
         let doc = new jsPDF('p', 'pt');
         doc.autoTable(columns, rows);

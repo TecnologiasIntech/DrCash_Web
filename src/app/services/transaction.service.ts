@@ -197,21 +197,21 @@ export class TransactionService {
     convertTransactionsToPrintPDF(transactions: Transaction[]): any[] {
         let transactionToPrint: any[] = [];
         for (let iteration in transactions) {
-            transactionToPrint.push({
-                transactionID: transactions[iteration].dateRegistered.toString() + transactions[iteration].modifiedById,
-                userKey: transactions[iteration].userKey,
-                dateRegistered: DateService.getDateLetterBy(transactions[iteration].dateRegistered.toString()),
-                patientFirstName: transactions[iteration].patientFirstName,
-                type: transactions[iteration].type,
-                amountCharged: "$" + (transactions[iteration].amountCharged ? transactions[iteration].amountCharged.toString() : "0.00"),
-                cash: "$" + (transactions[iteration].cash ? transactions[iteration].cash.toString() : "0.00"),
-                credit: "$" + (transactions[iteration].credit ? transactions[iteration].credit.toString() : "0.00"),
-                check: "$" + (transactions[iteration].check ? transactions[iteration].check.toString() : "0.00"),
-                checkNumber: (transactions[iteration].checkNumber ? transactions[iteration].checkNumber : "0"),
-                closed: (transactions[iteration].closed ? transactions[iteration].closed : false),
-                registerId: transactions[iteration].registerId,
+            transactionToPrint.push([
+                transactions[iteration].dateRegistered.toString() + transactions[iteration].modifiedById,
+                transactions[iteration].userKey,
+                DateService.getDateLetterBy(transactions[iteration].dateRegistered.toString()),
+                transactions[iteration].patientFirstName,
+                transactions[iteration].type,
+                "$" + (transactions[iteration].amountCharged ? transactions[iteration].amountCharged.toString() : "0.00"),
+                "$" + (transactions[iteration].cash ? transactions[iteration].cash.toString() : "0.00"),
+                "$" + (transactions[iteration].credit ? transactions[iteration].credit.toString() : "0.00"),
+                "$" + (transactions[iteration].check ? transactions[iteration].check.toString() : "0.00"),
+                (transactions[iteration].checkNumber ? transactions[iteration].checkNumber : "0"),
+                (transactions[iteration].closed ? transactions[iteration].closed : false),
+                transactions[iteration].registerId,
 
-            })
+            ])
         }
         return transactionToPrint;
     }
