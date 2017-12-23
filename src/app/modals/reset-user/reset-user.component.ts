@@ -51,6 +51,7 @@ export class ResetUserComponent implements OnInit {
         this.addLowerCaseToArray();
         this.addSpecialCharactersToArray();
         this.addUppercaseLetterToArray();
+        this.editableUser.password = "";
     }
 
     saveUser(){
