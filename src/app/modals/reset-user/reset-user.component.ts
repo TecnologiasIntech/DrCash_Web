@@ -16,6 +16,9 @@ export class ResetUserComponent implements OnInit {
     @ViewChild('securityLevel')
     securityLevel: ElementRef;
 
+    @ViewChild('confirmPasswordInput')
+    confirmPasswordInput: ElementRef;
+
     upperCaseLetters: string [] = [];
     lowerCaseLetters: string [] = [];
     specialCharacters: string [] = [];
@@ -27,10 +30,15 @@ export class ResetUserComponent implements OnInit {
 
     editableUser: User = {} as User;
 
+    confirmPassword: string = "";
+
     securityQuestions: string[] = Globals.securityQuestions;
 
     passwordLevel: number = 0;
     passwordStregth: string = "Weak";
+
+    showWarning: boolean = false;
+    warning: string = "";
 
     ngOnInit() {
         this.addLowerCaseToArray();
@@ -38,8 +46,34 @@ export class ResetUserComponent implements OnInit {
         this.addUppercaseLetterToArray();
     }
 
+    saveUser(){
+        if(this.doThePasswordsMatch()){
+            console.log("Usuario Registrado")
+        }else{
+            this.focusConfirmPasswordInput();
+            this.showPasswordDoNotMatchWarning();
+        }
+    }
+
+    doThePasswordsMatch(){
+        return (this.confirmPassword == this.editableUser.password);
+    }
+
+    focusConfirmPasswordInput(){
+        this.confirmPasswordInput.nativeElement.focus();
+    }
+
+    showPasswordDoNotMatchWarning(){
+        this.warning = "Passwords must match.";
+        this.showWarning = true;
+    }
+
+    disableAlert(){
+        this.showWarning = false;
+    }
 
     displayPasswordLevel() {
+        this.disableAlert();
         this.resetPasswordSecurityLevel()
         this.validateCharactersInPassword();
         this.validatePasswordLength();

@@ -20,7 +20,7 @@
     <div>
       <!--New Password-->
       <div class="form-group">
-        <input type="text" class="form-control form-control-line" placeholder="New Password" [(ngModel)]="editableUser.password"
+        <input type="password" class="form-control form-control-line" placeholder="New Password" [(ngModel)]="editableUser.password"
         (ngModelChange)="displayPasswordLevel()">
         <i class="form-group__bar"></i>
       </div>
@@ -30,7 +30,7 @@
 
       <!--Confirm Password-->
       <div class="form-group mt-3">
-        <input type="password" class="form-control form-control-line" placeholder="Confirm Password">
+        <input type="password" class="form-control form-control-line" #confirmPasswordInput [(ngModel)]="confirmPassword" (ngModelChange)="disableAlert()" placeholder="Confirm Password">
         <i class="form-group__bar"></i>
       </div>
 
@@ -53,11 +53,16 @@
     <!--Buttons-->
     <div class="row">
       <div class="col-3 offset-2">
-        <button class="btn btn-success">Change</button>
+        <button class="btn btn-success" (click)="saveUser()">Change</button>
       </div>
       <div class="col-3 offset-1">
         <button class="btn btn-danger">Cancel</button>
       </div>
+    </div>
+
+    <!--Alert -->
+    <div *ngIf="showWarning" class="alert alert-danger mt-3 animated shake" role="alert">
+      <strong>Warning!</strong> {{warning}}
     </div>
 
   </div>
