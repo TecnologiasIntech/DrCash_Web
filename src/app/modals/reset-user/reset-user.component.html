@@ -37,7 +37,7 @@
       <!--Security Questions-->
       <div class="form-group form-group--select">
         <div class="select">
-          <select class="form-control">
+          <select class="form-control" [(ngModel)]="editableUser.securityQuestion" (ngModelChange)="disableAlert()">
             <option *ngFor="let question of securityQuestions">{{question}}</option>
           </select>
         </div>
@@ -45,7 +45,8 @@
 
       <!--Security Answer-->
       <div class="form-group">
-        <input type="text" class="form-control form-control-line" placeholder="Answer">
+        <input type="text" class="form-control form-control-line" #securityAnswer placeholder="Answer" [(ngModel)]="editableUser.securityAnswer"
+               (ngModelChange)="disableAlert()">
         <i class="form-group__bar"></i>
       </div>
     </div>

@@ -2,6 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Globals} from "../../statics/globals";
 import {forEach} from "@angular/router/src/utils/collection";
 import {User} from "../../interfaces/user";
+import {ValidationService} from "../../services/validation.service";
 
 @Component({
     selector: 'app-reset-user',
@@ -18,6 +19,9 @@ export class ResetUserComponent implements OnInit {
 
     @ViewChild('confirmPasswordInput')
     confirmPasswordInput: ElementRef;
+
+    @ViewChild('securityAnswer')
+    securityAnswer: ElementRef;
 
     upperCaseLetters: string [] = [];
     lowerCaseLetters: string [] = [];
@@ -47,12 +51,38 @@ export class ResetUserComponent implements OnInit {
     }
 
     saveUser(){
+        if(this.isResetUserReady()){
+            console.log("Usuario Listo");
+        }
+    }
+
+    isResetUserReady(){
         if(this.doThePasswordsMatch()){
-            console.log("Usuario Registrado")
+            if(this.isPasswordLevelStrong()){
+                return(!this.isSecurityQuestiondOrSeucirtyAnswerEmpty());
+            }else{
+                return false;
+            }
         }else{
             this.focusConfirmPasswordInput();
             this.showPasswordDoNotMatchWarning();
+            return false;
         }
+    }
+
+    isPasswordLevelStrong(){
+        if(this.passwordLevel < 4){
+            this.showPasswordMustBeStrongWarning();
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    showPasswordMustBeStrongWarning(){
+        this.warning = "Your password must be STRONG";
+        this.showWarning = true;
     }
 
     doThePasswordsMatch(){
@@ -68,6 +98,29 @@ export class ResetUserComponent implements OnInit {
         this.showWarning = true;
     }
 
+    isSecurityQuestiondOrSeucirtyAnswerEmpty(){
+        if(ValidationService.errorInField(this.editableUser.securityQuestion)){
+            this.showSecurityQuestionWarning()
+            return true;
+        }else{
+            if(ValidationService.errorInField(this.editableUser.securityAnswer)){
+                this.focusSecurityAnswer()
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+
+    showSecurityQuestionWarning(){
+        this.warning = "You must choose a security question.";
+        this.showWarning = true;
+    }
+
+    focusSecurityAnswer(){
+        this.securityAnswer.nativeElement.focus();
+    }
+
     disableAlert(){
         this.showWarning = false;
     }
@@ -78,7 +131,6 @@ export class ResetUserComponent implements OnInit {
         this.validateCharactersInPassword();
         this.validatePasswordLength();
         this.sumPasswordLevel();
-        console.log(this.passwordLevel)
 
         let color: string;
         switch (this.passwordLevel) {
