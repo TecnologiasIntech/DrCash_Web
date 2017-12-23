@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Transaction} from "../../interfaces/transaction";
 
 @Component({
   selector: 'app-logs',
@@ -12,4 +13,21 @@ export class LogsComponent implements OnInit {
   ngOnInit() {
   }
 
+    transactions: Transaction[] = [];
+    transaction: Transaction = {} as Transaction;
+    transactionNumber: number;
+    dateFrom: any;
+    dateTo: any;
+
+    cleanFields(){
+        this.transactionNumber = null;
+        this.dateFrom = null;
+        this.dateTo = null;
+
+        this.transaction = {} as Transaction;
+        this.transactions = [];
+    }
 }
+
+
+
