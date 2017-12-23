@@ -17,16 +17,21 @@ export class LogService {
     getlog(procesBy: string) {
         return this.db.list("logs", ref => ref
             .orderByChild('procesBy')
-            .equalTo(procesBy).valueChanges())
+            .equalTo(procesBy)).valueChanges()
+
     }
 
     searchLogs(procesBy: string, dateFrom: number, dateTo: number) {
         return new Promise((resolve, reject) => {
             if (!ValidationService.errorInField(procesBy)) {
-                this.getlog(procesBy).take(1).subscribe((snapshot: Log) => {
-                    let logs: Log[] = [];
-                    logs.push(snapshot);
-                    resolve(logs);
+                this.getlog(procesBy).take(1).subscribe((snapshot: Log[]) => {
+                    if (snapshot.length > 0) {
+                        resolve(snapshot)
+                    } else {
+                        let logs: any[] = [];
+                        logs.push(snapshot);
+                        resolve(logs);
+                    }
                 })
             } else if (!ValidationService.errorInField(dateFrom) && ValidationService.errorInField(dateTo)) {
                 this.db.list('logs', ref => ref
