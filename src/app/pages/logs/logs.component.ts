@@ -15,12 +15,12 @@ export class LogsComponent implements OnInit {
 
     transactions: Transaction[] = [];
     transaction: Transaction = {} as Transaction;
-    transactionNumber: number;
+    username: number;
     dateFrom: any;
     dateTo: any;
 
     cleanFields(){
-        this.transactionNumber = null;
+        this.username = null;
         this.dateFrom = null;
         this.dateTo = null;
 
