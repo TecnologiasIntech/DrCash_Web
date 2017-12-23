@@ -3,6 +3,8 @@ import {Globals} from "../../statics/globals";
 import {forEach} from "@angular/router/src/utils/collection";
 import {User} from "../../interfaces/user";
 import {ValidationService} from "../../services/validation.service";
+import {UserService} from "../../services/user.service";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-reset-user',
@@ -11,7 +13,8 @@ import {ValidationService} from "../../services/validation.service";
 })
 export class ResetUserComponent implements OnInit {
 
-    constructor() {
+    constructor(private _userServices: UserService,
+                private _activeModal: NgbActiveModal) {
     }
 
     @ViewChild('securityLevel')
@@ -32,7 +35,7 @@ export class ResetUserComponent implements OnInit {
     specialCharacterInPassword = false;
     acceptablePasswordLength = false;
 
-    editableUser: User = {} as User;
+    editableUser: User = Globals.userInfo;
 
     confirmPassword: string = "";
 
@@ -52,7 +55,10 @@ export class ResetUserComponent implements OnInit {
 
     saveUser(){
         if(this.isResetUserReady()){
-            console.log("Usuario Listo");
+            this.editableUser.passwordReset = false;
+            this._userServices.updateUser(this.editableUser);
+            this._activeModal.close();
+
         }
     }
 
@@ -233,5 +239,6 @@ export class ResetUserComponent implements OnInit {
         this.specialCharacters.push(String.fromCharCode(35)) //#
         this.specialCharacters.push(String.fromCharCode(63)) //?
         this.specialCharacters.push(String.fromCharCode(38)) //&
+        this.specialCharacters.push(String.fromCharCode(42)) //*
     }
 }
