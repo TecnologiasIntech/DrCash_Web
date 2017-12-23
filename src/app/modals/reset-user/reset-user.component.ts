@@ -54,6 +54,10 @@ export class ResetUserComponent implements OnInit {
         this.editableUser.password = "";
     }
 
+    closeApp(){
+        window.close();
+    }
+
     saveUser(){
         if(this.isResetUserReady()){
             this.editableUser.passwordReset = false;
