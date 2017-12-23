@@ -136,8 +136,10 @@ export class TransactionService {
     searchDailyTransactions(transactionNumber: number, comment: string, patientName: string, dateFrom: number, dateTo: number) {
         return new Promise((resolve, reject) => {
             if (!ValidationService.errorInField(transactionNumber)) {
-                this.getTransaction(transactionNumber).take(1).subscribe(snapshot => {
-                    resolve(snapshot);
+                this.getTransaction(transactionNumber).take(1).subscribe((snapshot:Transaction) => {
+                    let transaction:Transaction[] = [];
+                    transaction.push(snapshot);
+                    resolve(transaction);
                 })
             } else if (!ValidationService.errorInField(dateFrom) && ValidationService.errorInField(dateTo)) {
                 this.db.list('transactions', ref => ref
