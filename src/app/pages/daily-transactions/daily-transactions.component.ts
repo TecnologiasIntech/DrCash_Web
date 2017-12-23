@@ -3,7 +3,8 @@ import {Transaction} from "../../interfaces/transaction";
 import {TransactionService} from "../../services/transaction.service";
 import {ValidationService} from "../../services/validation.service";
 import {TRANSACTIONTYPE} from "../../enums/enums";
-
+import 'jspdf-autotable';
+import * as jsPDF from 'jspdf';
 @Component({
     selector: 'app-daily-transactions',
     templateUrl: './daily-transactions.component.html',
@@ -60,6 +61,14 @@ export class DailyTransactionsComponent implements OnInit {
             case TRANSACTIONTYPE.REFUND:
                 return 'Refund';
         }
+    }
+
+    printTransactionsTable(){
+        let columns: string[] = ["id","nombre"];
+        let rows = this._transactionService.convertTransactionsToPrintPDF(this.transactions);
+        let doc = new jsPDF('p', 'pt');
+        doc.autoTable(columns, rows);
+        doc.save('table.pdf');
     }
 
 }
