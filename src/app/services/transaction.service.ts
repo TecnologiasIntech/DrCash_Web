@@ -14,6 +14,7 @@ import {ValidationService} from "./validation.service";
 import 'rxjs/add/operator/take'
 import {onChildAdded} from "angularfire2/database-deprecated";
 import {reject} from "q";
+import * as _ from "lodash";
 
 @Injectable()
 export class TransactionService {
@@ -125,11 +126,51 @@ export class TransactionService {
         this.db.list('closedTransactions').update(closeTransaction.datetime, closeTransaction);
     }
 
-    updateTransaction(transactionKey: string, ammount: number, transaction: Transaction) {
-        this.db.list('transactions').update(transactionKey.toString(), {
-            amountCharged: ammount,
-            comment: transaction
+    updateTransaction(transaction: Transaction) {
+        this.db.list('transactions').update(transaction.dateRegistered.toString()+transaction.modifiedById, transaction)
+    }
+
+    searchDailyTransactions(transactionNumber: number, comment: string, patientName: string, dateFrom: number, dateTo: number) {
+        return new Promise((resolve, reject) => {
+            if (!ValidationService.errorInField(transactionNumber)) {
+                this.getTransaction(transactionNumber).take(1).subscribe((snapshot:Transaction) => {
+                    let transaction:Transaction[] = [];
+                    transaction.push(snapshot);
+                    resolve(transaction);
+                })
+            } else if (!ValidationService.errorInField(dateFrom) && ValidationService.errorInField(dateTo)) {
+                this.db.list('transactions', ref => ref
+                    .orderByChild('dateRegistered')
+                    .startAt(dateFrom)
+                ).valueChanges().take(1).subscribe((snapshot: Transaction[]) => {
+                    let transactions: Transaction[] = this.filterTransations(snapshot, comment, patientName);
+                    resolve(transactions)
+                })
+            } else if (!ValidationService.errorInField(dateFrom) && !ValidationService.errorInField(dateTo)) {
+                this.db.list('transactions', ref => ref
+                    .orderByChild('dateRegistered')
+                    .startAt(dateFrom)
+                    .endAt(dateTo)
+                ).valueChanges().take(1).subscribe((snapshot: Transaction[]) => {
+                    let transactions: Transaction[] = this.filterTransations(snapshot, comment, patientName);
+                    resolve(transactions)
+                })
+            }
         })
+    }
+
+    filterTransations(transactions: Transaction[], comment: string, patientName: string) {
+        // debugger
+        if (!ValidationService.errorInField(comment) && ValidationService.errorInField(patientName))
+            transactions = _.filter(transactions, ['comment', comment]);
+
+        if (ValidationService.errorInField(comment) && !ValidationService.errorInField(patientName))
+            transactions = _.filter(transactions, ['patientFirstName', patientName]);
+
+        if (!ValidationService.errorInField(comment) && !ValidationService.errorInField(patientName))
+            transactions = _.filter(transactions, {'patientFirstName': patientName, 'comment': comment});
+
+        return transactions;
     }
 
     static getDefaultValuesToTransaction() {

@@ -135,7 +135,7 @@ export class HomeComponent implements OnInit {
                 break;
 
             case TRANSACTIONTYPE.REFUND:
-                logTransaction = "Refund for total amount: $" + transaction.amountCharged;
+                logTransaction = "Refund for total amount: $" + transaction.cash;
                 break;
 
             case TRANSACTIONTYPE.INITIALCASH:
