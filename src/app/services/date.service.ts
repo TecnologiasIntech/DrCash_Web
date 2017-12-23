@@ -54,7 +54,7 @@ export class DateService {
         dateNumber = date.getFullYear().toString();
         dateNumber += ("0"+(date.getMonth()+1).toString()).slice(-2);
         dateNumber += ("0"+(date.getDate().toString())).slice(-2);
-        dateNumber += "00000"
+        dateNumber += "000000"
         return parseInt(dateNumber);
     }
 
@@ -64,7 +64,7 @@ export class DateService {
         dateNumber = date.getFullYear().toString();
         dateNumber += ("0"+(date.getMonth()+1).toString()).slice(-2);
         dateNumber += ("0"+(date.getDate().toString())).slice(-2);
-        dateNumber += "23599"
+        dateNumber += "235959"
         return parseInt(dateNumber);
     }
     

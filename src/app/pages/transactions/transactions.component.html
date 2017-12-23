@@ -3,7 +3,7 @@
     <h1>Transaccions</h1>
 
     <!--Card-->
-    <div class="card mt-4">
+    <div class="card mt-4" style="height: 70vh; max-height: 70vh">
 
         <div class="row">
             <div class="col-9">
@@ -53,7 +53,7 @@
                                 <td>{{transaction.dateRegistered}}</td>
                                 <td>{{transaction.patientFirstName}}</td>
                                 <td>{{transaction.userKey}}</td>
-                                <td>{{transaction.dateRegistered}}</td>
+                                <td>{{ _dateService.convertDateToDD_MM_YYYY_HH_MM(transaction.dateRegistered.toString()) }}</td>
                             </tr>
                             </tbody>
                         </table>

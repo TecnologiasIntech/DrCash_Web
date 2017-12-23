@@ -5,6 +5,10 @@ import {ValidationService} from "../../services/validation.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {CashInComponent} from "../../modals/cash-in/cash-in.component";
 import {Globals} from "../../statics/globals";
+import * as firebase from "firebase";
+import UpdateData = firebase.firestore.UpdateData;
+import {UpdateTransactionComponent} from "../../modals/update-transaction/update-transaction.component";
+import {DateService} from "../../services/date.service";
 
 @Component({
     selector: 'app-transactions',
@@ -14,7 +18,8 @@ import {Globals} from "../../statics/globals";
 export class TransactionsComponent implements OnInit {
 
     constructor(private _transactionService: TransactionService,
-                private _modal:NgbModal) {
+                private _modal:NgbModal,
+                public _dateService: DateService) {
     }
 
     transactions: Transaction[] = [];
@@ -29,6 +34,7 @@ export class TransactionsComponent implements OnInit {
 
     searchTransactions() {
         this.validateDateFields();
+        this.transactions = [];
         this._transactionService.searchDailyTransactions(this.transactionNumber, null, null, this.dateFrom, this.dateTo)
             .then((response: Transaction[]) => {
                 this.transactions = response;
@@ -54,7 +60,8 @@ export class TransactionsComponent implements OnInit {
     }
 
     openEditTransaction(){
-        this._modal.open(CashInComponent, Globals.optionModalLg);
+        const modal = this._modal.open(UpdateTransactionComponent, Globals.optionModalLg);
+        modal.componentInstance.editTransaction = this.transaction;
     }
 
 }

@@ -7,6 +7,7 @@ import {Transaction} from "../../interfaces/transaction";
 import {DateService} from "../../services/date.service";
 import {TRANSACTIONTYPE} from "../../enums/enums";
 import {PrintService} from "../../services/print.service";
+import {alertService} from "../../services/alert.service";
 
 
 @Component({
@@ -27,7 +28,8 @@ export class RefundComponent implements OnInit {
 
     constructor(private _activeModal: NgbActiveModal,
                 public _validationService: ValidationService,
-                private _transactionService: TransactionService) {
+                private _transactionService: TransactionService,
+                private _alertService: alertService) {
         this.refundTransaction = TransactionService.getDefaultValuesToTransaction();
     }
 
@@ -66,23 +68,17 @@ export class RefundComponent implements OnInit {
         })
     }
 
-    updateTransaction(numberTransaction: string, ammount: number, comment: Transaction) {
-        this._transactionService.updateTransaction(numberTransaction, ammount, comment);
-        this._activeModal.dismiss();
-    }
-
     setTransaction() {
         this.refundTransaction.dateRegistered = DateService.getCurrentDate();
         this.refundTransaction.cash = parseFloat(this.refund);
         this.refundTransaction.type = TRANSACTIONTYPE.REFUND;
         this.refundTransaction.modificationDate = DateService.getCurrentDate();
-        if(!ValidationService.errorInField(this.refundComment)){
+        if (!ValidationService.errorInField(this.refundComment)) {
             this.refundTransaction.comment = this.refundComment;
         }
-
+        this.showSuccessfulTransactionAlert();
         this._transactionService.setTransaction(this.refundTransaction);
         PrintService.printRefund(this.refundTransaction);
-        this._activeModal.close();
     }
 
 
@@ -90,5 +86,11 @@ export class RefundComponent implements OnInit {
         this._activeModal.dismiss();
     }
 
+    showSuccessfulTransactionAlert() {
+        this._alertService.confirmSuccess("Successful Transaction", "")
+            .then(() => {
+                this._activeModal.close();
+            });
+    }
 
 }

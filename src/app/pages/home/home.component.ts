@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
          }else{
              this.loadTransactions();
          }
-       //this._modal.open(DailyTransactionsComponent, Globals.optionModalLg);
+       // this._modal.open(UpdateTransactionComponent, Globals.optionModalLg);
     }
 
     ngOnInit() {
@@ -125,7 +125,7 @@ export class HomeComponent implements OnInit {
                 break;
 
             case TRANSACTIONTYPE.REFUND:
-                logTransaction = "Refund for total amount: $" + transaction.amountCharged;
+                logTransaction = "Refund for total amount: $" + transaction.cash;
                 break;
 
             case TRANSACTIONTYPE.INITIALCASH:
