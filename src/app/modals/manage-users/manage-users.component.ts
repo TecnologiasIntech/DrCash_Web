@@ -8,6 +8,7 @@ import {forEach} from "@angular/router/src/utils/collection";
 import {FirebaseListObservable} from "angularfire2/database-deprecated";
 import {ValidationService} from "../../services/validation.service";
 import {USERTYPE} from "../../enums/enums";
+import {LogService} from "../../services/log.service";
 
 @Component({
     selector: 'app-manage-users',
@@ -18,7 +19,8 @@ export class ManageUsersComponent implements OnInit {
 
     constructor(private _activeModal: NgbActiveModal,
                 private _modal: NgbModal,
-                private _usersService: UserService) {
+                private _usersService: UserService,
+                private _logService:LogService) {
     }
 
     ngOnInit() {
@@ -63,6 +65,7 @@ export class ManageUsersComponent implements OnInit {
             if (!this.areEmptyFields()) {
                 this.saveSecurityLevel();
                 this._usersService.updateUser(this.editableUser);
+                this.setLog();
                 this.resetEditableUser();
             }
         }
@@ -70,6 +73,11 @@ export class ManageUsersComponent implements OnInit {
             this.resetEditableUser();
         }
 
+    }
+
+    setLog(){
+        let message:string = Globals.userInfo.username+" edited the user "+this.editableUser.username;
+        this._logService.setLog(message)
     }
 
     saveSecurityLevel(){
