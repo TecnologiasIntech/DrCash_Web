@@ -8,6 +8,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ManageUsersComponent} from "../../modals/manage-users/manage-users.component";
 import {USERTYPE} from "../../enums/enums";
 import {SignUpComponent} from "../../modals/sign-up/sign-up.component";
+import {LogService} from "../../services/log.service";
 
 @Component({
     selector: 'app-user-profile',
@@ -17,7 +18,8 @@ import {SignUpComponent} from "../../modals/sign-up/sign-up.component";
 export class UserProfileComponent implements OnInit {
 
     constructor(private _userService: UserService,
-                private _modal: NgbModal) {
+                private _modal: NgbModal,
+                private _logService:LogService) {
         // setTimeout(()=>{
         // }, 5000)
         this.editableUser = Globals.userInfo;
@@ -133,9 +135,14 @@ export class UserProfileComponent implements OnInit {
             this.saveNewPassword();
             this._userService.updateUser(this.editableUser);
             this.editableUser = Globals.userInfo;
+            this.setLog()
             this.editProfile = false;
             this.enableSuccesfullyAlert();
         }
     }
 
+    setLog(){
+        let message:string = Globals.userInfo.username+" edited his user.";
+        this._logService.setLog(message)
+    }
 }
