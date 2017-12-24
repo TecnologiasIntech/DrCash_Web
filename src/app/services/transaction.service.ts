@@ -13,7 +13,7 @@ import {TRANSACTIONTYPE} from "../enums/enums";
 import {ValidationService} from "./validation.service";
 import 'rxjs/add/operator/take'
 import {onChildAdded} from "angularfire2/database-deprecated";
-import {reject} from "q";
+import {denodeify, reject} from "q";
 import * as _ from "lodash";
 
 @Injectable()
@@ -124,7 +124,7 @@ export class TransactionService {
     }
 
     setClosedTransaction(closeTransaction: ClosedTransaction) {
-        this.db.list('closedTransactions').update(closeTransaction.datetime, closeTransaction);
+        this.db.list('closedTransactions').update(closeTransaction.datetime.toString(), closeTransaction);
     }
 
     updateTransaction(transaction: Transaction) {
@@ -172,6 +172,38 @@ export class TransactionService {
             transactions = _.filter(transactions, {'patientFirstName': patientName, 'comment': comment});
 
         return transactions;
+    }
+
+    searchClosedTransactions(transactionNumber:number, dateFrom:number, dateTo:number){
+        return new Promise((resolve, reject) => {
+            debugger
+            if (!ValidationService.errorInField(transactionNumber)) {
+                this.getClosedTransaction(transactionNumber).take(1).subscribe((snapshot:ClosedTransaction) => {
+                    let transaction:ClosedTransaction[] = [];
+                    transaction.push(snapshot);
+                    resolve(transaction);
+                })
+            } else if (!ValidationService.errorInField(dateFrom) && ValidationService.errorInField(dateTo)) {
+                this.db.list('closedTransactions', ref => ref
+                    .orderByChild('datetime')
+                    .startAt(dateFrom)
+                ).valueChanges().take(1).subscribe((snapshot: ClosedTransaction[]) => {
+                    resolve(snapshot)
+                })
+            } else if (!ValidationService.errorInField(dateFrom) && !ValidationService.errorInField(dateTo)) {
+                this.db.list('closedTransactions', ref => ref
+                    .orderByChild('datetime')
+                    .startAt(dateFrom)
+                    .endAt(dateTo)
+                ).valueChanges().take(1).subscribe((snapshot: ClosedTransaction[]) => {
+                    resolve(snapshot)
+                })
+            }
+        })
+    }
+
+    getClosedTransaction(transactionNumber:number){
+        return this.db.object('closedTransactions/'+transactionNumber.toString()).valueChanges();
     }
 
     static getDefaultValuesToTransaction() {

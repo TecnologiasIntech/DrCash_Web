@@ -220,7 +220,7 @@ export class CloseDateComponent implements OnInit {
             transaction_count: this._transactionService.numberOfCurrentTransactions,
             reg_RegisterID: "1",
             username: Globals.userInfo.username,
-            datetime: DateService.getCurrentDate().toString()
+            datetime: DateService.getCurrentDate()
         };
 
         this._transactionService.setClosedTransaction(closedTransaction);
