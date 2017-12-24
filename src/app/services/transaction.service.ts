@@ -127,11 +127,8 @@ export class TransactionService {
         this.db.list('closedTransactions').update(closeTransaction.datetime, closeTransaction);
     }
 
-    updateTransaction(transactionKey: string, ammount: number, transaction: Transaction) {
-        this.db.list('transactions').update(transactionKey.toString(), {
-            amountCharged: ammount,
-            comment: transaction
-        })
+    updateTransaction(transaction: Transaction) {
+        this.db.list('transactions').update(transaction.dateRegistered.toString()+transaction.modifiedById, transaction)
     }
 
     searchDailyTransactions(transactionNumber: number, comment: string, patientName: string, dateFrom: number, dateTo: number) {

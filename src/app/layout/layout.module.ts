@@ -1,18 +1,18 @@
 ///<reference path="../modals/sign-up/sign-up.component.ts"/>
-import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
-import { NgModule } from "@angular/core";
-import { LayoutRouting } from "./layout.routing";
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import {CommonModule} from "@angular/common";
+import {FormsModule} from "@angular/forms";
+import {NgModule} from "@angular/core";
+import {LayoutRouting} from "./layout.routing";
+import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
+import {ProgressbarModule} from 'ngx-bootstrap/progressbar';
 import {ButtonsModule, Ng2BootstrapModule} from 'ngx-bootstrap';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-import { LayoutComponent } from "./layout.component";
-import { HeaderComponent } from './header/header.component';
-import { SearchComponent } from './header/search/search.component';
-import { NavigationComponent } from './navigation/navigation.component';
-import { NavigationTriggerComponent } from './header/navigation-trigger/navigation-trigger.component';
+import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
+import {PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
+import {LayoutComponent} from "./layout.component";
+import {HeaderComponent} from './header/header.component';
+import {SearchComponent} from './header/search/search.component';
+import {NavigationComponent} from './navigation/navigation.component';
+import {NavigationTriggerComponent} from './header/navigation-trigger/navigation-trigger.component';
 import {alertService} from "../services/alert.service";
 import {AngularFireModule} from "angularfire2";
 import {AngularFireDatabase} from "angularfire2/database";
@@ -46,12 +46,13 @@ import {ValidationService} from "../services/validation.service";
 import {InitialCashComponent} from "../modals/initial-cash/initial-cash.component";
 import {Globals} from "../statics/globals";
 import {DateService} from "../services/date.service";
+import {ResetUserComponent} from "../modals/reset-user/reset-user.component";
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 }
 
-@NgModule ({
+@NgModule({
     declarations: [
         LayoutComponent,
         HeaderComponent,
@@ -68,7 +69,6 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         DailyTransactionsComponent,
         LogsComponent,
         TransactionsComponent,
-        UpdateTransactionComponent,
         ClosedStatementsComponent,
         UserProfileComponent,
         ManageUsersComponent,
@@ -78,7 +78,9 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         SmtpComponent,
         SignUpComponent,
         LoginComponent,
-        InitialCashComponent
+        InitialCashComponent,
+        UpdateTransactionComponent,
+        ResetUserComponent
     ],
     imports: [
         CommonModule,
@@ -115,11 +117,12 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         NewRegisterComponent,
         RefundComponent,
         SignUpComponent,
-        UpdateTransactionComponent,
         AuthorizationComponent,
-        InitialCashComponent
-
+        InitialCashComponent,
+        UpdateTransactionComponent,
+        ResetUserComponent
     ]
 })
 
-export class LayoutModule {  }
+export class LayoutModule {
+}
