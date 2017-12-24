@@ -4,6 +4,7 @@ import {ClosedTransaction} from "../../interfaces/closed-transaction";
 import {DateService} from "../../services/date.service";
 import {TransactionService} from "../../services/transaction.service";
 import {ValidationService} from "../../services/validation.service";
+import {PrintService} from "../../services/print.service";
 
 @Component({
     selector: 'app-closed-statements',
@@ -62,6 +63,10 @@ export class ClosedStatementsComponent implements OnInit {
             .then((response: Transaction[]) => {
                 this.transactions = response;
             })
+    }
+
+    printTransaction(){
+        PrintService.printClosedTransaction(this.closedTransaction);
     }
 
 }
