@@ -47,7 +47,7 @@
                     </thead>
                     <tbody>
                     <tr *ngFor="let log of logs">
-                        <td>{{log.dateTime}}</td>
+                        <td>{{_dateService.convertDateToDD_MM_YYYY_HH_MM(log.dateTime)}}</td>
                         <td>{{log.username}}</td>
                         <td>{{log.actions}}</td>
                         <td>{{log.clinic}}</td>
