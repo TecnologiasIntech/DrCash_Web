@@ -36,24 +36,26 @@
         <!--Transactions Table-->
         <div class="row">
             <div class="col-10 offset-1">
-                <table class="table mb-0">
-                    <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>User</th>
-                        <th>Actions</th>
-                        <th>Clinic</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let log of logs">
-                        <td>{{_dateService.convertDateToDD_MM_YYYY_HH_MM(log.dateTime)}}</td>
-                        <td>{{log.username}}</td>
-                        <td>{{log.actions}}</td>
-                        <td>{{log.clinic}}</td>
-                    </tr>
-                    </tbody>
-                </table>
+                <perfect-scrollbar>
+                    <table class="table mb-0">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>User</th>
+                            <th>Actions</th>
+                            <th>Clinic</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let log of logs">
+                            <td>{{_dateService.convertDateToDD_MM_YYYY_HH_MM(log.dateTime)}}</td>
+                            <td>{{log.username}}</td>
+                            <td>{{log.actions}}</td>
+                            <td>{{log.clinic}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </perfect-scrollbar>
             </div>
         </div>
     </div>
