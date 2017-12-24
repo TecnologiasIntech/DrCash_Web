@@ -25,7 +25,8 @@ export class TransactionService {
 
     public myCurrentTransactions: Transaction[] = [];
 
-    constructor(private db: AngularFireDatabase) {
+    constructor(private db: AngularFireDatabase,
+                private _dateService: DateService) {
     }
 
     getTransaction(key: number) {
@@ -133,8 +134,8 @@ export class TransactionService {
     searchDailyTransactions(transactionNumber: number, comment: string, patientName: string, dateFrom: number, dateTo: number) {
         return new Promise((resolve, reject) => {
             if (!ValidationService.errorInField(transactionNumber)) {
-                this.getTransaction(transactionNumber).take(1).subscribe((snapshot:Transaction) => {
-                    let transaction:Transaction[] = [];
+                this.getTransaction(transactionNumber).take(1).subscribe((snapshot: Transaction) => {
+                    let transaction: Transaction[] = [];
                     transaction.push(snapshot);
                     resolve(transaction);
                 })
@@ -188,5 +189,27 @@ export class TransactionService {
             registerId: "1",
             modifiedById: Globals.userInfo.userId
         }
+    }
+
+    convertTransactionsToPrintPDF(transactions: Transaction[]): any[] {
+        let transactionToPrint: any[] = [];
+        for (let iteration in transactions) {
+            transactionToPrint.push([
+                transactions[iteration].dateRegistered.toString() + transactions[iteration].modifiedById,
+                transactions[iteration].userKey,
+                DateService.getDateLetterBy(transactions[iteration].dateRegistered.toString()),
+                transactions[iteration].patientFirstName,
+                transactions[iteration].type,
+                "$" + (transactions[iteration].amountCharged ? transactions[iteration].amountCharged.toString() : "0.00"),
+                "$" + (transactions[iteration].cash ? transactions[iteration].cash.toString() : "0.00"),
+                "$" + (transactions[iteration].credit ? transactions[iteration].credit.toString() : "0.00"),
+                "$" + (transactions[iteration].check ? transactions[iteration].check.toString() : "0.00"),
+                (transactions[iteration].checkNumber ? transactions[iteration].checkNumber : "0"),
+                (transactions[iteration].closed ? transactions[iteration].closed : false),
+                transactions[iteration].registerId,
+
+            ])
+        }
+        return transactionToPrint;
     }
 }

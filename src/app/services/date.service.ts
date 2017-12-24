@@ -9,19 +9,19 @@ export class DateService {
 
     }
 
-    static getCurrentDate():number{
+    static getCurrentDate(): number {
         return this.getDateNumber()
     }
 
-    static getDateNumber():number {
+    static getDateNumber(): number {
         let date = new Date();
         let dateNumber: string;
         dateNumber = date.getFullYear().toString();
-        dateNumber += ("0"+(date.getMonth()+1).toString()).slice(-2);
-        dateNumber += ("0"+(date.getDate().toString())).slice(-2);
-        dateNumber += ("0"+(date.getHours().toString())).slice(-2);
-        dateNumber += ("0"+(date.getMinutes().toString())).slice(-2);
-        dateNumber += ("0"+(date.getSeconds().toString())).slice(-2);
+        dateNumber += ("0" + (date.getMonth() + 1).toString()).slice(-2);
+        dateNumber += ("0" + (date.getDate().toString())).slice(-2);
+        dateNumber += ("0" + (date.getHours().toString())).slice(-2);
+        dateNumber += ("0" + (date.getMinutes().toString())).slice(-2);
+        dateNumber += ("0" + (date.getSeconds().toString())).slice(-2);
 
         return parseInt(dateNumber);
     }
@@ -37,18 +37,30 @@ export class DateService {
         return dateLetter;
     }
 
-    convertDateToDD_MM_YYYY_HH_MM(date:string){
-        let newDate:string = "";
-        newDate += date.substr(6, 2)+"/";
-        newDate += date.substr(4, 2)+"/";
-        newDate += date.substr(0, 4)+" ";
-        newDate += date.substr(8, 2)+":";
+    static getDateLetterBy(beforeDate: string) {
+        let year: number = parseInt(beforeDate.substr(0, 4));
+        let month: number = parseInt(beforeDate.substr(4, 2)) - 1;
+        let day: number = parseInt(beforeDate.substr(6, 2));
+
+        let date = new Date(year, month, day);
+        let dateLetter: string;
+        dateLetter = date.toDateString();
+
+        return dateLetter;
+    }
+
+    convertDateToDD_MM_YYYY_HH_MM(date: string) {
+        let newDate: string = "";
+        newDate += date.substr(6, 2) + "/";
+        newDate += date.substr(4, 2) + "/";
+        newDate += date.substr(0, 4) + " ";
+        newDate += date.substr(8, 2) + ":";
         newDate += date.substr(10, 2);
 
         return newDate;
     }
 
-     getInitialCurrentDate(){
+    getInitialCurrentDate() {
         let date = new Date();
         let dateNumber: string;
         dateNumber = date.getFullYear().toString();
@@ -58,7 +70,7 @@ export class DateService {
         return parseInt(dateNumber);
     }
 
-      getEndCurrentDate(){
+    getEndCurrentDate() {
         let date = new Date();
         let dateNumber: string;
         dateNumber = date.getFullYear().toString();
@@ -67,23 +79,23 @@ export class DateService {
         dateNumber += "235959"
         return parseInt(dateNumber);
     }
-    
-    static getInitialCurrentDate(){
+
+    static getInitialCurrentDate() {
         let date = new Date();
         let dateNumber: string;
         dateNumber = date.getFullYear().toString();
-        dateNumber += ("0"+(date.getMonth()+1).toString()).slice(-2);
-        dateNumber += ("0"+(date.getDate().toString())).slice(-2);
+        dateNumber += ("0" + (date.getMonth() + 1).toString()).slice(-2);
+        dateNumber += ("0" + (date.getDate().toString())).slice(-2);
         dateNumber += "000000";
         return parseInt(dateNumber);
     }
 
-    static  getEndCurrentDate(){
+    static getEndCurrentDate() {
         let date = new Date();
         let dateNumber: string;
         dateNumber = date.getFullYear().toString();
-        dateNumber += ("0"+(date.getMonth()+1).toString()).slice(-2);
-        dateNumber += ("0"+(date.getDate().toString())).slice(-2);
+        dateNumber += ("0" + (date.getMonth() + 1).toString()).slice(-2);
+        dateNumber += ("0" + (date.getDate().toString())).slice(-2);
         dateNumber += "235959";
         return parseInt(dateNumber);
     }
