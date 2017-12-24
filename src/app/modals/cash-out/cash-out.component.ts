@@ -7,6 +7,8 @@ import {Transaction} from "../../interfaces/transaction";
 import {DateService} from "../../services/date.service";
 import {alertService} from "../../services/alert.service";
 import {PrintService} from "../../services/print.service";
+import {LogService} from "../../services/log.service";
+import {Globals} from "../../statics/globals";
 
 @Component({
     selector: 'app-cash-out',
@@ -35,7 +37,8 @@ export class CashOutComponent implements OnInit {
     constructor(private _activeModal: NgbActiveModal,
                 public _validationService: ValidationService,
                 private _transactionService:TransactionService,
-                private _alertService:alertService) {
+                private _alertService:alertService,
+                private _logService:LogService) {
 
         this.transaction=TransactionService.getDefaultValuesToTransaction()
     }
@@ -162,6 +165,7 @@ export class CashOutComponent implements OnInit {
             this.transaction.cash = parseFloat(this.transaction.cash.toString());
 
             this._transactionService.setTransaction(this.transaction);
+            this.setLog();
             PrintService.printCashOut(this.transaction);
 
             this._alertService.confirmSuccess("Successful Transaction","")
@@ -171,6 +175,13 @@ export class CashOutComponent implements OnInit {
         }else{
             this._alertService.error("Failed Transaction","TotalCash Field Must Have a Value ")
         }
+    }
+
+    setLog(){
+        //TODO Cambiar el numero de los register
+        let message:string = Globals.userInfo.username+" made a CashOut for "+this.transaction.cash+" in register 1";
+        message += " with the transaction number "+this.transaction.dateRegistered+Globals.userInfo.userId;
+        this._logService.setLog(message)
     }
 
 }
