@@ -8,6 +8,7 @@ import {TransactionService} from "../../services/transaction.service";
 import {TRANSACTIONTYPE} from "../../enums/enums";
 import {DateService} from "../../services/date.service";
 import {alertService} from "../../services/alert.service";
+import {LogService} from "../../services/log.service";
 
 @Component({
     selector: 'app-cash-in',
@@ -18,7 +19,8 @@ export class CashInComponent implements OnInit {
 
     constructor(private _activeModal: NgbActiveModal,
                 private _transactionService: TransactionService,
-                private _alertService: alertService) {
+                private _alertService: alertService,
+                private _logService: LogService) {
     }
 
     @ViewChild('otherComment')
@@ -58,9 +60,10 @@ export class CashInComponent implements OnInit {
         if (this.isCashInTransactionReady()) {
 
             this.validateCashCreditCheckInputsArentNull();
-            this.getTransactionDate()
+            this.getTransactionDate();
             this.saveTransaction();
             this.saveTransactionType();
+            this.setLog();
             this.printTicket();
             this.showSuccessfulTransactionAlert();
         } else {
@@ -68,6 +71,15 @@ export class CashInComponent implements OnInit {
             this.focusCheckBoxs();
         }
     }
+
+
+    setLog(){
+        //TODO Cambiar el numero de los register
+        let message:string = Globals.userInfo.username+" made a CashIn in register 1";
+        message += " with the transaction number "+this.newTransaction.dateRegistered+Globals.userInfo.userId;
+        this._logService.setLog(message)
+    }
+
 
     saveTransaction() {
         this.newTransaction.type = TRANSACTIONTYPE.CASHIN;
