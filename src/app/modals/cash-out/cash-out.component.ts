@@ -179,7 +179,7 @@ export class CashOutComponent implements OnInit {
 
     setLog(){
         //TODO Cambiar el numero de los register
-        let message:string = Globals.userInfo.username+" made a CashOut for "+this.transaction.cash+" in register 1";
+        let message:string = Globals.userInfo.username+" made a CashOut for $"+this.transaction.cash+" in register 1";
         message += " with the transaction number "+this.transaction.dateRegistered+Globals.userInfo.userId;
         this._logService.setLog(message)
     }
