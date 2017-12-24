@@ -16,5 +16,5 @@ export interface ClosedTransaction {
     transaction_count:number;
     reg_RegisterID:string;
     username:string;
-    datetime:string;
+    datetime:number;
 }
