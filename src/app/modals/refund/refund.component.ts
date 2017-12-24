@@ -8,6 +8,8 @@ import {DateService} from "../../services/date.service";
 import {TRANSACTIONTYPE} from "../../enums/enums";
 import {PrintService} from "../../services/print.service";
 import {alertService} from "../../services/alert.service";
+import {LogService} from "../../services/log.service";
+import {Globals} from "../../statics/globals";
 
 
 @Component({
@@ -29,7 +31,8 @@ export class RefundComponent implements OnInit {
     constructor(private _activeModal: NgbActiveModal,
                 public _validationService: ValidationService,
                 private _transactionService: TransactionService,
-                private _alertService: alertService) {
+                private _alertService: alertService,
+                private _logService:LogService) {
         this.refundTransaction = TransactionService.getDefaultValuesToTransaction();
     }
 
@@ -77,8 +80,16 @@ export class RefundComponent implements OnInit {
             this.refundTransaction.comment = this.refundComment;
         }
         this.showSuccessfulTransactionAlert();
+        this.setLog();
         this._transactionService.setTransaction(this.refundTransaction);
         PrintService.printRefund(this.refundTransaction);
+    }
+
+    setLog(){
+        //TODO Cambiar el numero de los register
+        let message:string = Globals.userInfo.username+" made a Refund of the transaction "+this.transaction.dateRegistered+this.transaction.registerId+" for $"+this.refundTransaction.cash+" in register 1";
+        message += " with the transaction number "+this.refundTransaction.dateRegistered+Globals.userInfo.userId;
+        this._logService.setLog(message)
     }
 
 
