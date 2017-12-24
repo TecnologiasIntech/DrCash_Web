@@ -7,6 +7,7 @@ import {DateService} from "../../services/date.service";
 import {TRANSACTIONTYPE} from "../../enums/enums";
 import {ValidationService} from "../../services/validation.service";
 import {alertService} from "../../services/alert.service";
+import {LogService} from "../../services/log.service";
 
 @Component({
   selector: 'app-update-transaction',
@@ -17,7 +18,8 @@ export class UpdateTransactionComponent implements OnInit {
 
     constructor(private _activeModal: NgbActiveModal,
                 private _transactionService: TransactionService,
-                private _alertService: alertService) {
+                private _alertService: alertService,
+                private _logService: LogService) {
     }
 
     @Input('editTransaction') editTransaction:Transaction;
@@ -58,11 +60,18 @@ export class UpdateTransactionComponent implements OnInit {
             this.saveTransaction();
             this.saveTransactionType();
             this.printTicket();
+            this.setLog();
             this.showSuccessfulTransactionAlert();
         } else {
             this.focusPaymentFirstNameInputs();
             this.focusCheckBoxs();
         }
+    }
+
+    setLog(){
+        //TODO Cambiar el numero de los register
+        let message:string = Globals.userInfo.username+" modified the transaction: "+this.newTransaction.dateRegistered+this.newTransaction.modifiedById;
+        this._logService.setLog(message)
     }
 
     saveTransaction() {
