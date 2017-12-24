@@ -7,6 +7,8 @@ import {Transaction} from "../../interfaces/transaction";
 import {TRANSACTIONTYPE} from "../../enums/enums";
 import {DateService} from "../../services/date.service";
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {Globals} from "../../statics/globals";
+import {LogService} from "../../services/log.service";
 
 @Component({
     selector: 'app-initial-cash',
@@ -22,7 +24,8 @@ export class InitialCashComponent implements OnInit {
 
     constructor(private _transactionsService: TransactionService,
                 private _activeModal:NgbActiveModal,
-                public _validationService: ValidationService) {
+                public _validationService: ValidationService,
+                private _logService:LogService) {
     }
 
     ngOnInit() {
@@ -34,6 +37,7 @@ export class InitialCashComponent implements OnInit {
             this.transaction.type = TRANSACTIONTYPE.INITIALCASH;
             this.transaction.cash = parseFloat(initialCash);
             this._transactionsService.setTransaction(this.transaction);
+            this.setLog();
             this._activeModal.close();
         }else{
             this.errorInitialCash = true;
@@ -42,5 +46,12 @@ export class InitialCashComponent implements OnInit {
     }
     selectAllText(){
         this.cash.nativeElement.select();
+    }
+
+    setLog(){
+        //TODO cambiar el registe por el numero de la caja registradora
+        let message: string = Globals.userInfo.username+" made a Initial Cash for $"+this.transaction.cash;
+        message += " in register 1";
+        this._logService.setLog(message);
     }
 }
