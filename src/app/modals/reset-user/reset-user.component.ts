@@ -5,6 +5,7 @@ import {User} from "../../interfaces/user";
 import {ValidationService} from "../../services/validation.service";
 import {UserService} from "../../services/user.service";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {LogService} from "../../services/log.service";
 
 @Component({
     selector: 'app-reset-user',
@@ -14,7 +15,8 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 export class ResetUserComponent implements OnInit {
 
     constructor(private _userServices: UserService,
-                private _activeModal: NgbActiveModal) {
+                private _activeModal: NgbActiveModal,
+                private _logService: LogService) {
     }
 
     @ViewChild('securityLevel')
@@ -62,9 +64,15 @@ export class ResetUserComponent implements OnInit {
         if(this.isResetUserReady()){
             this.editableUser.passwordReset = false;
             this._userServices.updateUser(this.editableUser);
+            this.setLog();
             this._activeModal.close();
 
         }
+    }
+
+    setLog(){
+        let message:string = Globals.userInfo.username+" change the password correctly.";
+        this._logService.setLog(message)
     }
 
     isResetUserReady(){
