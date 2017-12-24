@@ -29,7 +29,7 @@
             </div>
             <div class="col-4">
                 <button class="btn btn-danger" (click)="cleanFields()">Clear</button>
-                <button class="btn btn-primary" (click)="searchTransactions()">Search</button>
+                <button class="btn btn-primary" (click)="searchLogs()">Search</button>
                 <button class="btn btn-success">Print</button>
             </div>
         </div>
@@ -41,14 +41,16 @@
                     <tr>
                         <th>Date</th>
                         <th>User</th>
-                        <th>Message</th>
+                        <th>Actions</th>
+                        <th>Clinic</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>16582</td>
-                        <td>Dlio</td>
-                        <td>El usuario hizo la transaccion derp</td>
+                    <tr *ngFor="let log of logs">
+                        <td>{{log.dateTime}}</td>
+                        <td>{{log.username}}</td>
+                        <td>{{log.actions}}</td>
+                        <td>{{log.clinic}}</td>
                     </tr>
                     </tbody>
                 </table>
