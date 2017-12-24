@@ -20,6 +20,7 @@ export class LogService {
     constructor(private db: AngularFireDatabase) {
     }
 
+
     setLog(message:string){
         let log:Log = {} as Log;
         log.dateTime = DateService.getCurrentDate().toString();
@@ -29,17 +30,17 @@ export class LogService {
         this.db.list('logs').update(log.dateTime+Globals.userInfo.userId.toString(), log);
     }
 
-    getLog(procesBy: string) {
+    getLog(username: string) {
         return this.db.list("logs", ref => ref
-            .orderByChild('procesBy')
-            .equalTo(procesBy)).valueChanges()
+            .orderByChild('username')
+            .equalTo(username)).valueChanges()
 
     }
 
-    searchAllLogs(procesBy: string, dateFrom: number, dateTo: number) {
+    searchAllLogs(username: string, dateFrom: number, dateTo: number) {
         return new Promise((resolve, reject) => {
-            if (!ValidationService.errorInField(procesBy)) {
-                this.getLog(procesBy).take(1).subscribe((snapshot: Log[]) => {
+            if (!ValidationService.errorInField(username)) {
+                this.getLog(username).take(1).subscribe((snapshot: Log[]) => {
                     if (snapshot.length > 0) {
                         resolve(snapshot)
                     } else {
@@ -53,8 +54,7 @@ export class LogService {
                     .orderByChild('dateTime')
                     .startAt(dateFrom)
                 ).valueChanges().take(1).subscribe((snapshot: Log[]) => {
-                    let logs: Log[];
-                    resolve(logs)
+                    resolve(snapshot)
                 })
             } else if (!ValidationService.errorInField(dateFrom) && !ValidationService.errorInField(dateTo)) {
                 this.db.list('logs', ref => ref
@@ -62,17 +62,16 @@ export class LogService {
                     .startAt(dateFrom)
                     .endAt(dateTo)
                 ).valueChanges().take(1).subscribe((snapshot: Log[]) => {
-                    let logs: Log[];
-                    resolve(logs)
+                    resolve(snapshot)
                 })
             }
         })
     }
 
-    searchLogsByClinic(procesBy: string, dateFrom: number, dateTo: number) {
+    searchLogsByClinic(username: string, dateFrom: number, dateTo: number) {
         return new Promise((resolve, reject) => {
-            if (!ValidationService.errorInField(procesBy)) {
-                this.getLog(procesBy).take(1).subscribe((snapshot: Log[]) => {
+            if (!ValidationService.errorInField(username)) {
+                this.getLog(username).take(1).subscribe((snapshot: Log[]) => {
                     if (snapshot.length > 0) {
                         resolve(snapshot)
                     } else {

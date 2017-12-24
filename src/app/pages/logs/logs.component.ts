@@ -5,6 +5,7 @@ import {Log} from "../../interfaces/log";
 import {ValidationService} from "../../services/validation.service";
 import {LogService} from "../../services/log.service";
 import {Globals} from "../../statics/globals";
+import {DateService} from "../../services/date.service";
 
 @Component({
   selector: 'app-logs',
@@ -13,7 +14,8 @@ import {Globals} from "../../statics/globals";
 })
 export class LogsComponent implements OnInit {
 
-  constructor(private _logService: LogService) { }
+  constructor(private _logService: LogService,
+              public _dateService: DateService) { }
 
   ngOnInit() {
   }
@@ -49,8 +51,6 @@ export class LogsComponent implements OnInit {
                     this.logs = response;
                 })
         }
-
-        console.log(logs);
     }
 
     validateDateFields() {
