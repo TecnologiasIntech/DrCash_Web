@@ -8,6 +8,7 @@ import {ClosedTransaction} from "../../interfaces/closed-transaction";
 import {DateService} from "../../services/date.service";
 import {Globals} from "../../statics/globals";
 import {PrintService} from "../../services/print.service";
+import {LogService} from "../../services/log.service";
 
 @Component({
     selector: 'app-close-date',
@@ -45,7 +46,8 @@ export class CloseDateComponent implements OnInit {
 
     constructor(private _activeModal: NgbActiveModal,
                 public _validationService: ValidationService,
-                private _transactionService: TransactionService) {
+                private _transactionService: TransactionService,
+                private _logService: LogService) {
 
     }
 
@@ -224,7 +226,15 @@ export class CloseDateComponent implements OnInit {
         };
 
         this._transactionService.setClosedTransaction(closedTransaction);
+        this.setLog();
         PrintService.printClosedTransaction(closedTransaction);
+    }
+
+    setLog(){
+        //TODO Cambiar el numero de los register
+        let message:string = Globals.userInfo.username+" closed date at te register 1";
+         message += " for $"+this.totalCash;
+        this._logService.setLog(message)
     }
 
     verifyFields() {
