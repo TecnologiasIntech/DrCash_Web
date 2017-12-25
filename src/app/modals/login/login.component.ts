@@ -6,6 +6,7 @@ import {ValidationService} from "../../services/validation.service";
 import {Globals} from "../../statics/globals";
 import {ERRORAUTH} from "../../enums/enums";
 import {timeout} from "q";
+import {LogService} from "../../services/log.service";
 
 
 @Component({
@@ -31,7 +32,8 @@ export class LoginComponent implements OnInit {
 
 
     constructor(private activeModal: NgbActiveModal,
-                private _usrService: UserService) {
+                private _usrService: UserService,
+                private _logService:LogService) {
 
 
     }
@@ -64,6 +66,7 @@ export class LoginComponent implements OnInit {
     userAuth(user: User) {
         this._usrService.authUser(user).then((response:User) => {
             Globals.userInfo = response;
+            this.setLog();
             this.activeModal.close(true);
         }).catch((reject: any) => {
             // this._alertService.error(reject,"Try Again");
@@ -76,6 +79,12 @@ export class LoginComponent implements OnInit {
                 this.passRef.nativeElement.focus();
             }
         })
+    }
+
+    setLog(){
+        //TODO Cambiar el numero de los register
+        let message:string = Globals.userInfo.username+" made a login at te register 1";
+        this._logService.setLog(message)
     }
 
     closeApp() {

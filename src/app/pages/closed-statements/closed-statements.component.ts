@@ -5,6 +5,8 @@ import {DateService} from "../../services/date.service";
 import {TransactionService} from "../../services/transaction.service";
 import {ValidationService} from "../../services/validation.service";
 import {PrintService} from "../../services/print.service";
+import {LogService} from "../../services/log.service";
+import {Globals} from "../../statics/globals";
 
 @Component({
     selector: 'app-closed-statements',
@@ -21,7 +23,8 @@ export class ClosedStatementsComponent implements OnInit {
     closedTransaction: ClosedTransaction = {} as ClosedTransaction;
 
     constructor(public _dateService: DateService,
-                private _transactionService: TransactionService) {
+                private _transactionService: TransactionService,
+                private _logService:LogService) {
     }
 
     ngOnInit() {
@@ -67,6 +70,14 @@ export class ClosedStatementsComponent implements OnInit {
 
     printTransaction(){
         PrintService.printClosedTransaction(this.closedTransaction);
+        this.setLog()
+    }
+
+    setLog(){
+        //TODO Cambiar el numero de los register
+        let message:string = Globals.userInfo.username+" reprint closed statement for ID ";
+        message += this.closedTransaction.datetime;
+        this._logService.setLog(message)
     }
 
 }

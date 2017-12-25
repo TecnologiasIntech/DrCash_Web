@@ -34,7 +34,7 @@ export class PrintService {
  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.8.0/JsBarcode.all.js"></script>
  
- </head><body >`);
+ </head><body style="overflow-y: auto">`);
         // language=HTML
         mywindow.document.write(`
 
@@ -141,7 +141,7 @@ export class PrintService {
                 </tbody>
             </table>
             
-                        <button class="oculto-impresion" onclick="imprimir()">Imprimir Ticket</button>
+                        <button class="oculto-impresion" onclick="imprimir()" align="center"">Imprimir Ticket</button>
 
             <div class="text-center">Close Statement ID</div>
             <canvas id="barcode"></canvas>

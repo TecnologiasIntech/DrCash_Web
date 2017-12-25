@@ -80,7 +80,6 @@ export class TransactionService {
     getTotalRegistered(): number {
         let totalRegistered: number = 0;
         for (let item in this.myCurrentTransactions) {
-            debugger
             if (this.myCurrentTransactions[item].type != TRANSACTIONTYPE.INITIALCASH) {
                 switch (this.myCurrentTransactions[item].type) {
 
@@ -176,7 +175,6 @@ export class TransactionService {
 
     searchClosedTransactions(transactionNumber:number, dateFrom:number, dateTo:number){
         return new Promise((resolve, reject) => {
-            debugger
             if (!ValidationService.errorInField(transactionNumber)) {
                 this.getClosedTransaction(transactionNumber).take(1).subscribe((snapshot:ClosedTransaction) => {
                     let transaction:ClosedTransaction[] = [];

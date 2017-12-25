@@ -7,6 +7,7 @@ import {ValidationService} from "../../services/validation.service";
 import {UserService} from "../../services/user.service";
 import {forEach} from "@angular/router/src/utils/collection";
 import {FirebaseListObservable} from "angularfire2/database-deprecated";
+import {LogService} from "../../services/log.service";
 
 @Component({
     selector: 'app-sign-up',
@@ -18,7 +19,8 @@ export class SignUpComponent implements OnInit {
     newUser: User = {} as User;
 
     constructor(private _activeModal: NgbActiveModal,
-                private _usersService: UserService) {
+                private _usersService: UserService,
+                private _logService:LogService) {
     }
 
     @ViewChild('username')
@@ -45,14 +47,25 @@ export class SignUpComponent implements OnInit {
                     this.updateSecurityLevel();
                     this.loadUserDefaultData();
                     this.setUserClinic();
-                    this._usersService.updateUser(this.newUser);
-                    this.resetNewUser();
-                    this.closeModal();
+                    this._usersService.getUserID()
+                        .then((response:number)=>{
+                            this.newUser.userId = response;
+                            this.newUser.password = "password";
+                            this._usersService.updateUser(this.newUser);
+                            this.setLog();
+                            this.resetNewUser();
+                            this.closeModal();
+                        })
                 }else{
                     this.enableSuccesfullyAlert();
                 }
             })
         }
+    }
+
+    setLog(){
+        let message:string = Globals.userInfo.username + " Sign Up the new user "+this.newUser.username;
+        this._logService.setLog(message);
     }
 
     setUserClinic() {
