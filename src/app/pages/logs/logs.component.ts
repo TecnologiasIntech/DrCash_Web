@@ -6,6 +6,8 @@ import {ValidationService} from "../../services/validation.service";
 import {LogService} from "../../services/log.service";
 import {Globals} from "../../statics/globals";
 import {DateService} from "../../services/date.service";
+import 'jspdf-autotable';
+import * as jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-logs',
@@ -56,6 +58,16 @@ export class LogsComponent implements OnInit {
     validateDateFields() {
         if (!ValidationService.errorInField(this.dateFrom)) this.dateFrom = parseInt(this.dateFrom);
         if (!ValidationService.errorInField(this.dateTo)) this.dateTo = parseInt(this.dateTo);
+    }
+
+    printTransactionsTable(){
+        let columns: string[] = ["Processed By", "Date", "Actiokn"];
+        let rows = this._logService.convertLogsToPrintPDF(this.logs);
+        let doc = new jsPDF('p', 'pt');
+        doc.autoTable(columns, rows,{
+            styles: {cellPadding: 0.5, fontSize: 8}
+        });
+        doc.save('table.pdf');
     }
 }
 

@@ -17,7 +17,8 @@ import {Log} from "../interfaces/log";
 @Injectable()
 export class LogService {
 
-    constructor(private db: AngularFireDatabase) {
+    constructor(private db: AngularFireDatabase,
+                private _dateService:DateService) {
     }
 
 
@@ -105,6 +106,18 @@ export class LogService {
             logs = _.filter(logs, ['clinic', clinic]);
 
         return logs;
+    }
+
+    convertLogsToPrintPDF(logs: Log[]): any[] {
+        let logsToPrint: any[] = [];
+        for (let iteration in logs) {
+            logsToPrint.push([
+                logs[iteration].username,
+                this._dateService.convertDateToDD_MM_YYYY_HH_MM(logs[iteration].dateTime.toString()),
+                logs[iteration].actions
+            ])
+        }
+        return logsToPrint;
     }
 
 }
