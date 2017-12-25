@@ -47,10 +47,15 @@ export class SignUpComponent implements OnInit {
                     this.updateSecurityLevel();
                     this.loadUserDefaultData();
                     this.setUserClinic();
-                    this._usersService.updateUser(this.newUser);
-                    this.setLog();
-                    this.resetNewUser();
-                    this.closeModal();
+                    this._usersService.getUserID()
+                        .then((response:number)=>{
+                            this.newUser.userId = response;
+                            this.newUser.password = "password";
+                            this._usersService.updateUser(this.newUser);
+                            this.setLog();
+                            this.resetNewUser();
+                            this.closeModal();
+                        })
                 }else{
                     this.enableSuccesfullyAlert();
                 }

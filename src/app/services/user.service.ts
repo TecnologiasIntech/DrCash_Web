@@ -34,6 +34,9 @@ export class UserService {
 
     updateUser(user: User) {
         this.db.object('users/' + user.username).update(user);
+        this.db.object("users/").update({
+            numberUsers: user.userId
+        });
     }
 
     getUsersByMyClinic() {
@@ -68,6 +71,15 @@ export class UserService {
                 } else {
                     resolve(false);
                 }
+            })
+        })
+    }
+
+    getUserID(){
+        debugger
+        return new Promise(resolve=>{
+            this.db.object('users/numberUsers').valueChanges().take(1).subscribe((snapshot:number)=>{
+                resolve(snapshot+1)
             })
         })
     }
