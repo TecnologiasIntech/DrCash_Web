@@ -1,3 +1,58 @@
-<p>
-  new-register works!
-</p>
+<div class="card" style="width: 400px; margin-bottom: 0;">
+    <div class="card-title bg-warning p-10">
+        <!--Header-->
+        <div class="row mt-2">
+            <!--Down Icon-->
+            <div class="col-1 offset-1">
+                <i class="zmdi zmdi-laptop text-white" style="font-size: 25px"></i>
+            </div>
+            <!--Title-->
+            <div class="col-8" style="padding-top: 3px;">
+                <h4 class="text-white">New Register</h4>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card-body p-15">
+
+        <div class="row">
+            <div class="col-12">
+                <span>Register Number <strong class="m-l-5">{{ registerID }}</strong></span>
+                <button class="btn btn-primary d-inline-block m-l-20" (click)="getMachineName()">Get Computer Name</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group form-group--float m-t-15">
+                    <input type="text" class="form-control form-control-line" formControlFloat [(ngModel)]="computerName">
+                    <label>Machine Name</label>
+                    <i class="form-group__bar"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group form-group--float m-t-0 m-b-5">
+                    <input type="text" class="form-control form-control-line" formControlFloat>
+                    <label>Initial Cash</label>
+                    <i class="form-group__bar"></i>
+                </div>
+            </div>
+        </div>
+
+        <!--Buttons-->
+        <div class="row mt-4">
+            <div class="col-3 offset-1">
+                <button class="btn btn-success" (click)="createRegister()">Create Register</button>
+            </div>
+
+            <div class="col-3 offset-5">
+                <button class="btn btn-danger" (click)="cancel()">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -47,6 +47,7 @@ import {InitialCashComponent} from "../modals/initial-cash/initial-cash.componen
 import {Globals} from "../statics/globals";
 import {DateService} from "../services/date.service";
 import {ResetUserComponent} from "../modals/reset-user/reset-user.component";
+import {SettingService} from "../services/setting.service";
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -104,7 +105,8 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         UserService,
         ValidationService,
         Globals,
-        DateService
+        DateService,
+        SettingService
 
     ],
     entryComponents: [
