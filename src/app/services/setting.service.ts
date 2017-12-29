@@ -57,16 +57,13 @@ export class SettingService {
     }
 
     createDefaultRegister(key: string) {
-        //TODO: Cambiar el username por el de globals
         this.db.list('registers').set(key, {
             registerNumber: "",
             computerName: "",
             activeRegister: true,
-            // modifiedBy: Globals.userInfo.username,
-            modifiedBy: "carlos",
+            modifiedBy: Globals.userInfo.username,
             modificationDate: key,
-            // createdBy: Globals.userInfo.username,
-            createdBy: "carlos",
+            createdBy: Globals.userInfo.username,
             creationDate: key,
             key: key,
             getNameMachine: false,
