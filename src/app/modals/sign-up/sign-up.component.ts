@@ -50,7 +50,7 @@ export class SignUpComponent implements OnInit {
                     this._usersService.getUserID()
                         .then((response:number)=>{
                             this.newUser.userId = response;
-                            this.newUser.password = "password";
+                            this.setUserPassword();
                             this._usersService.updateUser(this.newUser);
                             this.setLog();
                             this.resetNewUser();
@@ -70,6 +70,20 @@ export class SignUpComponent implements OnInit {
 
     setUserClinic() {
         this.newUser.clinic = Globals.userInfo.clinic;
+    }
+
+    setUserPassword(){
+        if(Globals.settings.useDefaultPassword){
+            this.newUser.password = Globals.settings.defaultPassword;
+        }
+        else{
+            this.newUser.password = this.generateRandomPassword();
+        }
+    }
+
+    generateRandomPassword(){
+        let randomPassword:string = Math.random().toString(36).slice(-8);
+        return randomPassword;
     }
 
     updateSecurityLevel() {
