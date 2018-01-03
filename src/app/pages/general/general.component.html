@@ -49,8 +49,8 @@
                             <tr>
                                 <td>
                                     <label class="custom-control custom-radio">
-                                        <input id="radio1" name="leaveMoney" value="True" type="radio" class="custom-control-input"
-                                               [(ngModel)]="settings.leaveMoneyInRegister">
+                                        <input id="radio1" name="leaveMoney" value="true" type="radio" class="custom-control-input"
+                                               [(ngModel)]="leaveMoneyInRegister">
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">Leave Money In Register</span>
                                     </label>
@@ -58,8 +58,8 @@
                                     <div class="clearfix mt-2"></div>
 
                                     <label class="custom-control custom-radio">
-                                        <input type="radio" name="leaveMoney" value="False" class="custom-control-input"
-                                               [(ngModel)]="settings.leaveMoneyInRegister">
+                                        <input type="radio" name="leaveMoney" value="false" class="custom-control-input"
+                                               [(ngModel)]="leaveMoneyInRegister">
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">Leave Register Empty</span>
                                     </label>
@@ -86,15 +86,15 @@
                                     <td>
 
                                         <label class="custom-control custom-radio">
-                                            <input type="radio" name="sendPassword" value="True" class="custom-control-input"
-                                                   [(ngModel)]="settings.sendPasswordThroughEmail">
+                                            <input type="radio" name="sendPassword" value="true" class="custom-control-input"
+                                                   [(ngModel)]="sendPassword">
                                             <span class="custom-control-indicator"></span>
                                             <span class="custom-control-description">Send password through Email</span>
                                         </label>
 
                                         <label class="custom-control custom-radio">
-                                            <input type="radio" name="sendPassword" value="False" class="custom-control-input"
-                                                   [(ngModel)]="settings.sendPasswordThroughEmail">
+                                            <input type="radio" name="sendPassword" value="false" class="custom-control-input"
+                                                   [(ngModel)]="sendPassword">
                                             <span class="custom-control-indicator"></span>
                                             <span class="custom-control-description">Show password in the screen</span>
                                         </label>
@@ -121,8 +121,8 @@
                                 <tr align="left">
                                     <td>
                                         <label class="custom-control custom-radio">
-                                            <input type="radio" name="defaultPassword" value="True" class="custom-control-input"
-                                                   [(ngModel)]="settings.useDefaultPassword">
+                                            <input type="radio" name="defaultPassword" value="true" class="custom-control-input"
+                                                   [(ngModel)]="useDefaultPassword">
                                             <span class="custom-control-indicator"></span>
                                             <span class="custom-control-description">Use default password</span>
                                         </label>
@@ -130,8 +130,8 @@
                                         <div class="clearfix mt-2"></div>
 
                                         <label class="custom-control custom-radio">
-                                            <input type="radio" name="defaultPassword" value="False" class="custom-control-input"
-                                                   [(ngModel)]="settings.useDefaultPassword">
+                                            <input type="radio" name="defaultPassword" value="false" class="custom-control-input"
+                                                   [(ngModel)]="useDefaultPassword">
                                             <span class="custom-control-indicator"></span>
                                             <span class="custom-control-description">The application generate a temporary password</span>
                                         </label>

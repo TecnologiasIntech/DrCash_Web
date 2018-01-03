@@ -5,6 +5,7 @@ import * as firebase from "firebase";
 import Settings = firebase.firestore.Settings;
 import {Setting} from "../../interfaces/setting";
 import {SettingService} from "../../services/setting.service";
+import {settings} from "cluster";
 
 @Component({
   selector: 'app-general',
@@ -18,15 +19,36 @@ export class GeneralComponent implements OnInit {
           .then((response: Setting) => {
               this.settings = response;
           })
+
+      if(this.settings.leaveMoneyInRegister)this.leaveMoneyInRegister = "true";
+      if(!this.settings.leaveMoneyInRegister)this.leaveMoneyInRegister = "false";
+      if(this.settings.sendPasswordThroughEmail)this.sendPassword = "true";
+      if(!this.settings.sendPasswordThroughEmail)this.sendPassword = "false";
+      if(this.settings.useDefaultPassword)this.useDefaultPassword = "true";
+      if(!this.settings.useDefaultPassword)this.useDefaultPassword = "false";
+
   }
 
   settings: Setting = {} as Setting;
+
+  leaveMoneyInRegister: string;
+  sendPassword: string;
+  useDefaultPassword: string;
   ngOnInit() {
 
   }
 
   saveSettings(){
+      this.settings.leaveMoneyInRegister = this.parseBoolean(this.leaveMoneyInRegister);
+      this.settings.sendPasswordThroughEmail = this.parseBoolean(this.sendPassword);
+      this.settings.useDefaultPassword = this.parseBoolean(this.useDefaultPassword);
       this._settingService.setSettings(this.settings);
+
+  }
+
+  parseBoolean(text:string){
+      if(text.toLowerCase() == "true") return true;
+      if(text.toLowerCase() == "false") return false;
   }
 
     restrictNumeric(e) {
