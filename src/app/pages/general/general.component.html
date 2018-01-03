@@ -23,7 +23,9 @@
                                     <div class="input-group w-100">
                                         <span class="mt-2 mr-3">Lock the application in</span>
                                         <div class="form-group">
-                                            <input type="text" class="form-control text-center" placeholder="">
+                                            <input type="text" class="form-control text-center" placeholder=""
+                                                   (keypress)="restrictNumeric($event)"
+                                                   [(ngModel)]="settings.idleTime">
                                             <i class="form-group__bar"></i>
                                         </div>
                                         <span class="mt-2 ml-3">Minutes</span>
@@ -47,7 +49,8 @@
                             <tr>
                                 <td>
                                     <label class="custom-control custom-radio">
-                                        <input id="radio1" name="leaveMoney" type="radio" class="custom-control-input">
+                                        <input id="radio1" name="leaveMoney" value="True" type="radio" class="custom-control-input"
+                                               [(ngModel)]="settings.leaveMoneyInRegister">
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">Leave Money In Register</span>
                                     </label>
@@ -55,7 +58,8 @@
                                     <div class="clearfix mt-2"></div>
 
                                     <label class="custom-control custom-radio">
-                                        <input type="radio" name="leaveMoney" class="custom-control-input">
+                                        <input type="radio" name="leaveMoney" value="False" class="custom-control-input"
+                                               [(ngModel)]="settings.leaveMoneyInRegister">
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">Leave Register Empty</span>
                                     </label>
@@ -74,7 +78,6 @@
                                 <thead class="table-info" style="color: white;">
                                 <tr>
                                     <th>
-                                        <strong>Initial Cash</strong>
                                     </th>
                                 </tr>
                                 </thead>
@@ -83,13 +86,15 @@
                                     <td>
 
                                         <label class="custom-control custom-radio">
-                                            <input type="radio" name="sendPassword" class="custom-control-input">
+                                            <input type="radio" name="sendPassword" value="True" class="custom-control-input"
+                                                   [(ngModel)]="settings.sendPasswordThroughEmail">
                                             <span class="custom-control-indicator"></span>
                                             <span class="custom-control-description">Send password through Email</span>
                                         </label>
 
                                         <label class="custom-control custom-radio">
-                                            <input type="radio" name="sendPassword" class="custom-control-input">
+                                            <input type="radio" name="sendPassword" value="False" class="custom-control-input"
+                                                   [(ngModel)]="settings.sendPasswordThroughEmail">
                                             <span class="custom-control-indicator"></span>
                                             <span class="custom-control-description">Show password in the screen</span>
                                         </label>
@@ -116,7 +121,8 @@
                                 <tr align="left">
                                     <td>
                                         <label class="custom-control custom-radio">
-                                            <input type="radio" name="defaultPassword" class="custom-control-input">
+                                            <input type="radio" name="defaultPassword" value="True" class="custom-control-input"
+                                                   [(ngModel)]="settings.useDefaultPassword">
                                             <span class="custom-control-indicator"></span>
                                             <span class="custom-control-description">Use default password</span>
                                         </label>
@@ -124,7 +130,8 @@
                                         <div class="clearfix mt-2"></div>
 
                                         <label class="custom-control custom-radio">
-                                            <input type="radio" name="defaultPassword" class="custom-control-input">
+                                            <input type="radio" name="defaultPassword" value="False" class="custom-control-input"
+                                                   [(ngModel)]="settings.useDefaultPassword">
                                             <span class="custom-control-indicator"></span>
                                             <span class="custom-control-description">The application generate a temporary password</span>
                                         </label>
@@ -132,7 +139,8 @@
                                         <div class="clearfix mt-2"></div>
 
                                         <div class="form-group w-50">
-                                            <input type="text" class="form-control" placeholder="Default Password">
+                                            <input type="text" class="form-control" placeholder="Default Password"
+                                                   [(ngModel)]="settings.defaultPassword">
                                             <i class="form-group__bar"></i>
                                         </div>
 
@@ -165,6 +173,13 @@
 
                 </div>
 
+
+                <!--Save Button-->
+                <div class="row">
+                    <div class="col-4 offset-1">
+                        <button class="btn btn-primary" (click)="saveSettings()">Save Settings</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
