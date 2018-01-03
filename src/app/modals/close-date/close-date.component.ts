@@ -238,13 +238,11 @@ export class CloseDateComponent implements OnInit {
     }
 
     verifyFields() {
-        debugger;
         if (this.totalCash == 0) {
             this.bills100.nativeElement.focus()
             this.isErrorTotalCash = true;
             this.selectAllText(BILLS.BILLS100);
         } else if (Globals.settings.leaveMoneyInRegister){
-            debugger;
             if(ValidationService.errorInField(this.leftRegisterLabel)) {
                 this.leftRegisterRef.nativeElement.focus();
                 this.isErrorLeftInRegister = true;
