@@ -1,5 +1,6 @@
 import {Injectable} from "@angular/core";
 import {User} from "../interfaces/user";
+import {Setting} from "../interfaces/setting";
 
 @Injectable()
 export class Globals {
@@ -15,6 +16,8 @@ export class Globals {
     };
     sidebarVisible: boolean = false;
     static userInfo: User;
+
+    static settings: Setting;
 
     static securityQuestions: string[] = [
         "What was your childhood nickname?",

@@ -5,13 +5,10 @@ export interface Setting {
     SMTPEmailBCC?:string;
     SMTPUsername?:string;
     SMTPPassword?:string;
-    lockAutomatically:boolean;
-    timeOutLock?:number;
-    refreshSummary:boolean;
-    timeRefreshSummary?:number;
-    logo?:string;
-    resetPasswordEmail:boolean;
-    defaultPassword?:boolean;
-    defaultPasswordValue?:string;
-    leaveMoneyInRegister?:boolean;
+    idleTime:number;
+    leaveMoneyInRegister:boolean;
+    sendPasswordThroughEmail:boolean;
+    useDefaultPassword: boolean;
+    defaultPassword:string;
+    logoUrl: string;
 }
