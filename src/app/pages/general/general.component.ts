@@ -9,78 +9,81 @@ import {settings} from "cluster";
 import {ValidationService} from "../../services/validation.service";
 
 @Component({
-  selector: 'app-general',
-  templateUrl: './general.component.html',
-  styleUrls: ['./general.component.scss']
+    selector: 'app-general',
+    templateUrl: './general.component.html',
+    styleUrls: ['./general.component.scss']
 })
 export class GeneralComponent implements OnInit {
 
-  constructor(private _settingService: SettingService) {
-      this._settingService.getSettings()
-          .then((response: Setting) => {
-              this.settings = response;
-          })
-      this.parseBooleanToString();
+    constructor(private _settingService: SettingService) {
+        this._settingService.getSettings()
+            .then((response: Setting) => {
+                this.settings = response;
+                this.parseBooleanToString();
+
+            })
 
 
-  }
+
+    }
 
     @ViewChild('defaultPasswordInput')
     defaultPasswordInput: ElementRef;
 
-  settings: Setting = {} as Setting;
+    settings: Setting = {} as Setting;
 
-  leaveMoneyInRegister: string;
-  sendPassword: string;
-  useDefaultPassword: string;
-  ngOnInit() {
-      this.enableOrDisableDefaultPasswordInput();
-  }
+    leaveMoneyInRegister: string;
+    sendPassword: string;
+    useDefaultPassword: string;
 
-  saveSettings(){
-      if(this.isDefaultPasswordEnabledAndFilled()){
-          this.prepareSettings();
-          this._settingService.setSettings(this.settings);
-      }
-  }
+    ngOnInit() {
+        this.enableOrDisableDefaultPasswordInput();
+    }
 
-  prepareSettings(){
-      this.settings.leaveMoneyInRegister = this.parseBoolean(this.leaveMoneyInRegister);
-      this.settings.sendPasswordThroughEmail = this.parseBoolean(this.sendPassword);
-      this.settings.useDefaultPassword = this.parseBoolean(this.useDefaultPassword);
-      this.settings.idleTime = parseInt(this.settings.idleTime.toLocaleString());
-  }
+    saveSettings() {
+        if (this.isDefaultPasswordEnabledAndFilled()) {
+            this.prepareSettings();
+            this._settingService.setSettings(this.settings);
+        }
+    }
 
-  parseBoolean(text:string){
-      if(text.toLowerCase() == "true") return true;
-      if(text.toLowerCase() == "false") return false;
-  }
+    prepareSettings() {
+        this.settings.leaveMoneyInRegister = this.parseBoolean(this.leaveMoneyInRegister);
+        this.settings.sendPasswordThroughEmail = this.parseBoolean(this.sendPassword);
+        this.settings.useDefaultPassword = this.parseBoolean(this.useDefaultPassword);
+        this.settings.idleTime = parseInt(this.settings.idleTime.toLocaleString());
+    }
 
-  parseBooleanToString(){
-      if(this.settings.leaveMoneyInRegister)this.leaveMoneyInRegister = "true";
-      if(!this.settings.leaveMoneyInRegister)this.leaveMoneyInRegister = "false";
-      if(this.settings.sendPasswordThroughEmail)this.sendPassword = "true";
-      if(!this.settings.sendPasswordThroughEmail)this.sendPassword = "false";
-      if(this.settings.useDefaultPassword)this.useDefaultPassword = "true";
-      if(!this.settings.useDefaultPassword)this.useDefaultPassword = "false";
-  }
+    parseBoolean(text: string) {
+        if (text.toLowerCase() == "true") return true;
+        if (text.toLowerCase() == "false") return false;
+    }
 
-  enableOrDisableDefaultPasswordInput(){
-      console.log(this.useDefaultPassword)
-          if (this.useDefaultPassword == "true") {
-              this.defaultPasswordInput.nativeElement.removeAttribute('disabled');
-          } else {
-              this.defaultPasswordInput.nativeElement.setAttribute('disabled', 'disabled');
-          }
-  }
+    parseBooleanToString() {
+        if (this.settings.leaveMoneyInRegister) this.leaveMoneyInRegister = "true";
+        if (!this.settings.leaveMoneyInRegister) this.leaveMoneyInRegister = "false";
+        if (this.settings.sendPasswordThroughEmail) this.sendPassword = "true";
+        if (!this.settings.sendPasswordThroughEmail) this.sendPassword = "false";
+        if (this.settings.useDefaultPassword) this.useDefaultPassword = "true";
+        if (!this.settings.useDefaultPassword) this.useDefaultPassword = "false";
+    }
 
-  isDefaultPasswordEnabledAndFilled(){
-      if(this.useDefaultPassword == "true" && ValidationService.errorInField(this.settings.defaultPassword)){
-          this.defaultPasswordInput.nativeElement.focus();
-          return false;
-      }
-      return true;
-  }
+    enableOrDisableDefaultPasswordInput() {
+        console.log(this.useDefaultPassword)
+        if (this.useDefaultPassword == "true") {
+            this.defaultPasswordInput.nativeElement.removeAttribute('disabled');
+        } else {
+            this.defaultPasswordInput.nativeElement.setAttribute('disabled', 'disabled');
+        }
+    }
+
+    isDefaultPasswordEnabledAndFilled() {
+        if (this.useDefaultPassword == "true" && ValidationService.errorInField(this.settings.defaultPassword)) {
+            this.defaultPasswordInput.nativeElement.focus();
+            return false;
+        }
+        return true;
+    }
 
     restrictNumeric(e) {
         let input;
@@ -97,7 +100,7 @@ export class GeneralComponent implements OnInit {
             return false;
         }
         if (e.which === 46) {
-          return false;
+            return false;
         }
         if (e.which < 33) {
             return true;
