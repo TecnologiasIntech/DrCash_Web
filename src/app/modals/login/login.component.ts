@@ -7,6 +7,8 @@ import {Globals} from "../../statics/globals";
 import {ERRORAUTH} from "../../enums/enums";
 import {timeout} from "q";
 import {LogService} from "../../services/log.service";
+import {SettingService} from "../../services/setting.service";
+import {Setting} from "../../interfaces/setting";
 
 
 @Component({
@@ -33,7 +35,8 @@ export class LoginComponent implements OnInit {
 
     constructor(private activeModal: NgbActiveModal,
                 private _usrService: UserService,
-                private _logService:LogService) {
+                private _logService:LogService,
+                private _settingService: SettingService) {
 
 
     }
@@ -67,6 +70,7 @@ export class LoginComponent implements OnInit {
         this._usrService.authUser(user).then((response:User) => {
             Globals.userInfo = response;
             this.setLog();
+            this.setSettings();
             this.activeModal.close(true);
         }).catch((reject: any) => {
             // this._alertService.error(reject,"Try Again");
@@ -101,5 +105,12 @@ export class LoginComponent implements OnInit {
         this.errorPass = false;
         this.errorPassAndUsername = false;
         this.wrongPassword = false;
+    }
+
+    setSettings(){
+        this._settingService.getSettings()
+            .then((response: Setting) => {
+                Globals.settings = response;
+            })
     }
 }
