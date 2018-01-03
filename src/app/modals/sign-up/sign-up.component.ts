@@ -8,6 +8,7 @@ import {UserService} from "../../services/user.service";
 import {forEach} from "@angular/router/src/utils/collection";
 import {FirebaseListObservable} from "angularfire2/database-deprecated";
 import {LogService} from "../../services/log.service";
+import {alertService} from "../../services/alert.service";
 
 @Component({
     selector: 'app-sign-up',
@@ -20,7 +21,8 @@ export class SignUpComponent implements OnInit {
 
     constructor(private _activeModal: NgbActiveModal,
                 private _usersService: UserService,
-                private _logService:LogService) {
+                private _logService:LogService,
+                private _alertService:alertService) {
     }
 
     @ViewChild('username')
@@ -53,8 +55,7 @@ export class SignUpComponent implements OnInit {
                             this.setUserPassword();
                             this._usersService.updateUser(this.newUser);
                             this.setLog();
-                            this.resetNewUser();
-                            this.closeModal();
+                            this.showNewPasswordAler(this.newUser.password);
                         })
                 }else{
                     this.enableSuccesfullyAlert();
@@ -79,6 +80,13 @@ export class SignUpComponent implements OnInit {
         else{
             this.newUser.password = this.generateRandomPassword();
         }
+    }
+
+    showNewPasswordAler(password:string) {
+        this._alertService.confirmSuccess("New Password", password)
+            .then(() => {
+                this._activeModal.close();
+            });
     }
 
     generateRandomPassword(){
