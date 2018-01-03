@@ -122,7 +122,7 @@
                                     <td>
                                         <label class="custom-control custom-radio">
                                             <input type="radio" name="defaultPassword" value="true" class="custom-control-input"
-                                                   [(ngModel)]="useDefaultPassword">
+                                                   [(ngModel)]="useDefaultPassword" (ngModelChange)="enableOrDisableDefaultPasswordInput()">
                                             <span class="custom-control-indicator"></span>
                                             <span class="custom-control-description">Use default password</span>
                                         </label>
@@ -131,7 +131,7 @@
 
                                         <label class="custom-control custom-radio">
                                             <input type="radio" name="defaultPassword" value="false" class="custom-control-input"
-                                                   [(ngModel)]="useDefaultPassword">
+                                                   [(ngModel)]="useDefaultPassword" (ngModelChange)="enableOrDisableDefaultPasswordInput()">
                                             <span class="custom-control-indicator"></span>
                                             <span class="custom-control-description">The application generate a temporary password</span>
                                         </label>
@@ -139,8 +139,9 @@
                                         <div class="clearfix mt-2"></div>
 
                                         <div class="form-group w-50">
-                                            <input type="text" class="form-control" placeholder="Default Password"
-                                                   [(ngModel)]="settings.defaultPassword">
+                                            <input type="text" class="form-control" placeholder="Default Password" #defaultPasswordInput
+                                                   [(ngModel)]="settings.defaultPassword"
+                                            >
                                             <i class="form-group__bar"></i>
                                         </div>
 
