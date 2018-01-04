@@ -7,6 +7,8 @@ import {Globals} from "../../statics/globals";
 import {ERRORAUTH} from "../../enums/enums";
 import {timeout} from "q";
 import {LogService} from "../../services/log.service";
+import {RouteService} from "../../services/route.service";
+import {AngularFireAuth} from "angularfire2/auth";
 
 
 @Component({
@@ -33,12 +35,17 @@ export class LoginComponent implements OnInit {
 
     constructor(private activeModal: NgbActiveModal,
                 private _usrService: UserService,
-                private _logService:LogService) {
+                private _logService:LogService,
+                private _auth:AngularFireAuth) {
 
 
     }
 
     ngOnInit() {
+        // RouteService.getParameterByName('email');
+        let token = RouteService.getParameterByName('token');
+        // var auth = this._auth.idToken.
+        // debugger
     }
 
 

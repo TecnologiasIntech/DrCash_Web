@@ -32,6 +32,14 @@ export class UserService {
         })
     }
 
+    getUser(emai:string){
+        return new Promise(resolve => {
+            this.db.object('users/' + emai).valueChanges().subscribe((result: User) => {
+                resolve(result);
+            })
+        })
+    }
+
     updateUser(user: User) {
         this.db.object('users/' + user.username).update(user);
         this.db.object("users/").update({
