@@ -53,6 +53,9 @@ import {InputFloatDirective} from "../shared/directives/input-float/input-float.
 import {DropImagesDirective} from "../directives/drop-images.directive";
 import {UploadLogocomponent} from "../modals/uploadLogo/uploadLogocomponent";
 
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
+import { MomentModule } from 'angular2-moment';
+
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 }
@@ -102,6 +105,8 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         SharedModule,
         NgbModule,
         NgbModule.forRoot(),
+        MomentModule,
+        NgIdleKeepaliveModule.forRoot()
     ],
     providers: [
         alertService,
