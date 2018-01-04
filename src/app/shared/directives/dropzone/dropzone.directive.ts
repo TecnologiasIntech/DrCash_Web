@@ -16,7 +16,10 @@ export class DropzoneDirective {
 
         initDropzone.dropzone({
             url: this.posturl,
-            addRemoveLinks: true
+            addRemoveLinks: true,
+            maxFilesize: 1,
+            dictDefaultMessage: "Select File",
+            renameFilename: "logo"
         });
     }
 }

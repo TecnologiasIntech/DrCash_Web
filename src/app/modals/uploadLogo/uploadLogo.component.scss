@@ -1,0 +1,58 @@
+.containerModal{
+  width: 500px;
+  height:400px;
+}
+.containerDropImage{
+  margin-left: 70px;
+  margin-top: 20px;
+}
+
+.main-container{
+  margin-top: 40px;
+}
+ .btnUploadImages{
+   bottom: 0;
+   position: fixed;
+   margin-bottom: 20px;
+   left: 195px;
+ }
+
+
+/* Drop Zone */
+.drop-zone {
+  border: dotted 3px lightgray;
+  opacity: 0.5;
+  color: #666;
+  text-align: center;
+  height: 150px;
+  width: 80%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.file-over {
+  border: dotted 3px dodgerblue;
+}
+
+.table {
+  margin-top: 30px;
+}
+
+.text-green {
+  color: green
+}
+.header_fijo {
+  width: 411px;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+.header_fijo thead tr {
+  display: block;
+  position: relative;
+}
+.header_fijo tbody {
+  display: block;
+  overflow: auto;
+  width: 100%;
+  height: 180px;
+}

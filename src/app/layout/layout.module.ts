@@ -48,6 +48,10 @@ import {Globals} from "../statics/globals";
 import {DateService} from "../services/date.service";
 import {ResetUserComponent} from "../modals/reset-user/reset-user.component";
 import {SettingService} from "../services/setting.service";
+import {DropzoneDirective} from "../shared/directives/dropzone/dropzone.directive";
+import {InputFloatDirective} from "../shared/directives/input-float/input-float.directive";
+import {DropImagesDirective} from "../directives/drop-images.directive";
+import {UploadLogocomponent} from "../modals/uploadLogo/uploadLogocomponent";
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -81,12 +85,15 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         LoginComponent,
         InitialCashComponent,
         UpdateTransactionComponent,
-        ResetUserComponent
+        ResetUserComponent,
+        DropImagesDirective,
+        UploadLogocomponent
     ],
     imports: [
         CommonModule,
         LayoutRouting,
         FormsModule,
+        SharedModule,
         AngularFireModule,
         BsDropdownModule.forRoot(),
         ProgressbarModule.forRoot(),
@@ -122,7 +129,8 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         AuthorizationComponent,
         InitialCashComponent,
         UpdateTransactionComponent,
-        ResetUserComponent
+        ResetUserComponent,
+        UploadLogocomponent
     ]
 })
 

@@ -7,6 +7,10 @@ import {Setting} from "../../interfaces/setting";
 import {SettingService} from "../../services/setting.service";
 import {settings} from "cluster";
 import {ValidationService} from "../../services/validation.service";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {UploadLogocomponent} from "../../modals/uploadLogo/uploadLogocomponent";
+import {alertService} from "../../services/alert.service";
+import {FileItem} from "../../interfaces/file-item";
 
 @Component({
     selector: 'app-general',
@@ -15,16 +19,15 @@ import {ValidationService} from "../../services/validation.service";
 })
 export class GeneralComponent implements OnInit {
 
-    constructor(private _settingService: SettingService) {
+    constructor(private _settingService: SettingService,
+                private _modal: NgbModal,
+                private _alertService: alertService) {
         this._settingService.getSettings()
             .then((response: Setting) => {
                 this.settings = response;
                 this.parseBooleanToString();
 
             })
-
-
-
     }
 
     @ViewChild('defaultPasswordInput')
@@ -35,6 +38,13 @@ export class GeneralComponent implements OnInit {
     leaveMoneyInRegister: string;
     sendPassword: string;
     useDefaultPassword: string;
+    dropzonePostUrl: any = 'dropzonePostUrl'
+    file: any;
+
+    show() {
+        debugger
+        console.log(this.file);
+    }
 
     ngOnInit() {
         this.enableOrDisableDefaultPasswordInput();
@@ -107,6 +117,27 @@ export class GeneralComponent implements OnInit {
         }
         input = String.fromCharCode(e.which);
         return !!/[\d\s]/.test(input);
+    }
+
+    openUploadLogo() {
+        let image: FileItem;
+        this._modal.open(UploadLogocomponent, Globals.optionModalLg).result.then((result) => {
+
+            if (result.length > 1) {
+                this._alertService.confirmError('Error updating the image', 'You can only upload a photo')
+                    .then(() => {
+                        this.openUploadLogo();
+                    })
+            } else {
+                image = result[0];
+                this._settingService.uploadLogo(image)
+                    .then((response:string)=>{
+                        this._alertService.success("Successfully updated image", "");
+                        this.settings.logoUrl = response;
+                    })
+            }
+
+        }, (error) => { })
     }
 
 }
