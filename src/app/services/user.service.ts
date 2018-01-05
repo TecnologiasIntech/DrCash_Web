@@ -34,7 +34,7 @@ export class UserService {
         })
     }
 
-    getUser(emai:string){
+    getUser(emai: string) {
         return new Promise(resolve => {
             this.db.object('users/' + emai).valueChanges().subscribe((result: User) => {
                 resolve(result);
@@ -61,9 +61,9 @@ export class UserService {
         })
     }
 
-    updatePassword(newPassword:string){
+    updatePassword(newPassword: string) {
         this._af.auth.currentUser.updatePassword(newPassword)
-            .catch((error)=>{
+            .catch((error) => {
                 console.log("Error to change Password: " + error);
             })
     }
@@ -92,12 +92,26 @@ export class UserService {
         })
     }
 
-    getUserID(){
-        debugger
-        return new Promise(resolve=>{
-            this.db.object('users/numberUsers').valueChanges().take(1).subscribe((snapshot:number)=>{
-                resolve(snapshot+1)
+    getUserID() {
+        return new Promise(resolve => {
+            this.db.object('users/numberUsers').valueChanges().take(1).subscribe((snapshot: number) => {
+                resolve(snapshot + 1)
             })
         })
+    }
+
+    createNewUser(email: string, pass: string) {
+        this._af.auth.createUserWithEmailAndPassword(email, pass)
+            .then(response => {
+                this._af.auth.signInWithEmailAndPassword(Globals.userInfo.email, Globals.userInfo.password)
+                    .catch(error => {
+                        console.log("Error Sign In :");
+                        console.log(error);
+                    })
+            })
+            .catch(error => {
+                console.log("Error Create User :");
+                console.log(error);
+            })
     }
 }

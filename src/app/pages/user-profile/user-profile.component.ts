@@ -19,11 +19,8 @@ export class UserProfileComponent implements OnInit {
 
     constructor(private _userService: UserService,
                 private _modal: NgbModal,
-                private _logService:LogService) {
-        // setTimeout(()=>{
-        // }, 5000)
+                private _logService: LogService) {
         this.editableUser = Globals.userInfo;
-
     }
 
     editableUser: User;
@@ -37,8 +34,8 @@ export class UserProfileComponent implements OnInit {
     showSuccessAlert: boolean = false;
 
     ngOnInit() {
-        if(Globals.userInfo.securityLevel == USERTYPE.SUPERVISOR ||
-            Globals.userInfo.securityLevel == USERTYPE.ADMINISTRATOR){
+        if (Globals.userInfo.securityLevel == USERTYPE.SUPERVISOR ||
+            Globals.userInfo.securityLevel == USERTYPE.ADMINISTRATOR) {
             this.showManageUsers = true;
         }
     }
@@ -46,15 +43,17 @@ export class UserProfileComponent implements OnInit {
     editProfile: boolean = false;
     showManageUsers: boolean = false;
 
-    openManageUsersModal(){
+    openManageUsersModal() {
         this._modal.open(ManageUsersComponent, Globals.optionModalLg).result.then(
-            (result)=>{
+            (result) => {
                 this._modal.open(SignUpComponent, Globals.optionModalLg).result.then(
-                    result=>{
+                    result => {
                         this.openManageUsersModal();
-                    }, reason => {}
+                    }, reason => {
+                    }
                 )
-            }, (reason)=>{}
+            }, (reason) => {
+            }
         )
     }
 
@@ -92,12 +91,12 @@ export class UserProfileComponent implements OnInit {
         this.showWarning = true;
     }
 
-    enableSuccesfullyAlert(){
+    enableSuccesfullyAlert() {
         this.showSuccessAlert = true;
 
-        setTimeout(()=>{
+        setTimeout(() => {
             this.showSuccessAlert = false;
-        },5000);
+        }, 5000);
     }
 
     saveNewPassword() {
@@ -141,8 +140,8 @@ export class UserProfileComponent implements OnInit {
         }
     }
 
-    setLog(){
-        let message:string = Globals.userInfo.username+" edited his user.";
+    setLog() {
+        let message: string = Globals.userInfo.username + " edited his user.";
         this._logService.setLog(message)
     }
 }
