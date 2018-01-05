@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { SharedService } from '../shared/services/shared.service';
+import {Component, OnInit} from '@angular/core';
+import {SharedService} from '../shared/services/shared.service';
 
 import {Idle, DEFAULT_INTERRUPTSOURCES} from '@ng-idle/core';
 import {Keepalive} from '@ng-idle/keepalive';
 import {Globals} from "../statics/globals";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {CredentialsComponent} from "../modals/credentials/credentials.component";
+import {ValidationService} from "../services/validation.service";
+import construct = Reflect.construct;
 
 @Component({
     selector: 'app-layout',
@@ -22,24 +24,39 @@ export class LayoutComponent implements OnInit {
     constructor(private sharedService: SharedService,
                 private idle: Idle,
                 private keepalive: Keepalive,
-                private _modal: NgbModal,) {
+                private _modal: NgbModal) {
         sharedService.maThemeSubject.subscribe((value) => {
             this.maTheme = value
         });
 
-        idle.setIdle(5);
-        idle.setTimeout(5);
-        idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+        this.idleCheck();
 
-        idle.onIdleEnd.subscribe(() => this.idleState = 'No longer idle.');
-        idle.onTimeout.subscribe(() => {
-            console.log("AFK");
+    }
+
+    idleCheck() {
+
+        this.idle.setIdle((Globals.settings.idleTime * 60)-5);
+        this.idle.setTimeout(5);
+        this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+        this.idle.onTimeout.subscribe(() => {
+            if(Globals.afk == false){
+                this._modal.open(CredentialsComponent, Globals.optionModalLg).result
+                    .then(() => {
+                        this.reset();
+                    })
+            }else{
+                this.reset();
+            }
         });
+
         this.reset();
+
     }
 
     reset() {
+        Globals.afk = false;
         this.idle.watch();
+
     }
 
     ngOnInit() {

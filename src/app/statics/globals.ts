@@ -19,6 +19,8 @@ export class Globals {
 
     static settings: Setting;
 
+    static afk: boolean = false;
+
     static securityQuestions: string[] = [
         "What was your childhood nickname?",
         "What school did you attend for sixth grade?",
