@@ -48,6 +48,7 @@ export class CashInComponent implements OnInit {
     transactionDateNumber: string;
     transactionDateLetter: string;
     transactionId: string;
+    urlLogo: string = Globals.settings.logoUrl;
 
     transactionType: string;
 
@@ -353,6 +354,8 @@ export class CashInComponent implements OnInit {
 </style>
  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.8.0/JsBarcode.all.js"></script>
+ <script>
+</script>
  
  </head><body >`);
         // language=HTML
@@ -361,7 +364,7 @@ export class CashInComponent implements OnInit {
             <!--Ticker Header-->
             <div class="row">
                 <div class="col-4 mt-1">
-                    <img src="https://image.ibb.co/jBf2eb/Clinica_La_Familia_Logo.png" alt="">
+                    <img #logo src="${this.urlLogo}" width="100px" height="100px" alt="">
                 </div>
                 <div class="col-8">
                     Clinica La Familia

@@ -4,8 +4,12 @@ import {ClosedTransaction} from "../interfaces/closed-transaction";
 import {DateService} from "./date.service";
 import {Transaction} from "../interfaces/transaction";
 
+
+
 @Injectable()
 export class PrintService {
+
+
 
     constructor() {
     }
@@ -41,7 +45,7 @@ export class PrintService {
             <!--Ticker Header-->
             <div class="row">
                 <div class="col-4 mt-1">
-                    <img src="https://image.ibb.co/jBf2eb/Clinica_La_Familia_Logo.png" alt="">
+                    <img #logo src="${Globals.settings.logoUrl}" width="100px" height="100px" alt="">
                 </div>
                 <div class="col-8">
                     Clinica La Familia
@@ -206,7 +210,7 @@ export class PrintService {
             <!--Ticker Header-->
             <div class="row">
                 <div class="col-4 mt-1">
-                    <img src="https://image.ibb.co/jBf2eb/Clinica_La_Familia_Logo.png" alt="">
+                    <img #logo src="${Globals.settings.logoUrl}" width="100px" height="100px" alt="">
                 </div>
                 <div class="col-8">
                     Clinica La Familia
@@ -304,7 +308,7 @@ export class PrintService {
             <!--Ticker Header-->
             <div class="row">
                 <div class="col-4 mt-1">
-                    <img src="https://image.ibb.co/jBf2eb/Clinica_La_Familia_Logo.png" alt="">
+                    <img #logo src="${Globals.settings.logoUrl}" width="100px" height="100px" alt="">
                 </div>
                 <div class="col-8">
                     Clinica La Familia
