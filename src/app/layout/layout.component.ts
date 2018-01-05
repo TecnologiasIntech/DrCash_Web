@@ -15,18 +15,31 @@ import {CredentialsComponent} from "../modals/credentials/credentials.component"
 export class LayoutComponent implements OnInit {
     maTheme: string = this.sharedService.maTheme;
 
+    idleState = 'Not started.';
+    timedOut = false;
+    lastPing?: Date = null;
+
     constructor(private sharedService: SharedService,
-                private idle: Idle, private keepalive: Keepalive,
+                private idle: Idle,
+                private keepalive: Keepalive,
                 private _modal: NgbModal,) {
         sharedService.maThemeSubject.subscribe((value) => {
             this.maTheme = value
-        })
-
-        idle.setIdle((Globals.settings.idleTime * 60));
-        idle.setTimeout(1);
-        idle.onTimeout.subscribe(() => {
-            this._modal.open(CredentialsComponent, Globals.optionModalLg);
         });
+
+        idle.setIdle(5);
+        idle.setTimeout(5);
+        idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+
+        idle.onIdleEnd.subscribe(() => this.idleState = 'No longer idle.');
+        idle.onTimeout.subscribe(() => {
+            console.log("AFK");
+        });
+        this.reset();
+    }
+
+    reset() {
+        this.idle.watch();
     }
 
     ngOnInit() {
