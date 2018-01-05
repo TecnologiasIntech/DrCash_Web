@@ -15,4 +15,5 @@ export interface User {
     creationDate:string;
     userId:number;
     clinic:number;
+    registerId: number;
 }

@@ -64,6 +64,7 @@ export class ResetUserComponent implements OnInit {
         if(this.isResetUserReady()){
             this.editableUser.passwordReset = false;
             this._userServices.updateUser(this.editableUser);
+            this._userServices.updatePassword(this.editableUser.password);
             this.setLog();
             this._activeModal.close();
 

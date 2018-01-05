@@ -9,6 +9,7 @@ import {DateService} from "../../services/date.service";
 import {Globals} from "../../statics/globals";
 import {PrintService} from "../../services/print.service";
 import {LogService} from "../../services/log.service";
+import {SettingService} from "../../services/setting.service";
 
 @Component({
     selector: 'app-close-date',
@@ -47,8 +48,8 @@ export class CloseDateComponent implements OnInit {
     constructor(private _activeModal: NgbActiveModal,
                 public _validationService: ValidationService,
                 private _transactionService: TransactionService,
-                private _logService: LogService) {
-
+                private _logService: LogService,
+                private _settingsService: SettingService) {
     }
 
     ngOnInit() {
@@ -227,6 +228,7 @@ export class CloseDateComponent implements OnInit {
 
         this._transactionService.setClosedTransaction(closedTransaction);
         this.setLog();
+        this._settingsService.openRegister();
         PrintService.printClosedTransaction(closedTransaction);
     }
 

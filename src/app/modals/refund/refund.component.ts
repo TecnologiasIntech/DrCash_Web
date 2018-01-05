@@ -10,6 +10,7 @@ import {PrintService} from "../../services/print.service";
 import {alertService} from "../../services/alert.service";
 import {LogService} from "../../services/log.service";
 import {Globals} from "../../statics/globals";
+import {SettingService} from "../../services/setting.service";
 
 
 @Component({
@@ -32,7 +33,8 @@ export class RefundComponent implements OnInit {
                 public _validationService: ValidationService,
                 private _transactionService: TransactionService,
                 private _alertService: alertService,
-                private _logService:LogService) {
+                private _logService:LogService,
+                private _settingsService: SettingService) {
         this.refundTransaction = TransactionService.getDefaultValuesToTransaction();
     }
 
@@ -82,6 +84,7 @@ export class RefundComponent implements OnInit {
         this.showSuccessfulTransactionAlert();
         this.setLog();
         this._transactionService.setTransaction(this.refundTransaction);
+        this._settingsService.openRegister();
         PrintService.printRefund(this.refundTransaction);
     }
 

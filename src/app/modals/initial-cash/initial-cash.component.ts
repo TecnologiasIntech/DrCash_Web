@@ -9,6 +9,7 @@ import {DateService} from "../../services/date.service";
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Globals} from "../../statics/globals";
 import {LogService} from "../../services/log.service";
+import {SettingService} from "../../services/setting.service";
 
 @Component({
     selector: 'app-initial-cash',
@@ -25,7 +26,8 @@ export class InitialCashComponent implements OnInit {
     constructor(private _transactionsService: TransactionService,
                 private _activeModal:NgbActiveModal,
                 public _validationService: ValidationService,
-                private _logService:LogService) {
+                private _logService:LogService,
+                private _settingsService: SettingService) {
     }
 
     ngOnInit() {
@@ -37,6 +39,7 @@ export class InitialCashComponent implements OnInit {
             this.transaction.type = TRANSACTIONTYPE.INITIALCASH;
             this.transaction.cash = parseFloat(initialCash);
             this._transactionsService.setTransaction(this.transaction);
+            this._settingsService.openRegister();
             this.setLog();
             this._activeModal.close();
         }else{

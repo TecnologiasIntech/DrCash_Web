@@ -7,12 +7,14 @@ import {Globals} from "../statics/globals";
 import {DateService} from "./date.service";
 import {reject} from "q";
 import {ValidationService} from "./validation.service";
+import {AngularFireAuth} from "angularfire2/auth";
 
 @Injectable()
 export class UserService {
 
     constructor(private db: AngularFireDatabase,
-                private alertService: alertService) {
+                private alertService: alertService,
+                private _af: AngularFireAuth) {
     }
 
     authUser(user: User) {
@@ -28,6 +30,14 @@ export class UserService {
                 } else {
                     reject(ERRORAUTH.USERNOTFOUND);
                 }
+            })
+        })
+    }
+
+    getUser(emai:string){
+        return new Promise(resolve => {
+            this.db.object('users/' + emai).valueChanges().subscribe((result: User) => {
+                resolve(result);
             })
         })
     }
@@ -49,6 +59,13 @@ export class UserService {
                     resolve(snapshot);
                 })
         })
+    }
+
+    updatePassword(newPassword:string){
+        this._af.auth.currentUser.updatePassword(newPassword)
+            .catch((error)=>{
+                console.log("Error to change Password: " + error);
+            })
     }
 
     getAllUsers() {
