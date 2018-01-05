@@ -79,7 +79,6 @@ export class GeneralComponent implements OnInit {
     }
 
     enableOrDisableDefaultPasswordInput() {
-        console.log(this.useDefaultPassword)
         if (this.useDefaultPassword == "true") {
             this.defaultPasswordInput.nativeElement.removeAttribute('disabled');
         } else {
