@@ -34,8 +34,8 @@ export class LayoutComponent implements OnInit {
     }
 
     idleCheck() {
-
-        this.idle.setIdle((Globals.settings.idleTime * 60)-5);
+        let idleTime: number = (parseInt(Globals.settings.idleTime.toString()) * 60)-5;
+        this.idle.setIdle(idleTime);
         this.idle.setTimeout(5);
         this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
         this.idle.onTimeout.subscribe(() => {
