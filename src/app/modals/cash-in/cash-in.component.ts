@@ -9,6 +9,7 @@ import {TRANSACTIONTYPE} from "../../enums/enums";
 import {DateService} from "../../services/date.service";
 import {alertService} from "../../services/alert.service";
 import {LogService} from "../../services/log.service";
+import {SettingService} from "../../services/setting.service";
 
 @Component({
     selector: 'app-cash-in',
@@ -20,7 +21,8 @@ export class CashInComponent implements OnInit {
     constructor(private _activeModal: NgbActiveModal,
                 private _transactionService: TransactionService,
                 private _alertService: alertService,
-                private _logService: LogService) {
+                private _logService: LogService,
+                private _settingsService: SettingService) {
     }
 
     @ViewChild('otherComment')
@@ -64,6 +66,7 @@ export class CashInComponent implements OnInit {
             this.saveTransaction();
             this.saveTransactionType();
             this.setLog();
+            this._settingsService.openRegister();
             this.printTicket();
             this.showSuccessfulTransactionAlert();
         } else {

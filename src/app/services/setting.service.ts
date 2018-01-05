@@ -71,4 +71,8 @@ export class SettingService {
         })
     }
 
+    openRegister(){
+        this.db.object('registers/'+Globals.userInfo.registerId.toString()+"/openRegister").update(true);
+    }
+
 }
