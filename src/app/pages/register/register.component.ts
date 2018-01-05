@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
 
     constructor(private _settingsService: SettingService,
                 private _alertService: alertService,
-                private _modal:NgbModal) {
+                private _modal: NgbModal) {
         this.getRegisters();
     }
 
@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
     getRegisters() {
         this._settingsService.getRegisters()
             .then((response: Register[]) => {
-                response.splice(response.length-1, 1);
+                response.splice(response.length - 1, 1);
                 this.registers = response;
                 console.log(response)
             })
@@ -66,17 +66,18 @@ export class RegisterComponent implements OnInit {
         this.registerId = null;
     }
 
-    getComputerName(key: string) {
-        this._settingsService.getMachineName(key)
+    getComputerName() {
+        this._settingsService.getMachineName(Globals.userInfo.registerId.toString())
             .then((response: string) => {
                 this.computerName = response;
             })
     }
 
-    openNewRegister(){
+    openNewRegister() {
         this._modal.open(NewRegisterComponent, Globals.optionModalSm).result
-            .then(()=>{
+            .then(() => {
                 this.getRegisters();
-            }, ()=>{})
+            }, () => {
+            })
     }
 }
