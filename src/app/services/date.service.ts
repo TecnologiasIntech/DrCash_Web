@@ -64,8 +64,8 @@ export class DateService {
         let date = new Date();
         let dateNumber: string;
         dateNumber = date.getFullYear().toString();
-        dateNumber += ("0"+(date.getMonth()+1).toString()).slice(-2);
-        dateNumber += ("0"+(date.getDate().toString())).slice(-2);
+        dateNumber += ("0" + (date.getMonth() + 1).toString()).slice(-2);
+        dateNumber += ("0" + (date.getDate().toString())).slice(-2);
         dateNumber += "000000"
         return parseInt(dateNumber);
     }
@@ -74,8 +74,8 @@ export class DateService {
         let date = new Date();
         let dateNumber: string;
         dateNumber = date.getFullYear().toString();
-        dateNumber += ("0"+(date.getMonth()+1).toString()).slice(-2);
-        dateNumber += ("0"+(date.getDate().toString())).slice(-2);
+        dateNumber += ("0" + (date.getMonth() + 1).toString()).slice(-2);
+        dateNumber += ("0" + (date.getDate().toString())).slice(-2);
         dateNumber += "235959"
         return parseInt(dateNumber);
     }
@@ -98,5 +98,25 @@ export class DateService {
         dateNumber += ("0" + (date.getDate().toString())).slice(-2);
         dateNumber += "235959";
         return parseInt(dateNumber);
+    }
+
+    static getInitialDateByDatePicker(date: any) {
+        let newDate: string = "";
+        newDate += date.year;
+        newDate += ("0" + date.month).slice(-2);
+        newDate += ("0" + date.day).slice(-2);
+        newDate += "000000";
+
+        return newDate;
+    }
+
+    static getEndDateByDatePicker(date: any) {
+        let newDate: string = "";
+        newDate += date.year;
+        newDate += ("0" + date.month).slice(-2);
+        newDate += ("0" + date.day).slice(-2);
+        newDate += "235959";
+
+        return newDate;
     }
 }

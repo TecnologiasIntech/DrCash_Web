@@ -3,7 +3,7 @@
         <div class="card-body p-15">
             <!--Filters-->
             <div class="row">
-                <div class="col-2 offset-1">
+                <div class="col-2 p-l-15">
                     <div class="form-group">
                         <input type="text" class="form-control form-control-line" placeholder="Transaction Number"
                         [(ngModel)]="transactionNumber"
@@ -11,7 +11,7 @@
                         <i class="form-group__bar"></i>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-2">
                     <div class="form-group">
                         <input type="text" class="form-control form-control-line" placeholder="Comment"
                         [(ngModel)]="comment"
@@ -27,27 +27,37 @@
                         <i class="form-group__bar"></i>
                     </div>
                 </div>
-                <div class="col-1">
+                <div class="col-2">
                     <div class="form-group">
-                        <input type="text" class="form-control form-control-line" placeholder="Date From"
-                        [(ngModel)]="dateFrom"
-                        >
-                        <i class="form-group__bar"></i>
+                        <div class="input-group">
+                            <input class="form-control form-control-line" placeholder="Date From"
+                                   name="dp" ngbDatepicker #df="ngbDatepicker" [(ngModel)]="dateFrom">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" (click)="df.toggle()" type="button">
+                                    <i class="zmdi zmdi-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer; color: black;"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-1">
+                <div class="col-2">
                     <div class="form-group">
-                        <input type="text" class="form-control form-control-line" placeholder="Date To"
-                        [(ngModel)]="dateTo"
-                        >
-                        <i class="form-group__bar"></i>
+                        <div class="input-group">
+                            <input class="form-control form-control-line" placeholder="Date To"
+                                   name="dp" ngbDatepicker #dt="ngbDatepicker" [(ngModel)]="dateTo">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" (click)="dt.toggle()" type="button">
+                                    <i class="zmdi zmdi-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer; color: black;"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-1 p-r-0">
-                    <button class="btn btn-danger" (click)="cleanFields()">Clear</button>
+                <div class="col-1 p-r-10">
+                    <button class="btn btn-danger btn-block" (click)="cleanFields()">Clear</button>
                 </div>
                 <div class="col-1 p-l-0">
-                    <button class="btn btn-primary" (click)="searchTransactions()">Search</button>
+                    <button class="btn btn-primary btn-block" (click)="searchTransactions()">Search</button>
                 </div>
             </div>
 

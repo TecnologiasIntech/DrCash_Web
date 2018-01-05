@@ -5,6 +5,7 @@ import {ValidationService} from "../../services/validation.service";
 import {TRANSACTIONTYPE} from "../../enums/enums";
 import 'jspdf-autotable';
 import * as jsPDF from 'jspdf';
+import {DateService} from "../../services/date.service";
 @Component({
     selector: 'app-daily-transactions',
     templateUrl: './daily-transactions.component.html',
@@ -35,8 +36,14 @@ export class DailyTransactionsComponent implements OnInit {
     }
 
     validateDateFields() {
-        if (!ValidationService.errorInField(this.dateFrom)) this.dateFrom = parseInt(this.dateFrom);
-        if (!ValidationService.errorInField(this.dateTo)) this.dateTo = parseInt(this.dateTo);
+        if (!ValidationService.errorInField(this.dateFrom)) {
+            this.dateFrom = DateService.getInitialDateByDatePicker(this.dateFrom);
+            this.dateFrom = parseInt(this.dateFrom);
+        }
+        if (!ValidationService.errorInField(this.dateTo)) {
+            this.dateTo = DateService.getEndDateByDatePicker(this.dateTo);
+            this.dateTo = parseInt(this.dateTo);
+        }
     }
 
     cleanFields() {

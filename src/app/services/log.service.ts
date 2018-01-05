@@ -24,7 +24,7 @@ export class LogService {
 
     setLog(message:string){
         let log:Log = {} as Log;
-        log.dateTime = DateService.getCurrentDate().toString();
+        log.dateTime = DateService.getCurrentDate();
         log.username = Globals.userInfo.username;
         log.clinic = Globals.userInfo.clinic;
         log.actions = message;

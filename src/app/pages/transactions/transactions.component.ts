@@ -43,8 +43,14 @@ export class TransactionsComponent implements OnInit {
     }
 
     validateDateFields() {
-        if (!ValidationService.errorInField(this.dateFrom)) this.dateFrom = parseInt(this.dateFrom);
-        if (!ValidationService.errorInField(this.dateTo)) this.dateTo = parseInt(this.dateTo);
+        if (!ValidationService.errorInField(this.dateFrom)) {
+            this.dateFrom = DateService.getInitialDateByDatePicker(this.dateFrom);
+            this.dateFrom = parseInt(this.dateFrom);
+        }
+        if (!ValidationService.errorInField(this.dateTo)) {
+            this.dateTo = DateService.getEndDateByDatePicker(this.dateTo);
+            this.dateTo = parseInt(this.dateTo);
+        }
     }
 
     showTransaction(transaction:Transaction) {

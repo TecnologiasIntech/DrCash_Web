@@ -72,7 +72,7 @@ export class SettingService {
     }
 
     openRegister(){
-        this.db.object('registers/'+Globals.userInfo.registerId.toString()+"/openRegister").update(true);
+        this.db.object('registers/'+Globals.userInfo.registerId.toString()).update({openRegister:true});
     }
 
 }
