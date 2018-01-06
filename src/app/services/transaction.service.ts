@@ -205,7 +205,6 @@ export class TransactionService {
     }
 
     static getDefaultValuesToTransaction() {
-        //TODO Asignar valor a RegisterID
         return {
             userKey: Globals.userInfo.username,
             type: -1,
@@ -216,7 +215,7 @@ export class TransactionService {
             other: false,
             otherComments: "",
             closed: false,
-            registerId: "1",
+            registerId: Globals.userInfo.registerId,
             modifiedById: Globals.userInfo.userId
         }
     }

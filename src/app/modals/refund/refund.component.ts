@@ -89,8 +89,7 @@ export class RefundComponent implements OnInit {
     }
 
     setLog(){
-        //TODO Cambiar el numero de los register
-        let message:string = Globals.userInfo.username+" made a Refund of the transaction "+this.transaction.dateRegistered+this.transaction.registerId+" for $"+this.refundTransaction.cash+" in register 1";
+        let message:string = Globals.userInfo.username+" made a Refund of the transaction "+this.transaction.dateRegistered+this.transaction.registerId+" for $"+this.refundTransaction.cash+" in register "+ Globals.userInfo.registerId;
         message += " with the transaction number "+this.refundTransaction.dateRegistered+Globals.userInfo.userId;
         this._logService.setLog(message)
     }

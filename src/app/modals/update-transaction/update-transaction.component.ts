@@ -69,7 +69,6 @@ export class UpdateTransactionComponent implements OnInit {
     }
 
     setLog(){
-        //TODO Cambiar el numero de los register
         let message:string = Globals.userInfo.username+" modified the transaction: "+this.newTransaction.dateRegistered+this.newTransaction.modifiedById;
         this._logService.setLog(message)
     }

@@ -204,7 +204,7 @@ export class CloseDateComponent implements OnInit {
     }
 
     setClosedTransaction() {
-        //TODO: Pregunta para que sirve el balance
+        //TODO: Preguntar si es necesario el balance
         let closedTransaction: ClosedTransaction = {
             bills_100: this.Bills100,
             bills_50: this.Bills50,
@@ -234,8 +234,7 @@ export class CloseDateComponent implements OnInit {
     }
 
     setLog(){
-        //TODO Cambiar el numero de los register
-        let message:string = Globals.userInfo.username+" closed date at te register 1";
+        let message:string = Globals.userInfo.username+" closed date at te register "+ Globals.userInfo.registerId;
          message += " for $"+this.totalCash;
         this._logService.setLog(message)
     }

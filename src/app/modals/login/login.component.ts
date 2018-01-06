@@ -91,8 +91,7 @@ export class LoginComponent implements OnInit {
     }
 
     setLog(){
-        //TODO Cambiar el numero de los register
-        let message:string = Globals.userInfo.username+" made a login at te register 1";
+        let message:string = Globals.userInfo.username+" made a login at te register "+ Globals.userInfo.registerId;
         this._logService.setLog(message)
     }
 
