@@ -119,4 +119,20 @@ export class DateService {
 
         return newDate;
     }
+
+    static removeOneDayToDate(previusDate: string) {
+
+        let year: number = parseInt(previusDate.substr(0, 4));
+        let month: number = parseInt(previusDate.substr(4, 2)) - 1;
+        let day: number = parseInt(previusDate.substr(6, 2));
+
+        let date = new Date(year, month, day);
+        date.setDate(date.getDate() - 1);
+
+        let newDate: string = date.getFullYear().toString();
+        newDate += ("0" + (date.getMonth() + 1).toString()).slice(-2);
+        newDate += ("0" + (date.getDate().toString())).slice(-2);
+
+        return newDate;
+    }
 }

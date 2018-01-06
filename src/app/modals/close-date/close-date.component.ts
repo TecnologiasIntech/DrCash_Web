@@ -204,7 +204,7 @@ export class CloseDateComponent implements OnInit {
     }
 
     setClosedTransaction() {
-        //TODO: Poner bien el registerID
+        //TODO: Pregunta para que sirve el balance
         let closedTransaction: ClosedTransaction = {
             bills_100: this.Bills100,
             bills_50: this.Bills50,
@@ -219,9 +219,10 @@ export class CloseDateComponent implements OnInit {
             total_check: parseFloat(this.totalCheck),
             total_credit: parseFloat(this.totalCredit),
             initial_cash: this._transactionService.initialCash,
+            leftInRegister: parseFloat(this.leftRegisterLabel),
             balance: 0,
             transaction_count: this._transactionService.numberOfCurrentTransactions,
-            reg_RegisterID: "1",
+            reg_RegisterID: Globals.userInfo.registerId.toString(),
             username: Globals.userInfo.username,
             datetime: DateService.getCurrentDate()
         };
