@@ -5,6 +5,8 @@ import {Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
 import {Globals} from "../../statics/globals";
 import {User} from "../../interfaces/user";
+import {SettingService} from "../../services/setting.service";
+import {Setting} from "../../interfaces/setting";
 
 @Component({
     selector: 'app-auth',
@@ -15,7 +17,8 @@ export class AuthComponent implements OnInit {
 
     constructor(private _af: AngularFireAuth,
                 private _router: Router,
-                private _userService: UserService) {
+                private _userService: UserService,
+                private _settingsService:SettingService) {
         this.authUser();
     }
 
@@ -32,6 +35,10 @@ export class AuthComponent implements OnInit {
             this._userService.getUser(email)
                 .then((response: User) => {
                     Globals.userInfo = response;
+                    this._settingsService.getSettings()
+                        .then((response: Setting) => {
+                            Globals.settings = response;
+                        })
                     this._router.navigate(['home']);
                 });
         })
