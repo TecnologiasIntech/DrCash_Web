@@ -127,7 +127,7 @@ export class TransactionService {
     }
 
     updateTransaction(transaction: Transaction) {
-        this.db.list('transactions').update(transaction.dateRegistered.toString()+transaction.modifiedById, transaction)
+        this.db.list('transactions').update(transaction.dateRegistered.toString() + transaction.modifiedById, transaction)
     }
 
     searchDailyTransactions(transactionNumber: number, comment: string, patientName: string, dateFrom: number, dateTo: number) {
@@ -173,11 +173,11 @@ export class TransactionService {
         return transactions;
     }
 
-    searchClosedTransactions(transactionNumber:number, dateFrom:number, dateTo:number){
+    searchClosedTransactions(transactionNumber: number, dateFrom: number, dateTo: number) {
         return new Promise((resolve, reject) => {
             if (!ValidationService.errorInField(transactionNumber)) {
-                this.getClosedTransaction(transactionNumber).take(1).subscribe((snapshot:ClosedTransaction) => {
-                    let transaction:ClosedTransaction[] = [];
+                this.getClosedTransaction(transactionNumber).take(1).subscribe((snapshot: ClosedTransaction) => {
+                    let transaction: ClosedTransaction[] = [];
                     transaction.push(snapshot);
                     resolve(transaction);
                 })
@@ -200,8 +200,8 @@ export class TransactionService {
         })
     }
 
-    getClosedTransaction(transactionNumber:number){
-        return this.db.object('closedTransactions/'+transactionNumber.toString()).valueChanges();
+    getClosedTransaction(transactionNumber: number) {
+        return this.db.object('closedTransactions/' + transactionNumber.toString()).valueChanges();
     }
 
     static getDefaultValuesToTransaction() {
@@ -241,5 +241,23 @@ export class TransactionService {
             ])
         }
         return transactionToPrint;
+    }
+
+    getLeftInRegister(cash: number, fDate: number, tDate: number) {
+        return new Promise((resolve, reject) => {
+            this.db.list('closedTransactions/', ref => ref
+                .orderByChild("datetime")
+                .startAt(fDate)
+                .endAt(tDate))
+                .valueChanges().take(1)
+                .subscribe((snapshot: ClosedTransaction[]) => {
+                    let closeDate = _.filter(snapshot, ["reg_RegisterID", Globals.userInfo.registerId.toString()]);
+                    if (!ValidationService.errorInField(closeDate)) {
+                        resolve(closeDate[closeDate.length - 1].leftInRegister);
+                    } else {
+                        reject();
+                    }
+                })
+        })
     }
 }

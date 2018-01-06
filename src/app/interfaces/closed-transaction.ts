@@ -12,6 +12,7 @@ export interface ClosedTransaction {
     total_check: number;
     total_credit:number;
     initial_cash:number;
+    leftInRegister:number;
     balance:number;
     transaction_count:number;
     reg_RegisterID:string;

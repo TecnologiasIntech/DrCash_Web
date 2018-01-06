@@ -50,6 +50,7 @@ import {ResetUserComponent} from "../modals/reset-user/reset-user.component";
 import {SettingService} from "../services/setting.service";
 import {RouteService} from "../services/route.service";
 import {AuthComponent} from "../pages/auth/auth.component";
+import {AboutComponent} from "../modals/about/about.component";
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -84,7 +85,8 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         InitialCashComponent,
         UpdateTransactionComponent,
         ResetUserComponent,
-        AuthComponent
+        AuthComponent,
+        AboutComponent
     ],
     imports: [
         CommonModule,
@@ -126,7 +128,8 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         AuthorizationComponent,
         InitialCashComponent,
         UpdateTransactionComponent,
-        ResetUserComponent
+        ResetUserComponent,
+        AboutComponent
     ]
 })
 

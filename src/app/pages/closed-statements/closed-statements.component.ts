@@ -52,8 +52,14 @@ export class ClosedStatementsComponent implements OnInit {
     }
 
     validateDateFields() {
-        if (!ValidationService.errorInField(this.dateFrom)) this.dateFrom = parseInt(this.dateFrom);
-        if (!ValidationService.errorInField(this.dateTo)) this.dateTo = parseInt(this.dateTo);
+        if (!ValidationService.errorInField(this.dateFrom)) {
+            this.dateFrom = DateService.getInitialDateByDatePicker(this.dateFrom);
+            this.dateFrom = parseInt(this.dateFrom);
+        }
+        if (!ValidationService.errorInField(this.dateTo)) {
+            this.dateTo = DateService.getEndDateByDatePicker(this.dateTo);
+            this.dateTo = parseInt(this.dateTo);
+        }
     }
 
     showClosedTransaction(closedTransaction: ClosedTransaction) {
@@ -61,7 +67,6 @@ export class ClosedStatementsComponent implements OnInit {
         let dateF: number, dateT: number;
         dateF = parseInt((this.closedTransaction.datetime.toString()).substr(0, 8) + "000000");
         dateT = parseInt((this.closedTransaction.datetime.toString()).substr(0, 8) + "235959");
-        debugger;
         this._transactionService.searchDailyTransactions(null, null, null, dateF, dateT)
             .then((response: Transaction[]) => {
                 this.transactions = response;

@@ -15,8 +15,6 @@ import * as _ from "lodash";
 import { AppComponent } from './app.component';
 import { SharedService } from "./shared/services/shared.service";
 import {alertService} from "./services/alert.service";
-import { UpdateTransactionComponent } from './modals/update-transaction/update-transaction.component';
-import { AuthComponent } from './pages/auth/auth.component';
 
 @NgModule({
     declarations: [

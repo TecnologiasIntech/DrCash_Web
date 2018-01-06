@@ -8,7 +8,7 @@
                 <input type="number" min="0" step="1" #initialCash
                        class="form-control form-control-line text-center currency {{ errorInitialCash ? 'initialCashError' : '' }}"
                        placeholder="$0.00" [(ngModel)]="transaction.cash" (keyup)="errorInitialCash = false;"
-                       (keyup.enter)="setInitialCash(transaction.cash)" #cash autofocus
+                       (keyup.enter)="verifyLeftInRegister(transaction.cash, initialDate, endDate)" #cash autofocus
                        (keydown.ArrowUp)="_validationService.validateArrows($event)"
                        (keydown.ArrowDown)="_validationService.validateArrows($event)"
                        (keypress)="_validationService.restrictNumeric($event, initialCash.value)"
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="card-footer p-b-20">
-            <button class="btn btn-block btn-primary" (click)="setInitialCash(transaction.cash)">ACCEPT</button>
+            <button class="btn btn-block btn-primary" (click)="verifyLeftInRegister(transaction.cash, initialDate, endDate)">ACCEPT</button>
         </div>
     </div>
 </section>

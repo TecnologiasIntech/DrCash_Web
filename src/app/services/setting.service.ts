@@ -23,11 +23,11 @@ export class SettingService {
         }
     }
 
-    getMachineName(key: string) {
+    getMachineName(registerID: string) {
         return new Promise(resolve => {
-            this.db.object('registers/' + key).update({getNameMachine: true});
+            this.db.object('registers/' + registerID).update({getNameMachine: true});
 
-            this.db.object('registers/' + key).valueChanges().subscribe((snapshot: Register) => {
+            this.db.object('registers/' + registerID).valueChanges().subscribe((snapshot: Register) => {
                 if (!snapshot.getNameMachine) {
                     resolve(snapshot.computerNameByPlugin);
                 }
@@ -72,7 +72,7 @@ export class SettingService {
     }
 
     openRegister(){
-        this.db.object('registers/'+Globals.userInfo.registerId.toString()+"/openRegister").update(true);
+        this.db.object('registers/'+Globals.userInfo.registerId.toString()).update({openRegister:true});
     }
 
 }
