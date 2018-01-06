@@ -34,8 +34,7 @@ export class LayoutComponent implements OnInit {
     }
 
     idleCheck() {
-        let idleTime: number = (parseInt(Globals.settings.idleTime.toString()) * 60)-5;
-        this.idle.setIdle(idleTime);
+        this.idle.setIdle(5);
         this.idle.setTimeout(5);
         this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
         this.idle.onTimeout.subscribe(() => {
@@ -49,11 +48,18 @@ export class LayoutComponent implements OnInit {
             }
         });
 
+        this.idle.onInterrupt.subscribe(()=>this.reset());
         this.reset();
 
     }
 
     reset() {
+        if(ValidationService.errorInField(Globals.userInfo)){
+            this.idle.setIdle(5);
+        }else{
+            let idleTime: number = (parseInt(Globals.settings.idleTime.toString()) * 60)-5;
+            this.idle.setIdle(idleTime);
+        }
         Globals.afk = false;
         this.idle.watch();
 
