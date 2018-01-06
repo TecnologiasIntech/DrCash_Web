@@ -139,7 +139,6 @@ export class SignUpComponent implements OnInit {
     }
 
     loadUserDefaultData() {
-        // TODO: Verificar si es de utilidad el userID y si no entonces eliminarlo
         this.newUser.activeAccount = true;
         this.newUser.passwordReset = true;
         this.newUser.modifiedBy = Globals.userInfo.userId;

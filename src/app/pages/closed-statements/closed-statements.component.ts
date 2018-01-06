@@ -79,7 +79,6 @@ export class ClosedStatementsComponent implements OnInit {
     }
 
     setLog(){
-        //TODO Cambiar el numero de los register
         let message:string = Globals.userInfo.username+" reprint closed statement for ID ";
         message += this.closedTransaction.datetime;
         this._logService.setLog(message)

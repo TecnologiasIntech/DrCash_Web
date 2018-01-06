@@ -38,7 +38,7 @@ export class CashInComponent implements OnInit {
     @ViewChild('copayment')
     copaymentInput: ElementRef;
 
-    newTransaction: Transaction = {} as Transaction;
+    newTransaction: any = {} as Transaction;
 
     total: number = 0;
     amount: number = 0
@@ -78,8 +78,7 @@ export class CashInComponent implements OnInit {
 
 
     setLog(){
-        //TODO Cambiar el numero de los register
-        let message:string = Globals.userInfo.username+" made a CashIn for $"+this.newTransaction.amountCharged+" in register 1";
+        let message:string = Globals.userInfo.username+" made a CashIn for $"+this.newTransaction.amountCharged+" in register "+ Globals.userInfo.registerId;
         message += " with the transaction number "+this.newTransaction.dateRegistered+Globals.userInfo.userId;
         this._logService.setLog(message)
     }

@@ -10,6 +10,7 @@ import {Globals} from "../../statics/globals";
 import {PrintService} from "../../services/print.service";
 import {LogService} from "../../services/log.service";
 import {SettingService} from "../../services/setting.service";
+import {alertService} from "../../services/alert.service";
 
 @Component({
     selector: 'app-close-date',
@@ -49,7 +50,8 @@ export class CloseDateComponent implements OnInit {
                 public _validationService: ValidationService,
                 private _transactionService: TransactionService,
                 private _logService: LogService,
-                private _settingsService: SettingService) {
+                private _settingsService: SettingService,
+                private _alertSerivce:alertService) {
     }
 
     ngOnInit() {
@@ -163,7 +165,11 @@ export class CloseDateComponent implements OnInit {
     }
 
     closeModal() {
-        this._activeModal.close()
+        this._alertSerivce.getReason("")
+            .then((response:string)=>{
+                this.setReasonLog(response);
+                this.closeModal();
+            })
     }
 
     selectAllText(typeBills: number) {
@@ -204,7 +210,7 @@ export class CloseDateComponent implements OnInit {
     }
 
     setClosedTransaction() {
-        //TODO: Pregunta para que sirve el balance
+        //TODO: Preguntar si es necesario el balance
         let closedTransaction: ClosedTransaction = {
             bills_100: this.Bills100,
             bills_50: this.Bills50,
@@ -234,9 +240,13 @@ export class CloseDateComponent implements OnInit {
     }
 
     setLog(){
-        //TODO Cambiar el numero de los register
-        let message:string = Globals.userInfo.username+" closed date at te register 1";
+        let message:string = Globals.userInfo.username+" closed date at te register "+ Globals.userInfo.registerId;
          message += " for $"+this.totalCash;
+        this._logService.setLog(message)
+    }
+
+    setReasonLog(reason:string){
+        let message:string = Globals.userInfo.username+" cancel a close date for reason: "+ reason;
         this._logService.setLog(message)
     }
 

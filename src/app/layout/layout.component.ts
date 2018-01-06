@@ -35,7 +35,7 @@ export class LayoutComponent implements OnInit {
 
     idleCheck() {
         this.idle.setIdle(5);
-        this.idle.setTimeout(5);
+        this.idle.setTimeout(60);
         this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
         this.idle.onTimeout.subscribe(() => {
             if(Globals.afk == false){

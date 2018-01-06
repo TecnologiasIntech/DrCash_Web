@@ -20,7 +20,7 @@ import {alertService} from "../../services/alert.service";
 export class InitialCashComponent implements OnInit {
 
     errorInitialCash: boolean = false;
-    transaction: Transaction = TransactionService.getDefaultValuesToTransaction();
+    transaction: any = TransactionService.getDefaultValuesToTransaction();
     @ViewChild('cash')
     cash: any;
     initialDate: number;
@@ -60,9 +60,8 @@ export class InitialCashComponent implements OnInit {
     }
 
     setLog() {
-        //TODO cambiar el registe por el numero de la caja registradora
         let message: string = Globals.userInfo.username + " made a Initial Cash for $" + this.transaction.cash;
-        message += " in register 1";
+        message += " in register "+ Globals.userInfo.registerId;
         this._logService.setLog(message);
     }
 
