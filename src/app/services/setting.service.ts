@@ -5,7 +5,6 @@ import {Globals} from "../statics/globals";
 import * as firebase from "firebase";
 import {FileItem} from "../interfaces/file-item";
 import {Register} from "../interfaces/register";
-import {Globals} from "../statics/globals";
 
 @Injectable()
 export class SettingService {
