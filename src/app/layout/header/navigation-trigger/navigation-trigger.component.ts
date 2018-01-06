@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from "../../../shared/services/shared.service";
 import {Globals} from "../../../statics/globals";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {AboutComponent} from "../../../modals/about/about.component";
 
 @Component({
     selector: 'navigation-trigger',
@@ -12,7 +14,8 @@ export class NavigationTriggerComponent implements OnInit {
     viewReportsOptions: boolean=false;
     viewSettingsOptions: boolean=false;
     constructor(private sharedService: SharedService,
-                private _globals: Globals) {
+                private _globals: Globals,
+                private _modal:NgbModal) {
         // sharedService.sidebarVisibilitySubject.subscribe((value) => {
         //
         //     this.sidebarVisible = value
@@ -38,6 +41,10 @@ export class NavigationTriggerComponent implements OnInit {
     sidenavAndClickIcon(){
         this.openCloseNav();
         this.toggleSidebarVisibility();
+    }
+
+    openAbout(){
+        this._modal.open(AboutComponent, Globals.optionModalLg);
     }
 
     ngOnInit() {

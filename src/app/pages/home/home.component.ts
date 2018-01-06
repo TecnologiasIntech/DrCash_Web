@@ -135,7 +135,6 @@ export class HomeComponent implements OnInit {
     }
 
     loadTransactions() {
-        this.openInitialCash();
         if (Globals.userInfo.securityLevel == USERTYPE.USER) {
             this._transactionService.getMyCurrentTransactions()
                 .then((response: Transaction[]) => {
