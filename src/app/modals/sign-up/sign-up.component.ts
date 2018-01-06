@@ -53,6 +53,7 @@ export class SignUpComponent implements OnInit {
                         .then((response:number)=>{
                             this.newUser.userId = response;
                             this.setUserPassword();
+                            this._usersService.createNewUser(this.newUser.email, this.newUser.password);
                             this._usersService.updateUser(this.newUser);
                             this.setLog();
                             this.showNewPasswordAler(this.newUser.password);

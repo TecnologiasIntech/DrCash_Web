@@ -7,12 +7,14 @@ import {Globals} from "../statics/globals";
 import {DateService} from "./date.service";
 import {reject} from "q";
 import {ValidationService} from "./validation.service";
+import {AngularFireAuth} from "angularfire2/auth";
 
 @Injectable()
 export class UserService {
 
     constructor(private db: AngularFireDatabase,
-                private alertService: alertService) {
+                private alertService: alertService,
+                private _af: AngularFireAuth) {
     }
 
     authUser(user: User) {
@@ -28,6 +30,14 @@ export class UserService {
                 } else {
                     reject(ERRORAUTH.USERNOTFOUND);
                 }
+            })
+        })
+    }
+
+    getUser(emai: string) {
+        return new Promise(resolve => {
+            this.db.object('users/' + emai).valueChanges().subscribe((result: User) => {
+                resolve(result);
             })
         })
     }
@@ -49,6 +59,13 @@ export class UserService {
                     resolve(snapshot);
                 })
         })
+    }
+
+    updatePassword(newPassword: string) {
+        this._af.auth.currentUser.updatePassword(newPassword)
+            .catch((error) => {
+                console.log("Error to change Password: " + error);
+            })
     }
 
     getAllUsers() {
@@ -75,12 +92,26 @@ export class UserService {
         })
     }
 
-    getUserID(){
-        debugger
-        return new Promise(resolve=>{
-            this.db.object('users/numberUsers').valueChanges().take(1).subscribe((snapshot:number)=>{
-                resolve(snapshot+1)
+    getUserID() {
+        return new Promise(resolve => {
+            this.db.object('users/numberUsers').valueChanges().take(1).subscribe((snapshot: number) => {
+                resolve(snapshot + 1)
             })
         })
+    }
+
+    createNewUser(email: string, pass: string) {
+        this._af.auth.createUserWithEmailAndPassword(email, pass)
+            .then(response => {
+                this._af.auth.signInWithEmailAndPassword(Globals.userInfo.email, Globals.userInfo.password)
+                    .catch(error => {
+                        console.log("Error Sign In :");
+                        console.log(error);
+                    })
+            })
+            .catch(error => {
+                console.log("Error Create User :");
+                console.log(error);
+            })
     }
 }

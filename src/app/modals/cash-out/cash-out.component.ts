@@ -9,6 +9,7 @@ import {alertService} from "../../services/alert.service";
 import {PrintService} from "../../services/print.service";
 import {LogService} from "../../services/log.service";
 import {Globals} from "../../statics/globals";
+import {SettingService} from "../../services/setting.service";
 
 @Component({
     selector: 'app-cash-out',
@@ -38,7 +39,8 @@ export class CashOutComponent implements OnInit {
                 public _validationService: ValidationService,
                 private _transactionService:TransactionService,
                 private _alertService:alertService,
-                private _logService:LogService) {
+                private _logService:LogService,
+                private _settingsService: SettingService) {
 
         this.transaction=TransactionService.getDefaultValuesToTransaction()
     }
@@ -129,8 +131,6 @@ export class CashOutComponent implements OnInit {
                     this.Bills1 --;
                 }
                 break;
-            default:
-                break;
         }
         this.calculateTotalCash();
 
@@ -166,6 +166,7 @@ export class CashOutComponent implements OnInit {
 
             this._transactionService.setTransaction(this.transaction);
             this.setLog();
+            this._settingsService.openRegister();
             PrintService.printCashOut(this.transaction);
 
             this._alertService.confirmSuccess("Successful Transaction","")

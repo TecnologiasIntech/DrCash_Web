@@ -19,16 +19,28 @@
             </div>
             <div class="col-2">
               <div class="form-group">
-                <input type="text" class="form-control form-control-line" [(ngModel)]="dateFrom"
-                       placeholder="Date From">
-                <i class="form-group__bar"></i>
+                <div class="input-group">
+                  <input class="form-control form-control-line" placeholder="Date From"
+                         name="dp" ngbDatepicker #df="ngbDatepicker" [(ngModel)]="dateFrom">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" (click)="df.toggle()" type="button">
+                      <i class="zmdi zmdi-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer; color: black;"></i>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="col-2">
               <div class="form-group">
-                <input type="text" class="form-control form-control-line" [(ngModel)]="dateTo"
-                       placeholder="Date To">
-                <i class="form-group__bar"></i>
+                <div class="input-group">
+                  <input class="form-control form-control-line" placeholder="Date From"
+                         name="dp" ngbDatepicker #dt="ngbDatepicker" [(ngModel)]="dateTo">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" (click)="dt.toggle()" type="button">
+                      <i class="zmdi zmdi-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer; color: black;"></i>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="col-3">
@@ -61,7 +73,7 @@
             </div>
           </div>
 
-          <div class="row" style="max-height: 280px">
+          <div class="row" style="height: 180px; max-height: 180px;overflow-y: auto">
             <!--Transactions Table-->
             <div class="col-11 offset-1">
               <table class="table table-hover mb-0">

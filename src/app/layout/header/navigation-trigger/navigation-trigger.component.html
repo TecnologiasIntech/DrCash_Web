@@ -9,14 +9,14 @@
 <aside id="mySidenav" class="sidenav" style="margin-top: 72px;" [class.toggled]="_globals.sidebarVisible">
     <div class="row">
         <div class="col-12">
-            <div class="user">
-                <div class="user__info">
-                    <img class="borderStyleImage" src="../../../../assets/demo/img/profile-pics/4.jpg">
-                    <div>
-                        <div class="user__name">Bienvenido</div>
-                    </div>
-                </div>
-            </div>
+            <!--<div class="user">-->
+                <!--<div class="user__info">-->
+                    <!--&lt;!&ndash;<img class="borderStyleImage" src="../../../../assets/demo/img/profile-pics/4.jpg">&ndash;&gt;-->
+                    <!--<div>-->
+                        <!--<div class="user__name">Bienvenido</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
             <!--menu and submenus-->
             <div class="f-s-16 c-s-gray">
                 <ul class="listStyleNone p-0">
@@ -59,6 +59,10 @@
                             <li class="p-b-5 cursor-pointer" (click)="sidenavAndClickIcon()"><a
                                     [routerLink]="['/smtp']">SMTP</a></li>
                         </ul>
+                    </li>
+                    <li class="cursor-pointer" (click)="sidenavAndClickIcon(); openAbout()"><a>
+                        <i class="zmdi zmdi-info m-r-10 paddMenuOptions"></i>
+                        <span>About</span></a>
                     </li>
                 </ul>
             </div>

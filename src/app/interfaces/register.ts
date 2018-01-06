@@ -6,4 +6,7 @@ export interface Register {
     modificationDate?:string;
     createdBy:string;
     creationDate:string;
+    key:string,
+    getNameMachine:boolean;
+    computerNameByPlugin:string;
 }

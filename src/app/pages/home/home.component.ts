@@ -1,26 +1,21 @@
 import {InitialCashComponent} from "../../modals/initial-cash/initial-cash.component";
 import {Globals} from "../../statics/globals";
-import {LoginComponent} from "../../modals/login/login.component";
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {CashInComponent} from "../../modals/cash-in/cash-in.component";
 import {CashOutComponent} from "../../modals/cash-out/cash-out.component";
 import {RefundComponent} from "../../modals/refund/refund.component";
-import {SignUpComponent} from "../../modals/sign-up/sign-up.component";
 import {CloseDateComponent} from "../../modals/close-date/close-date.component";
 import {AuthorizationComponent} from "../../modals/authorization/authorization.component";
-import {window} from "rxjs/operator/window";
 import {AngularFireDatabase} from "angularfire2/database";
 import {TransactionService} from "../../services/transaction.service";
 import {DateService} from "../../services/date.service";
-import {Credentials} from "crypto";
 import {CredentialsComponent} from "../../modals/credentials/credentials.component";
 import {TRANSACTIONTYPE, USERTYPE} from "../../enums/enums";
 import {Transaction} from "../../interfaces/transaction";
-import {BrowserError} from "protractor/built/exitCodes";
-import {userInfo} from "os";
 import {ValidationService} from "../../services/validation.service";
 import {ResetUserComponent} from "../../modals/reset-user/reset-user.component";
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
@@ -39,16 +34,10 @@ export class HomeComponent implements OnInit {
                 private db: AngularFireDatabase,
                 public  _dateService: DateService,
                 private  _transactionService: TransactionService) {
-        if (Globals.userInfo == null) {
-            _modal.open(LoginComponent, Globals.optionModalLg).result
-                .then((response) => {
-                if(Globals.userInfo.passwordReset){
-                    this.openResetUser();
-                }else{
-                    this.loadTransactions();
-                }
-                })
-        }else{
+
+        if (Globals.userInfo.passwordReset) {
+            this.openResetUser();
+        } else {
             this.loadTransactions();
         }
     }
@@ -57,10 +46,10 @@ export class HomeComponent implements OnInit {
         this.cleanTotalsTransactions();
     }
 
-    openResetUser(){
+    openResetUser() {
         this._modal.open(ResetUserComponent, Globals.optionModalSm).result
-            .then(()=>{
-            this.loadTransactions();
+            .then(() => {
+                this.loadTransactions();
             })
     }
 
@@ -169,7 +158,7 @@ export class HomeComponent implements OnInit {
         }
     }
 
-    cleanTotalsTransactions(){
+    cleanTotalsTransactions() {
         this.totalsTransactions = {
             initialCash: 0,
             totalCashIn: 0,

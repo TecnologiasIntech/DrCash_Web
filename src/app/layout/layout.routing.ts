@@ -10,6 +10,7 @@ import {SmtpComponent} from "../pages/smtp/smtp.component";
 import {TransactionsComponent} from "../pages/transactions/transactions.component";
 import {UserProfileComponent} from "../pages/user-profile/user-profile.component";
 import {ClosedStatementsComponent} from "../pages/closed-statements/closed-statements.component";
+import {AuthComponent} from "../pages/auth/auth.component";
 
 const LAYOUT_ROUTES: Routes = [
     {
@@ -17,6 +18,7 @@ const LAYOUT_ROUTES: Routes = [
         //Home
         {path: '', redirectTo: 'home', pathMatch: 'full'},
         {path: 'home', component: HomeComponent},
+        {path: 'auth', component: AuthComponent},
         {path: 'general', component: GeneralComponent},
         {path: 'dailyTransaction', component: DailyTransactionsComponent},
         {path: 'logs', component: LogsComponent},

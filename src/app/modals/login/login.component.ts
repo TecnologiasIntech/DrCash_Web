@@ -9,6 +9,8 @@ import {timeout} from "q";
 import {LogService} from "../../services/log.service";
 import {SettingService} from "../../services/setting.service";
 import {Setting} from "../../interfaces/setting";
+import {RouteService} from "../../services/route.service";
+import {AngularFireAuth} from "angularfire2/auth";
 
 
 @Component({
@@ -36,12 +38,15 @@ export class LoginComponent implements OnInit {
     constructor(private activeModal: NgbActiveModal,
                 private _usrService: UserService,
                 private _logService:LogService,
-                private _settingService: SettingService) {
-
-
+                private _settingService: SettingService,
+                private _auth:AngularFireAuth) {
     }
 
     ngOnInit() {
+        // RouteService.getParameterByName('email');
+        let token = RouteService.getParameterByName('token');
+        // var auth = this._auth.idToken.
+        // debugger
     }
 
 
