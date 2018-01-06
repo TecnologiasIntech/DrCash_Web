@@ -17,7 +17,7 @@ import {SettingService} from "../../services/setting.service";
     styleUrls: ['./cash-out.component.scss']
 })
 export class CashOutComponent implements OnInit {
-    transaction:Transaction;
+    transaction:any;
     comment:string;
     Bills100: number = 0;
     Bills50: number = 0;

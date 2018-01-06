@@ -20,7 +20,7 @@ import {alertService} from "../../services/alert.service";
 export class InitialCashComponent implements OnInit {
 
     errorInitialCash: boolean = false;
-    transaction: Transaction = TransactionService.getDefaultValuesToTransaction();
+    transaction: any = TransactionService.getDefaultValuesToTransaction();
     @ViewChild('cash')
     cash: any;
     initialDate: number;

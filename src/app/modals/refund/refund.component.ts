@@ -27,7 +27,7 @@ export class RefundComponent implements OnInit {
     refundComment: string;
     cadena: string;
     transaction: Transaction;
-    refundTransaction: Transaction;
+    refundTransaction: any;
 
     constructor(private _activeModal: NgbActiveModal,
                 public _validationService: ValidationService,

@@ -126,4 +126,18 @@ export class alertService {
             })
         })
     }
+
+    async getReason(title:string){
+        return new Promise((resolve, reject) => {
+            swal({
+                title: title,
+                input: 'text',
+                showCancelButton: true,
+                confirmButtonText: 'Ok',
+                showLoaderOnConfirm: true
+            }).then((result) => {
+                resolve(result)
+            })
+        })
+    }
 }

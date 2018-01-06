@@ -38,7 +38,7 @@ export class CashInComponent implements OnInit {
     @ViewChild('copayment')
     copaymentInput: ElementRef;
 
-    newTransaction: Transaction = {} as Transaction;
+    newTransaction: any = {} as Transaction;
 
     total: number = 0;
     amount: number = 0
