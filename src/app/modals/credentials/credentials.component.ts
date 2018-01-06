@@ -31,10 +31,13 @@ export class CredentialsComponent implements OnInit {
     constructor(private activeModal: NgbActiveModal,
                 private _usrService: UserService) {
 
+        Globals.afk = true;
+
 
     }
 
     ngOnInit() {
+
     }
 
 
@@ -53,6 +56,7 @@ export class CredentialsComponent implements OnInit {
     userAuth(user: User) {
         this._usrService.authUser(user).then((response: User) => {
             Globals.userInfo = response;
+            Globals.afk = false;
             this.activeModal.close();
         }).catch((reject: any) => {
             // this._alertService.error(reject,"Try Again");

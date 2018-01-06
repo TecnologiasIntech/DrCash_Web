@@ -1,0 +1,54 @@
+<section>
+    <div class="containerModal">
+        <div class="row">
+            <div class="col-12" align="center">
+                <div NgDropImages
+                     [ngClass]="{'file-over': aboveDropZone}"
+                     (archivoSobre)="archivoSobreDropZone($event)"
+                     [archivos]="archivos"
+                     class="drop-zone">
+                    <h4 style="margin-top: 50px">Drag and Drop Image</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12" align="center">
+                <button class="btn btn-success" style="margin-right: 40px;" (click)="closeModal()"
+                        [disabled]="archivos.length == 0 || !permiteCargar">Upload Image
+                </button>
+                <button class="btn btn-danger" (click)="clearFiles()">
+                    Clear
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class=" offset-1  col-10">
+                <table class="table header_fijo" *ngIf="archivos.length > 0">
+                    <thead class="thead-inverse">
+                    <tr>
+                        <th scope="col" style="width: 100%;">Name Image</th>
+                        <th scope="col">Size</th>
+                    </tr>
+                    </thead>
+                    <tbody >
+                        <tr *ngFor="let arch of archivos">
+
+                            <td style="width: 100%;">
+                                <strong>{{arch.nombreArchivo}}</strong>
+                            </td>
+                            <td>
+                                {{arch.archivo.size /1024 /1024 | number:'.2'}}MB
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+</section>

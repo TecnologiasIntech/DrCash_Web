@@ -15,6 +15,9 @@ import * as _ from "lodash";
 import { AppComponent } from './app.component';
 import { SharedService } from "./shared/services/shared.service";
 import {alertService} from "./services/alert.service";
+import { UpdateTransactionComponent } from './modals/update-transaction/update-transaction.component';
+import {DropzoneDirective} from "./shared/directives/dropzone/dropzone.directive";
+import {InputFloatDirective} from "./shared/directives/input-float/input-float.directive";
 
 @NgModule({
     declarations: [

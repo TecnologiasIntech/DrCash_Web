@@ -48,6 +48,11 @@ import {Globals} from "../statics/globals";
 import {DateService} from "../services/date.service";
 import {ResetUserComponent} from "../modals/reset-user/reset-user.component";
 import {SettingService} from "../services/setting.service";
+import {DropzoneDirective} from "../shared/directives/dropzone/dropzone.directive";
+import {InputFloatDirective} from "../shared/directives/input-float/input-float.directive";
+import {DropImagesDirective} from "../directives/drop-images.directive";
+import {UploadLogocomponent} from "../modals/uploadLogo/uploadLogocomponent";
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'
 import {RouteService} from "../services/route.service";
 import {AuthComponent} from "../pages/auth/auth.component";
 import {AboutComponent} from "../modals/about/about.component";
@@ -85,6 +90,8 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         InitialCashComponent,
         UpdateTransactionComponent,
         ResetUserComponent,
+        DropImagesDirective,
+        UploadLogocomponent,
         AuthComponent,
         AboutComponent
     ],
@@ -92,6 +99,7 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         CommonModule,
         LayoutRouting,
         FormsModule,
+        SharedModule,
         AngularFireModule,
         BsDropdownModule.forRoot(),
         ProgressbarModule.forRoot(),
@@ -100,6 +108,7 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         SharedModule,
         NgbModule,
         NgbModule.forRoot(),
+        NgIdleKeepaliveModule.forRoot()
     ],
     providers: [
         alertService,
@@ -129,6 +138,7 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         InitialCashComponent,
         UpdateTransactionComponent,
         ResetUserComponent,
+        UploadLogocomponent,
         AboutComponent
     ]
 })
