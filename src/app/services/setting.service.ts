@@ -5,6 +5,7 @@ import {Globals} from "../statics/globals";
 import * as firebase from "firebase";
 import {FileItem} from "../interfaces/file-item";
 import {Register} from "../interfaces/register";
+import {ClinicInfo} from "../interfaces/clinic-info";
 
 @Injectable()
 export class SettingService {
@@ -122,6 +123,15 @@ export class SettingService {
                     resolve(file.url);
                 }
             )
+        })
+    }
+
+    getClinicInfo(){
+        return new Promise(resolve=>{
+            this.db.object('clinicas/' + Globals.userInfo.clinic + "/info").valueChanges().take(1)
+                .subscribe((snapshot:ClinicInfo)=>{
+                    resolve(snapshot);
+                })
         })
     }
 }

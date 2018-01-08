@@ -11,6 +11,7 @@ import {PrintService} from "../../services/print.service";
 import {LogService} from "../../services/log.service";
 import {SettingService} from "../../services/setting.service";
 import {alertService} from "../../services/alert.service";
+import {ClinicInfo} from "../../interfaces/clinic-info";
 
 @Component({
     selector: 'app-close-date',
@@ -236,7 +237,10 @@ export class CloseDateComponent implements OnInit {
         this._transactionService.setClosedTransaction(closedTransaction);
         this.setLog();
         this._settingsService.openRegister();
-        PrintService.printClosedTransaction(closedTransaction);
+        this._settingsService.getClinicInfo()
+            .then((response:ClinicInfo)=> {
+                PrintService.printClosedTransaction(closedTransaction, response);
+            })
     }
 
     setLog(){

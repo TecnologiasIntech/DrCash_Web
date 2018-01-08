@@ -10,6 +10,7 @@ import {DateService} from "../../services/date.service";
 import {alertService} from "../../services/alert.service";
 import {LogService} from "../../services/log.service";
 import {SettingService} from "../../services/setting.service";
+import {ClinicInfo} from "../../interfaces/clinic-info";
 
 @Component({
     selector: 'app-cash-in',
@@ -68,8 +69,11 @@ export class CashInComponent implements OnInit {
             this.saveTransactionType();
             this.setLog();
             this._settingsService.openRegister();
-            this.printTicket();
-            this.showSuccessfulTransactionAlert();
+            this._settingsService.getClinicInfo()
+                .then((response:ClinicInfo)=>{
+                    this.printTicket(response);
+                    this.showSuccessfulTransactionAlert();
+                });
         } else {
             this.focusPaymentFirstNameInputs();
             this.focusCheckBoxs();
@@ -333,7 +337,7 @@ export class CashInComponent implements OnInit {
         return !!/[\d\s]/.test(input);
     }
 
-    printTicket() {
+    printTicket(clinicInfo:ClinicInfo) {
         let mywindow = window.open('', 'PRINT', 'height=650,width=300');
 
         mywindow.document.write('<html><head>');
@@ -371,11 +375,11 @@ export class CashInComponent implements OnInit {
                 <div class="col-8">
                     Clinica La Familia
                     <br>
-                    301 E Cottonwood Ln
+                    ${clinicInfo.address}
                     <br>
-                    Casa Grande AZ 85122
+                    ${clinicInfo.stateAndCity}
                     <br>
-                    (602) 569-3999
+                    ${clinicInfo.phone}
                 </div>
             </div>
 

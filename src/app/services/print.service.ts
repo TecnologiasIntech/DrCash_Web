@@ -3,18 +3,17 @@ import {Globals} from "../statics/globals";
 import {ClosedTransaction} from "../interfaces/closed-transaction";
 import {DateService} from "./date.service";
 import {Transaction} from "../interfaces/transaction";
+import {ClinicInfo} from "../interfaces/clinic-info";
 
 
 
 @Injectable()
 export class PrintService {
 
-
-
     constructor() {
     }
 
-    static printClosedTransaction(closedTransaction: ClosedTransaction) {
+    static printClosedTransaction(closedTransaction: ClosedTransaction, clinicInfo:ClinicInfo) {
         let mywindow = window.open('', 'PRINT', 'height=800,width=300');
 
         mywindow.document.write('<html><head>');
@@ -50,11 +49,11 @@ export class PrintService {
                 <div class="col-8">
                     Clinica La Familia
                     <br>
-                    301 E Cottonwood Ln
+                    ${clinicInfo.address}
                     <br>
-                    Casa Grande AZ 85122
+                    ${clinicInfo.stateAndCity}
                     <br>
-                    (602) 569-3999
+                    ${clinicInfo.phone}
                 </div>
             </div>
 
@@ -179,7 +178,7 @@ export class PrintService {
         // mywindow.print();
     }
 
-    static printCashOut(transaction: Transaction) {
+    static printCashOut(transaction: Transaction, clinicInfo:ClinicInfo) {
         let mywindow = window.open('', 'PRINT', 'height=800,width=300');
 
         mywindow.document.write('<html><head>');
@@ -215,11 +214,11 @@ export class PrintService {
                 <div class="col-8">
                     Clinica La Familia
                     <br>
-                    301 E Cottonwood Ln
+                    ${clinicInfo.address}
                     <br>
-                    Casa Grande AZ 85122
+                    ${clinicInfo.stateAndCity}
                     <br>
-                    (602) 569-3999
+                    ${clinicInfo.phone}
                 </div>
             </div>
 
@@ -277,7 +276,7 @@ export class PrintService {
         // mywindow.print();
     }
 
-    static printRefund(transaction: Transaction) {
+    static printRefund(transaction: Transaction, clinicInfo:ClinicInfo) {
         let mywindow = window.open('', 'PRINT', 'height=800,width=300');
 
         mywindow.document.write('<html><head>');
@@ -313,11 +312,11 @@ export class PrintService {
                 <div class="col-8">
                     Clinica La Familia
                     <br>
-                    301 E Cottonwood Ln
+                    ${clinicInfo.address}
                     <br>
-                    Casa Grande AZ 85122
+                    ${clinicInfo.stateAndCity}
                     <br>
-                    (602) 569-3999
+                    ${clinicInfo.phone}
                 </div>
             </div>
 

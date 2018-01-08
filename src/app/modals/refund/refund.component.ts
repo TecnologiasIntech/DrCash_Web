@@ -11,6 +11,7 @@ import {alertService} from "../../services/alert.service";
 import {LogService} from "../../services/log.service";
 import {Globals} from "../../statics/globals";
 import {SettingService} from "../../services/setting.service";
+import {ClinicInfo} from "../../interfaces/clinic-info";
 
 
 @Component({
@@ -85,7 +86,10 @@ export class RefundComponent implements OnInit {
         this.setLog();
         this._transactionService.setTransaction(this.refundTransaction);
         this._settingsService.openRegister();
-        PrintService.printRefund(this.refundTransaction);
+        this._settingsService.getClinicInfo()
+            .then((response:ClinicInfo)=> {
+                PrintService.printRefund(this.refundTransaction, response);
+            })
     }
 
     setLog(){
