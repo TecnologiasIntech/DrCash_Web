@@ -27,7 +27,7 @@ export class NewRegisterComponent implements OnInit {
     }
 
     getMachineName() {
-        this._settingsService.getMachineName(this.key)
+        this._settingsService.getMachineName()
             .then((response: string) => {
                 this.computerName = response;
             })
