@@ -7,6 +7,8 @@ import {ValidationService} from "../../services/validation.service";
 import {PrintService} from "../../services/print.service";
 import {LogService} from "../../services/log.service";
 import {Globals} from "../../statics/globals";
+import {SettingService} from "../../services/setting.service";
+import {ClinicInfo} from "../../interfaces/clinic-info";
 
 @Component({
     selector: 'app-closed-statements',
@@ -24,7 +26,8 @@ export class ClosedStatementsComponent implements OnInit {
 
     constructor(public _dateService: DateService,
                 private _transactionService: TransactionService,
-                private _logService:LogService) {
+                private _logService:LogService,
+                private _settingsService:SettingService) {
     }
 
     ngOnInit() {
@@ -74,8 +77,12 @@ export class ClosedStatementsComponent implements OnInit {
     }
 
     printTransaction(){
-        PrintService.printClosedTransaction(this.closedTransaction);
-        this.setLog()
+        this._settingsService.getClinicInfo()
+            .then((response:ClinicInfo)=>{
+                PrintService.printClosedTransaction(this.closedTransaction, response);
+                this.setLog()
+            });
+
     }
 
     setLog(){
