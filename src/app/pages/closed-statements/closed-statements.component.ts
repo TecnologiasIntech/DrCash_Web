@@ -82,7 +82,6 @@ export class ClosedStatementsComponent implements OnInit {
                 PrintService.printClosedTransaction(this.closedTransaction, response);
                 this.setLog()
             });
-
     }
 
     setLog(){

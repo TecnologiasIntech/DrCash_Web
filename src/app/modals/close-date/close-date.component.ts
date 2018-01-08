@@ -166,10 +166,10 @@ export class CloseDateComponent implements OnInit {
     }
 
     closeModal() {
-        this._alertSerivce.getReason("")
+        this._alertSerivce.getReason("Write the reason why you cancel")
             .then((response:string)=>{
                 this.setReasonLog(response);
-                this.closeModal();
+                this._activeModal.close();
             })
     }
 

@@ -34,36 +34,41 @@
                             </div>
                         </div>
                         <div class="col-3">
-                            <button class="btn btn-primary btn-block" (click)="getComputerName()"> Get Computer Name</button>
+                            <button class="btn btn-primary btn-block" (click)="getComputerName()"> Get Computer Name
+                            </button>
                         </div>
                     </div>
 
                     <div class="row" style="height: 370px; max-height: 370px; overflow-y: auto">
                         <!--Closed Statement Table-->
                         <div class="col-12">
-                            <table class="table table-hover mb-0">
-                                <thead>
-                                <tr>
-                                    <th>Register Number</th>
-                                    <th>Machine Name</th>
-                                    <th>Active</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr *ngFor="let register of registers; let i = index" class="cursor-pointer" (click)="showRegister(register, i)">
-                                    <td>{{register.registerNumber}}</td>
-                                    <td>{{register.computerName}}</td>
-                                    <td>{{register.activeRegister}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
+                            <perfect-scrollbar>
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th>Register Number</th>
+                                        <th>Machine Name</th>
+                                        <th>Active</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let register of registers; let i = index" class="cursor-pointer"
+                                        (click)="showRegister(register, i)">
+                                        <td>{{register.registerNumber}}</td>
+                                        <td>{{register.computerName}}</td>
+                                        <td>{{register.activeRegister}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </perfect-scrollbar>
                         </div>
                     </div>
                 </div>
                 <div class="footer text-right">
                     <!--Buttons-->
                     <div class="mt-3 mb-3">
-                        <button class="btn btn-success m-r-50" style="width: 100px" (click)="updateRegisters()">Save</button>
+                        <button class="btn btn-success m-r-50" style="width: 100px" (click)="updateRegisters()">Save
+                        </button>
                         <button class="btn btn-danger m-r-50" style="width: 100px" (click)="cancel()">Cancel</button>
                     </div>
                 </div>
