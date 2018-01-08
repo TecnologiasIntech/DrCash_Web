@@ -278,11 +278,10 @@ export class CashInComponent implements OnInit {
                 !ValidationService.errorInField(this.newTransaction.credit) ||
                 !ValidationService.errorInField(this.newTransaction.check)) {
                 if (!ValidationService.errorInField(this.newTransaction.check)) {
-                    return (!ValidationService.errorInField(this.newTransaction.checkNumber));
+                    return (ValidationService.errorInField(this.newTransaction.checkNumber));
                 } else {
                     return false;
                 }
-
             } else {
                 return true;
             }

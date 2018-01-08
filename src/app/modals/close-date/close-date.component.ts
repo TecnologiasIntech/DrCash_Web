@@ -240,7 +240,8 @@ export class CloseDateComponent implements OnInit {
         this._settingsService.getClinicInfo()
             .then((response:ClinicInfo)=> {
                 PrintService.printClosedTransaction(closedTransaction, response);
-            })
+            });
+        this._activeModal.close();
     }
 
     setLog(){
@@ -263,6 +264,8 @@ export class CloseDateComponent implements OnInit {
             if(ValidationService.errorInField(this.leftRegisterLabel)) {
                 this.leftRegisterRef.nativeElement.focus();
                 this.isErrorLeftInRegister = true;
+            }else{
+                this.setClosedTransaction();
             }
         } else {
             if (ValidationService.errorInField(this.totalCheck)) {
