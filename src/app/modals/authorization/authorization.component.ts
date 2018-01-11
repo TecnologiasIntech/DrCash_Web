@@ -38,10 +38,10 @@ export class AuthorizationComponent implements OnInit {
     errorInLoginFields(user: User) {
         this.changeBooleansUserAndErrorsInLogin();
         this.changeBooleansPasswordAndErrorsInLogin();
-        if (ValidationService.errorInField(user.username) && ValidationService.errorInField(user.password)) {
+        if (ValidationService.errorInField(user.email) && ValidationService.errorInField(user.password)) {
             this.errorPassAndUsername = true;
         } else {
-            if (ValidationService.errorInField(user.username)) {
+            if (ValidationService.errorInField(user.email)) {
                 this.errorUserName = true;
                 this.userRef.nativeElement.focus();
             } else {
