@@ -11,6 +11,7 @@ import {PrintService} from "../../services/print.service";
 import {LogService} from "../../services/log.service";
 import {SettingService} from "../../services/setting.service";
 import {alertService} from "../../services/alert.service";
+import {ClinicInfo} from "../../interfaces/clinic-info";
 
 @Component({
     selector: 'app-close-date',
@@ -165,10 +166,10 @@ export class CloseDateComponent implements OnInit {
     }
 
     closeModal() {
-        this._alertSerivce.getReason("")
+        this._alertSerivce.getReason("Write the reason why you cancel")
             .then((response:string)=>{
                 this.setReasonLog(response);
-                this.closeModal();
+                this._activeModal.close();
             })
     }
 
@@ -211,6 +212,7 @@ export class CloseDateComponent implements OnInit {
 
     setClosedTransaction() {
         //TODO: Preguntar si es necesario el balance
+        this.validateInputs()
         let closedTransaction: ClosedTransaction = {
             bills_100: this.Bills100,
             bills_50: this.Bills50,
@@ -236,7 +238,23 @@ export class CloseDateComponent implements OnInit {
         this._transactionService.setClosedTransaction(closedTransaction);
         this.setLog();
         this._settingsService.openRegister();
-        PrintService.printClosedTransaction(closedTransaction);
+        this._settingsService.getClinicInfo()
+            .then((response:ClinicInfo)=> {
+                PrintService.printClosedTransaction(closedTransaction, response);
+            });
+        this._activeModal.close();
+    }
+
+    validateInputs(){
+        if(ValidationService.errorInField(this.totalCredit)){
+           this.totalCredit = "0";
+        }
+        if(ValidationService.errorInField(this.totalCheck)){
+            this.totalCheck = "0";
+        }
+        if(ValidationService.errorInField(this.leftRegisterLabel)){
+            this.leftRegisterLabel = "0";
+        }
     }
 
     setLog(){
@@ -259,6 +277,8 @@ export class CloseDateComponent implements OnInit {
             if(ValidationService.errorInField(this.leftRegisterLabel)) {
                 this.leftRegisterRef.nativeElement.focus();
                 this.isErrorLeftInRegister = true;
+            }else{
+                this.setClosedTransaction();
             }
         } else {
             if (ValidationService.errorInField(this.totalCheck)) {

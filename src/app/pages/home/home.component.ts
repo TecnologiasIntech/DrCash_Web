@@ -16,6 +16,7 @@ import {Transaction} from "../../interfaces/transaction";
 import {ValidationService} from "../../services/validation.service";
 import {ResetUserComponent} from "../../modals/reset-user/reset-user.component";
 import {ActivatedRoute} from "@angular/router";
+import {Broadcaster} from "../../../assets/js/broadcaster";
 
 
 @Component({
@@ -33,7 +34,8 @@ export class HomeComponent implements OnInit {
                 private _globals: Globals,
                 private db: AngularFireDatabase,
                 public  _dateService: DateService,
-                private  _transactionService: TransactionService) {
+                private  _transactionService: TransactionService,
+                private _broadcast:Broadcaster) {
 
         if (Globals.userInfo.passwordReset) {
             this.openResetUser();
@@ -44,6 +46,19 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         this.cleanTotalsTransactions();
+        this.listenFlagToHideTransactions();
+    }
+
+    listenFlagToHideTransactions(){
+        this._broadcast.on<boolean>('hideTransactions')
+            .subscribe((response:boolean)=>{
+                if(response){
+                    this.currentTransactions = [];
+                    this.cleanTotalsTransactions();
+                }else{
+                    this.loadTransactions();
+                }
+            });
     }
 
     openResetUser() {

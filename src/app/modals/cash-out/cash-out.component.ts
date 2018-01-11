@@ -10,6 +10,7 @@ import {PrintService} from "../../services/print.service";
 import {LogService} from "../../services/log.service";
 import {Globals} from "../../statics/globals";
 import {SettingService} from "../../services/setting.service";
+import {ClinicInfo} from "../../interfaces/clinic-info";
 
 @Component({
     selector: 'app-cash-out',
@@ -167,8 +168,10 @@ export class CashOutComponent implements OnInit {
             this._transactionService.setTransaction(this.transaction);
             this.setLog();
             this._settingsService.openRegister();
-            PrintService.printCashOut(this.transaction);
-
+            this._settingsService.getClinicInfo()
+                .then((response:ClinicInfo)=> {
+                    PrintService.printCashOut(this.transaction, response);
+                })
             this._alertService.confirmSuccess("Successful Transaction","")
                 .then(()=>{
                     this._activeModal.close();

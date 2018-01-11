@@ -22,7 +22,7 @@
                 <!--UserName-->
                 <div class="form-group">
                     <input type="text" class="form-control form-control-line" #username placeholder="UserName"
-                    [(ngModel)]="newUser.username">
+                           [(ngModel)]="newUser.username">
                     <i class="form-group__bar"></i>
                 </div>
 
@@ -51,25 +51,36 @@
                 </div>
 
                 <!--Security Levels Radios-->
-                <h4>Security Level</h4>
+                <h5>Security Level</h5>
                 <div>
                     <label class="custom-control custom-radio">
-                        <input type="radio" name="securityLevel" class="custom-control-input" value="0" [(ngModel)]="securityLevel">
+                        <input type="radio" name="securityLevel" class="custom-control-input" value="0"
+                               [(ngModel)]="securityLevel">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">User</span>
                     </label>
 
                     <label class="custom-control custom-radio">
-                        <input type="radio" name="securityLevel" class="custom-control-input" value="1" [(ngModel)]="securityLevel">
+                        <input type="radio" name="securityLevel" class="custom-control-input" value="1"
+                               [(ngModel)]="securityLevel">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Supervisor</span>
                     </label>
 
                     <label class="custom-control custom-radio">
-                        <input type="radio" name="securityLevel" class="custom-control-input" value="2" [(ngModel)]="securityLevel">
+                        <input type="radio" name="securityLevel" class="custom-control-input" value="2"
+                               [(ngModel)]="securityLevel">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Administrator</span>
                     </label>
+                </div>
+
+                <div class="form-group m-t-15 m-b-5">
+                    <label>Select Register</label>
+                    <select name="" id="" class="form-control-line form-control" [(ngModel)]="registerID">
+                        <option value="{{ register.registerNumber }}" *ngFor="let register of registers">{{ register.registerNumber }}</option>
+                    </select>
+                    <i class="form-group__bar"></i>
                 </div>
 
             </div>
@@ -89,7 +100,7 @@
         <div class="row mt-3">
             <div class="col-8 offset-2">
                 <div *ngIf="showSuccessAlert" class="alert alert-danger animated shake" role="alert">
-                   <h4 class="text-white">User exist</h4>
+                    <h4 class="text-white">User exist</h4>
                 </div>
             </div>
         </div>

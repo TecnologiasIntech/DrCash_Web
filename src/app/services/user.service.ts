@@ -19,8 +19,10 @@ export class UserService {
 
     authUser(user: User) {
         return new Promise((resolve, reject) => {
-            this.db.object('users/' + user.username).valueChanges().subscribe((result: User) => {
-                if (result.username != null) {
+            let email = user.email.replace(/[^a-zA-Z 0-9.]+/g,'');
+            email = email.replace('.','');
+            this.db.object('users/' + email).valueChanges().subscribe((result: User) => {
+                if (user.email != null) {
                     if (result.password == user.password) {
                         resolve(result);
 
@@ -43,7 +45,9 @@ export class UserService {
     }
 
     updateUser(user: User) {
-        this.db.object('users/' + user.username).update(user);
+        let email = user.email.replace(/[^a-zA-Z 0-9.]+/g,'');
+        email = email.replace('.','');
+        this.db.object('users/' + email).update(user);
         this.db.object("users/").update({
             numberUsers: user.userId
         });
@@ -101,17 +105,25 @@ export class UserService {
     }
 
     createNewUser(email: string, pass: string) {
-        this._af.auth.createUserWithEmailAndPassword(email, pass)
-            .then(response => {
-                this._af.auth.signInWithEmailAndPassword(Globals.userInfo.email, Globals.userInfo.password)
-                    .catch(error => {
-                        console.log("Error Sign In :");
-                        console.log(error);
-                    })
-            })
-            .catch(error => {
-                console.log("Error Create User :");
-                console.log(error);
-            })
+        return new Promise((resolve, reject) => {
+            this._af.auth.createUserWithEmailAndPassword(email, pass)
+                .then(response => {
+                    this._af.auth.signInWithEmailAndPassword(Globals.userInfo.email, Globals.userInfo.password)
+                        .then(()=>{
+                            resolve();
+                        })
+                        .catch(error => {
+                            reject(error);
+                            console.log("Error Sign In :");
+                            console.log(error);
+                        })
+                })
+                .catch(error => {
+                    reject(error);
+                    console.log("Error Create User :");
+                    console.log(error);
+                })
+        })
+
     }
 }

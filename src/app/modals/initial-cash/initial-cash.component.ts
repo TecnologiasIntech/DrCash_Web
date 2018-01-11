@@ -66,28 +66,34 @@ export class InitialCashComponent implements OnInit {
     }
 
     verifyLeftInRegister(initialCash: string, initiaDate: number, endDate: number) {
-        this._transactionsService.getLeftInRegister(parseInt(initialCash), initiaDate, endDate)
-            .then((response: number) => {
-                if (parseInt(initialCash) == response) {
-                    this.setInitialCash(initialCash);
-                } else {
-                    let message: string;
-                        message = "There is a difference of " + (parseInt(initialCash) - response) + " dollars in the amounts. Do you want to accept the difference?";
-
-                    this._alertService.confirmOrCancel("Warning", message)
-                        .then(() => {
+        this._transactionsService.getMyCurrentTransactions()
+            .then(()=>{
+                this._transactionsService.getLeftInRegister(parseInt(initialCash), initiaDate, endDate)
+                    .then((response: number) => {
+                        if (parseInt(initialCash) == response) {
                             this.setInitialCash(initialCash);
-                        })
-                        .catch(() => {
-                        });
-                }
-            })
-            .catch(() => {
-                let date = DateService.removeOneDayToDate(initiaDate.toString());
-                let fromDate = date + "000000";
-                let toDate = date + "235959";
+                        } else {
+                            let message: string;
+                            message = "There is a difference of " + (parseInt(initialCash) - response) + " dollars in the amounts. Do you want to accept the difference?";
 
-                this.verifyLeftInRegister(initialCash, parseInt(fromDate), parseInt(toDate))
+                            this._alertService.confirmOrCancel("Warning", message)
+                                .then(() => {
+                                    this.setInitialCash(initialCash);
+                                })
+                                .catch(() => {
+                                });
+                        }
+                    })
+                    .catch(() => {
+                        let date = DateService.removeOneDayToDate(initiaDate.toString());
+                        let fromDate = date + "000000";
+                        let toDate = date + "235959";
+
+                        this.verifyLeftInRegister(initialCash, parseInt(fromDate), parseInt(toDate))
+                    })
+            })
+            .catch(()=>{
+                this.setInitialCash(initialCash);
             })
     }
 }

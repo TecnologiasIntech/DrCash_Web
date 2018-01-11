@@ -6,7 +6,7 @@
                 <div class="col-2 p-l-15">
                     <div class="form-group">
                         <input type="text" class="form-control form-control-line" placeholder="Transaction Number"
-                        [(ngModel)]="transactionNumber"
+                               [(ngModel)]="transactionNumber"
                         >
                         <i class="form-group__bar"></i>
                     </div>
@@ -14,7 +14,7 @@
                 <div class="col-2">
                     <div class="form-group">
                         <input type="text" class="form-control form-control-line" placeholder="Comment"
-                        [(ngModel)]="comment"
+                               [(ngModel)]="comment"
                         >
                         <i class="form-group__bar"></i>
                     </div>
@@ -22,7 +22,7 @@
                 <div class="col-2">
                     <div class="form-group">
                         <input type="text" class="form-control form-control-line" placeholder="Patient Name"
-                        [(ngModel)]="patientName"
+                               [(ngModel)]="patientName"
                         >
                         <i class="form-group__bar"></i>
                     </div>
@@ -34,7 +34,8 @@
                                    name="dp" ngbDatepicker #df="ngbDatepicker" [(ngModel)]="dateFrom">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" (click)="df.toggle()" type="button">
-                                    <i class="zmdi zmdi-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer; color: black;"></i>
+                                    <i class="zmdi zmdi-calendar"
+                                       style="width: 1.2rem; height: 1rem; cursor: pointer; color: black;"></i>
                                 </button>
                             </div>
                         </div>
@@ -47,7 +48,8 @@
                                    name="dp" ngbDatepicker #dt="ngbDatepicker" [(ngModel)]="dateTo">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" (click)="dt.toggle()" type="button">
-                                    <i class="zmdi zmdi-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer; color: black;"></i>
+                                    <i class="zmdi zmdi-calendar"
+                                       style="width: 1.2rem; height: 1rem; cursor: pointer; color: black;"></i>
                                 </button>
                             </div>
                         </div>
@@ -64,44 +66,49 @@
             <!--Transactions-->
             <div class="row" style="height: 50vh; max-height: 50vh; overflow-y: auto">
                 <div class="col-12">
-                    <table class="table header_fijo">
-                        <thead>
-                        <tr class="w-847_5">
-                            <th class="w-282">Transaction ID</th>
-                            <th class="w-282">User</th>
-                            <th class="w-282">Date</th>
-                            <th class="w-282">Patient Name</th>
-                            <th class="w-282">Type</th>
-                            <th class="w-282">Charge</th>
-                            <th class="w-282">Cash</th>
-                            <th class="w-282">Credit</th>
-                            <th class="w-282">Check</th>
-                            <th class="w-282">Check #</th>
-                            <th class="w-282">Closed</th>
-                            <th class="w-282">Register</th>
-                        </tr>
-                        </thead>
-                        <tbody style="overflow-y: auto">
+                    <perfect-scrollbar>
+                        <table class="table header_fijo">
+                            <thead>
+                            <tr class="w-847_5">
+                                <th class="w-282">Transaction ID</th>
+                                <th class="w-282">User</th>
+                                <th class="w-282">Date</th>
+                                <th class="w-282">Patient Name</th>
+                                <th class="w-282">Type</th>
+                                <th class="w-282">Charge</th>
+                                <th class="w-282">Cash</th>
+                                <th class="w-282">Credit</th>
+                                <th class="w-282">Check</th>
+                                <th class="w-282">Check #</th>
+                                <th class="w-282">Closed</th>
+                                <th class="w-282">Register</th>
+                            </tr>
+                            </thead>
+                            <tbody style="overflow-y: auto">
 
-                        <tr *ngFor="let transaction of transactions">
-                            <td class="w-282">{{ transaction.dateRegistered }}</td>
-                            <td class="w-282">{{ transaction.userKey }}</td>
-                            <td class="w-282">{{ transaction.dateRegistered }}</td>
-                            <td class="w-282">{{ transaction.patientFirstName }}</td>
-                            <td class="w-282">{{ getTypeTransaction(transaction.type) }}</td>
-                            <td class="w-282">${{ transaction.amountCharged ? transaction.amountCharged : '0.00' }}</td>
-                            <td class="w-282">${{ transaction.cash ? transaction.cash : '0.00'}}</td>
-                            <td class="w-282">${{ transaction.credit ? transaction.credit : '0.00'}}</td>
-                            <td class="w-282">${{ transaction.check ? transaction.check : '0.00'}}</td>
-                            <td class="w-282">{{ transaction.checkNumber ? transaction.checkNumber : '0'}}</td>
-                            <td class="w-282">
-                                <input type="checkbox" value="{{ transaction.closed ? transaction.closed : false }}" disabled>
-                            </td>
-                            <td class="w-282">{{ transaction.registerId }}</td>
+                            <tr *ngFor="let transaction of transactions">
+                                <td class="w-282">{{ transaction.dateRegistered }}</td>
+                                <td class="w-282">{{ transaction.userKey }}</td>
+                                <td class="w-282">{{ transaction.dateRegistered }}</td>
+                                <td class="w-282">{{ transaction.patientFirstName }}</td>
+                                <td class="w-282">{{ getTypeTransaction(transaction.type) }}</td>
+                                <td class="w-282">${{ transaction.amountCharged ? transaction.amountCharged : '0.00'
+                                    }}
+                                </td>
+                                <td class="w-282">${{ transaction.cash ? transaction.cash : '0.00'}}</td>
+                                <td class="w-282">${{ transaction.credit ? transaction.credit : '0.00'}}</td>
+                                <td class="w-282">${{ transaction.check ? transaction.check : '0.00'}}</td>
+                                <td class="w-282">{{ transaction.checkNumber ? transaction.checkNumber : '0'}}</td>
+                                <td class="w-282">
+                                    <input type="checkbox" value="{{ transaction.closed ? transaction.closed : false }}"
+                                           disabled>
+                                </td>
+                                <td class="w-282">{{ transaction.registerId }}</td>
 
-                        </tr>
-                        </tbody>
-                    </table>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </perfect-scrollbar>
                 </div>
             </div>
 

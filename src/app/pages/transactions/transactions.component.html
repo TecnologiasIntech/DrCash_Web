@@ -23,7 +23,8 @@
                                        name="dp" ngbDatepicker #df="ngbDatepicker" [(ngModel)]="dateFrom">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" (click)="df.toggle()" type="button">
-                                        <i class="zmdi zmdi-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer; color: black;"></i>
+                                        <i class="zmdi zmdi-calendar"
+                                           style="width: 1.2rem; height: 1rem; cursor: pointer; color: black;"></i>
                                     </button>
                                 </div>
                             </div>
@@ -36,7 +37,8 @@
                                        name="dp" ngbDatepicker #dt="ngbDatepicker" [(ngModel)]="dateTo">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" (click)="dt.toggle()" type="button">
-                                        <i class="zmdi zmdi-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer; color: black;"></i>
+                                        <i class="zmdi zmdi-calendar"
+                                           style="width: 1.2rem; height: 1rem; cursor: pointer; color: black;"></i>
                                     </button>
                                 </div>
                             </div>
@@ -48,27 +50,33 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row" style="height: 400px; max-height: 400px; overflow-y: auto">
                     <!--Transactions Table-->
                     <div class="col-11 offset-1">
-                        <table class="table table-hover mb-0">
-                            <thead>
-                            <tr>
-                                <th>Transaction ID</th>
-                                <th>Patient Name</th>
-                                <th>Register</th>
-                                <th>Date</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr *ngFor="let transaction of transactions" class="cursor-pointer" (click)="showTransaction(transaction)">
-                                <td>{{transaction.dateRegistered}}</td>
-                                <td>{{transaction.patientFirstName}}</td>
-                                <td>{{transaction.userKey}}</td>
-                                <td>{{ _dateService.convertDateToDD_MM_YYYY_HH_MM(transaction.dateRegistered.toString()) }}</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <perfect-scrollbar>
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                <tr>
+                                    <th>Transaction ID</th>
+                                    <th>Patient Name</th>
+                                    <th>Register</th>
+                                    <th>Date</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let transaction of transactions" class="cursor-pointer"
+                                    (click)="showTransaction(transaction)">
+                                    <td>{{transaction.dateRegistered}}</td>
+                                    <td>{{transaction.patientFirstName}}</td>
+                                    <td>{{transaction.userKey}}</td>
+                                    <td>{{
+                                        _dateService.convertDateToDD_MM_YYYY_HH_MM(transaction.dateRegistered.toString())
+                                        }}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </perfect-scrollbar>
                     </div>
                 </div>
             </div>

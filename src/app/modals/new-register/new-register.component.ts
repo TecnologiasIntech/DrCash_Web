@@ -3,6 +3,7 @@ import {SettingService} from "../../services/setting.service";
 import {DateService} from "../../services/date.service";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {alertService} from "../../services/alert.service";
+import {Register} from "../../interfaces/register";
 
 @Component({
     selector: 'app-new-register',
@@ -27,7 +28,7 @@ export class NewRegisterComponent implements OnInit {
     }
 
     getMachineName() {
-        this._settingsService.getMachineName(this.key)
+        this._settingsService.getMachineName()
             .then((response: string) => {
                 this.computerName = response;
             })

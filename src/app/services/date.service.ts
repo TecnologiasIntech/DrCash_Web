@@ -51,6 +51,7 @@ export class DateService {
 
     convertDateToDD_MM_YYYY_HH_MM(date: string) {
         let newDate: string = "";
+        date = date.toString();
         newDate += date.substr(6, 2) + "/";
         newDate += date.substr(4, 2) + "/";
         newDate += date.substr(0, 4) + " ";

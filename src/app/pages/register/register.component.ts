@@ -67,7 +67,7 @@ export class RegisterComponent implements OnInit {
     }
 
     getComputerName() {
-        this._settingsService.getMachineName(Globals.userInfo.registerId.toString())
+        this._settingsService.getMachineName()
             .then((response: string) => {
                 this.computerName = response;
             })

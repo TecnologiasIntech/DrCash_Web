@@ -21,12 +21,13 @@ export class TransactionService {
 
     numberOfCurrentTransactions: number = 0;
     currentTransactions: Observable<Transaction[]>;
-    initialCash: number;
+    public initialCash: number;
 
     public myCurrentTransactions: Transaction[] = [];
 
     constructor(private db: AngularFireDatabase,
                 private _dateService: DateService) {
+        this.getMyCurrentTransactions()
     }
 
     getTransaction(key: number) {

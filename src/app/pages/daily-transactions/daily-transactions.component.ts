@@ -6,6 +6,7 @@ import {TRANSACTIONTYPE} from "../../enums/enums";
 import 'jspdf-autotable';
 import * as jsPDF from 'jspdf';
 import {DateService} from "../../services/date.service";
+
 @Component({
     selector: 'app-daily-transactions',
     templateUrl: './daily-transactions.component.html',
@@ -52,10 +53,11 @@ export class DailyTransactionsComponent implements OnInit {
         this.transactionNumber = null;
         this.dateFrom = null;
         this.dateTo = null;
+        this.transactions = null;
     }
 
-    getTypeTransaction(type:number){
-        switch (type){
+    getTypeTransaction(type: number) {
+        switch (type) {
             case TRANSACTIONTYPE.INITIALCASH:
                 return 'Initial Cash';
 
@@ -70,11 +72,11 @@ export class DailyTransactionsComponent implements OnInit {
         }
     }
 
-    printTransactionsTable(){
-        let columns: string[] = ["Transaction","User", "Date", "Patient Name", "Type", "Charge", "Cash", "Credit", "Check", "Change", "Check #", "Closed", "Register"];
+    printTransactionsTable() {
+        let columns: string[] = ["Transaction", "User", "Date", "Patient Name", "Type", "Charge", "Cash", "Credit", "Check", "Change", "Check #", "Closed", "Register"];
         let rows = this._transactionService.convertTransactionsToPrintPDF(this.transactions);
         let doc = new jsPDF('p', 'pt');
-        doc.autoTable(columns, rows,{
+        doc.autoTable(columns, rows, {
             styles: {cellPadding: 0.5, fontSize: 8}
         });
         doc.save('table.pdf');

@@ -26,14 +26,11 @@ export class CredentialsComponent implements OnInit {
     @ViewChild('username') private userRef: ElementRef;
     @ViewChild('password') private passRef: ElementRef;
 
-    usernameInput: string = Globals.userInfo.username;
+    usernameInput: string = Globals.userInfo.email;
 
     constructor(private activeModal: NgbActiveModal,
                 private _usrService: UserService) {
-
         Globals.afk = true;
-
-
     }
 
     ngOnInit() {
@@ -48,7 +45,7 @@ export class CredentialsComponent implements OnInit {
             this.errorPass = true;
             this.passRef.nativeElement.focus();
         } else {
-            user.username = this.usernameInput;
+            user.email = this.usernameInput;
             this.userAuth(user);
         }
     }

@@ -56,6 +56,7 @@ import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'
 import {RouteService} from "../services/route.service";
 import {AuthComponent} from "../pages/auth/auth.component";
 import {AboutComponent} from "../modals/about/about.component";
+import {Broadcaster} from "../../assets/js/broadcaster";
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -121,7 +122,8 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         Globals,
         DateService,
         SettingService,
-        RouteService
+        RouteService,
+        Broadcaster
 
     ],
     entryComponents: [
