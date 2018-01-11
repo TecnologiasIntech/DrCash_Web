@@ -1,6 +1,6 @@
 export interface Transaction {
     userKey:string;
-    dateRegistered?:string;
+    dateRegistered?:number;
     comment?:string;
     type:number;
     amountCharged?:number;
@@ -20,6 +20,6 @@ export interface Transaction {
     closed:boolean;
     registerId:string;
     modifiedById?:number;
-    modificationDate?:string;
+    modificationDate?:number;
 }
 

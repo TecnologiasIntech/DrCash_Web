@@ -1,3 +1,129 @@
-<p>
-  refund works!
-</p>
+<section>
+    <div class="cardRefund">
+        <div class="row headerRefound">
+            <!--header-->
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-1 ml-10">
+                        <i class="zmdi zmdi-money-box iconRefound colorWhite"></i>
+                    </div>
+                    <div class="col-10 mt-5">
+                        <h2 class="colorWhite">Refund</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--body-->
+        <div class="refoundBody">
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="offset-1 col-6">
+                            <div class="form-group">
+                                <input type="number" class="form-control form-control-line"
+                                       placeholder="Transaction Number" [(ngModel)]="transactionNumber"
+                                       name="numberTransaction"
+                                       (keypress)="_validationService.E($event)"
+                                       (keydown.ArrowUp)="_validationService.E($event)"
+                                       (keydown.ArrowDown)="_validationService.E($event)"
+                                >
+                                <i class="form-group__bar"></i>
+                            </div>
+                        </div>
+                        <!--buttons-->
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button class="btn btn-success" (click)="searchTransaction(transactionNumber)">
+                                        Search
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="btn btn-danger" (click)="clearTransaction()">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="offset-1 col-2">
+
+                    <label>Amount Charged</label>
+                </div>
+                <div class="col-8">
+                    <span>$ {{transaction?.amountCharged}}</span>
+                </div>
+            </div>
+
+            <div class="row mt-20">
+                <div class="offset-1 col-10">
+                    <label>Log</label>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="offset-1 col-10">
+                    <div class="form-group">
+
+                        <!--Log obtenido de la base de datos-->
+                        <textarea [disabled]="!enableLog" class="form-control form-control-line"
+                                  [(ngModel)]="logTransaction"
+                                  name="log" cols="30" rows="5" placeholder="Log of the transaction ...">{{cadena}}{{transaction?.amountCharged}}</textarea>
+
+                        <i class="form-group__bar"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-5">
+                    <div class="row">
+                        <div class="offset-2 col-6">
+                            <label>Amount to Charge</label>
+                            <div class="form-group">
+
+                                <input type="number" class="form-control form-control-line t-a-c" placeholder="$0.00"
+                                       [(ngModel)]="refund" name="log2"
+                                       (keypress)="_validationService.restrictNumeric($event)"
+                                       (keydown.ArrowUp)="_validationService.E($event)"
+                                       (keydown.ArrowDown)="_validationService.E($event)"
+
+                                >
+                                <i class="form-group__bar"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-7">
+                    <div class="row">
+                        <div class="col-10">
+                            <label>Log</label>
+                            <div class="form-group">
+                                    <textarea class="form-control form-control-line" placeholder="Write a Log"
+                                              [(ngModel)]="refundComment"
+                                              name="log2" cols="30" rows="5"
+                                    ></textarea>
+                                <i class="form-group__bar"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-20">
+                <div class="col-5">
+                    <div class="row" align="center">
+                        <div class="col-12">
+                            <button class="btn btn-danger" (click)="closeRefund()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-7">
+                    <button class="btn btn-success" (click)="setTransaction()">
+                        Save & Print
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

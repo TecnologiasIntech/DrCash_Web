@@ -1,3 +1,29 @@
-<p>
-  initial-cash works!
-</p>
+<section class="container" style="height: 230px; width: 200px ">
+    <div class="card">
+        <div class="card-header align-content-center">
+            <h4>Initial Cash</h4>
+        </div>
+        <div class="card-body m-b-30">
+            <div class="form-group m-b-0">
+                <input type="number" min="0" step="1" #initialCash
+                       class="form-control form-control-line text-center currency {{ errorInitialCash ? 'initialCashError' : '' }}"
+                       placeholder="$0.00" [(ngModel)]="transaction.cash" (keyup)="errorInitialCash = false;"
+                       (keyup.enter)="verifyLeftInRegister(transaction.cash, initialDate, endDate)" #cash autofocus
+                       (keydown.ArrowUp)="_validationService.validateArrows($event)"
+                       (keydown.ArrowDown)="_validationService.validateArrows($event)"
+                       (keypress)="_validationService.restrictNumeric($event, initialCash.value)"
+                       (click)="selectAllText()"
+                >
+                <i class="form-group__bar"></i>
+            </div>
+
+            <!--Error-->
+            <div style="color: #e74c3c; text-align: center; height: 20px;" class="m-t-10">
+                <span *ngIf="errorInitialCash">Insert Initial Cash</span>
+            </div>
+        </div>
+        <div class="card-footer p-b-20">
+            <button class="btn btn-block btn-primary" (click)="verifyLeftInRegister(transaction.cash, initialDate, endDate)">ACCEPT</button>
+        </div>
+    </div>
+</section>

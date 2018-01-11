@@ -1,3 +1,120 @@
-<p>
-  transactions works!
-</p>
+<section class="content">
+
+    <h1>Transactions</h1>
+
+    <!--Card-->
+    <div class="card mt-4" style="height: 70vh; max-height: 70vh">
+
+        <div class="row">
+            <div class="col-9">
+                <!--Filters-->
+                <div class="row offset-1 mt-5">
+                    <div class="col-5 p-l-30">
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-line" [(ngModel)]="transactionNumber"
+                                   placeholder="Transaction Number">
+                            <i class="form-group__bar"></i>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input class="form-control form-control-line" placeholder="Date From"
+                                       name="dp" ngbDatepicker #df="ngbDatepicker" [(ngModel)]="dateFrom">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" (click)="df.toggle()" type="button">
+                                        <i class="zmdi zmdi-calendar"
+                                           style="width: 1.2rem; height: 1rem; cursor: pointer; color: black;"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input class="form-control form-control-line" placeholder="Date From"
+                                       name="dp" ngbDatepicker #dt="ngbDatepicker" [(ngModel)]="dateTo">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" (click)="dt.toggle()" type="button">
+                                        <i class="zmdi zmdi-calendar"
+                                           style="width: 1.2rem; height: 1rem; cursor: pointer; color: black;"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-danger" (click)="cleanFields()">Clear</button>
+                        <button class="btn btn-primary" (click)="searchTransactions()">Search</button>
+                    </div>
+                </div>
+
+                <div class="row" style="height: 400px; max-height: 400px; overflow-y: auto">
+                    <!--Transactions Table-->
+                    <div class="col-11 offset-1">
+                        <perfect-scrollbar>
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                <tr>
+                                    <th>Transaction ID</th>
+                                    <th>Patient Name</th>
+                                    <th>Register</th>
+                                    <th>Date</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let transaction of transactions" class="cursor-pointer"
+                                    (click)="showTransaction(transaction)">
+                                    <td>{{transaction.dateRegistered}}</td>
+                                    <td>{{transaction.patientFirstName}}</td>
+                                    <td>{{transaction.userKey}}</td>
+                                    <td>{{
+                                        _dateService.convertDateToDD_MM_YYYY_HH_MM(transaction.dateRegistered.toString())
+                                        }}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </perfect-scrollbar>
+                    </div>
+                </div>
+            </div>
+
+            <!--Receipt-->
+            <div class="col-3 mt-5">
+                <h4>Receipt</h4>
+                <div class="row">
+                    <!--Titles-->
+                    <div class="col-8">
+                        <p>Amount Charged:</p>
+                        <p>Cash:</p>
+                        <p>Credit Card:</p>
+                        <p>Check:</p>
+                        <p>Total:</p>
+                        <p>Change:</p>
+                    </div>
+                    <!--Amounts-->
+                    <div class="col-4">
+                        <p>${{ transaction.amountCharged ? transaction.amountCharged : '0.00' }}</p>
+                        <p>${{ transaction.cash ? transaction.cash : '0.00' }}</p>
+                        <p>${{ transaction.credit ? transaction.credit : '0.00' }}</p>
+                        <p>${{ transaction.check ? transaction.check : '0.00' }}</p>
+                        <p>${{ transaction.check ? transaction.check : '0.00' }}</p>
+                        <p>${{ transaction.change ? transaction.change : '0.00' }}</p>
+                    </div>
+                </div>
+                <!--Buttons-->
+                <div class="offset-2 mt-3 mb-3">
+                    <button class="btn btn-danger">Close</button>
+                    <button class="btn btn-primary" (click)="openEditTransaction()">Edit</button>
+                    <button class="btn btn-success" (click)="printTicket()">Print</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</section>

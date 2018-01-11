@@ -16,6 +16,13 @@ export class alertService {
             'error'
         )
     }
+    success(title:string, message:string){
+        swal(
+            title,
+            message,
+            'success'
+        )
+    }
     infoTerms(title:string) {
        return new Promise((resolve =>{
            swal({
@@ -93,5 +100,44 @@ export class alertService {
 
         this.error(title, message);
 
+    }
+
+    confirmOrCancel(title:string, message:string){
+        return new Promise((resolve, reject) => {
+            swal({
+                title: title,
+                text: message,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+            }).then((result) => {
+                if (result) {
+                    resolve();
+                } else if (result.dismiss === 'cancel') {
+                    reject();
+                }
+            })
+        })
+    }
+
+    async getReason(title:string){
+        return new Promise((resolve, reject) => {
+            swal({
+                title: title,
+                input: 'text',
+                showCancelButton: true,
+                confirmButtonText: 'Ok',
+                showLoaderOnConfirm: true
+            }).then((result) => {
+                resolve(result)
+            })
+        })
     }
 }

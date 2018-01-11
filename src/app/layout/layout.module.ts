@@ -1,18 +1,18 @@
 ///<reference path="../modals/sign-up/sign-up.component.ts"/>
-import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
-import { NgModule } from "@angular/core";
-import { LayoutRouting } from "./layout.routing";
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import {CommonModule} from "@angular/common";
+import {FormsModule} from "@angular/forms";
+import {NgModule} from "@angular/core";
+import {LayoutRouting} from "./layout.routing";
+import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
+import {ProgressbarModule} from 'ngx-bootstrap/progressbar';
 import {ButtonsModule, Ng2BootstrapModule} from 'ngx-bootstrap';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-import { LayoutComponent } from "./layout.component";
-import { HeaderComponent } from './header/header.component';
-import { SearchComponent } from './header/search/search.component';
-import { NavigationComponent } from './navigation/navigation.component';
-import { NavigationTriggerComponent } from './header/navigation-trigger/navigation-trigger.component';
+import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
+import {PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
+import {LayoutComponent} from "./layout.component";
+import {HeaderComponent} from './header/header.component';
+import {SearchComponent} from './header/search/search.component';
+import {NavigationComponent} from './navigation/navigation.component';
+import {NavigationTriggerComponent} from './header/navigation-trigger/navigation-trigger.component';
 import {alertService} from "../services/alert.service";
 import {AngularFireModule} from "angularfire2";
 import {AngularFireDatabase} from "angularfire2/database";
@@ -42,14 +42,27 @@ import {SignUpComponent} from "../modals/sign-up/sign-up.component";
 import {SharedModule} from "../shared/shared.module";
 import {LoginComponent} from "../modals/login/login.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {ValidationService} from "../services/validation.service";
 import {InitialCashComponent} from "../modals/initial-cash/initial-cash.component";
 import {Globals} from "../statics/globals";
+import {DateService} from "../services/date.service";
+import {ResetUserComponent} from "../modals/reset-user/reset-user.component";
+import {SettingService} from "../services/setting.service";
+import {DropzoneDirective} from "../shared/directives/dropzone/dropzone.directive";
+import {InputFloatDirective} from "../shared/directives/input-float/input-float.directive";
+import {DropImagesDirective} from "../directives/drop-images.directive";
+import {UploadLogocomponent} from "../modals/uploadLogo/uploadLogocomponent";
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'
+import {RouteService} from "../services/route.service";
+import {AuthComponent} from "../pages/auth/auth.component";
+import {AboutComponent} from "../modals/about/about.component";
+import {Broadcaster} from "../../assets/js/broadcaster";
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 }
 
-@NgModule ({
+@NgModule({
     declarations: [
         LayoutComponent,
         HeaderComponent,
@@ -66,7 +79,6 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         DailyTransactionsComponent,
         LogsComponent,
         TransactionsComponent,
-        UpdateTransactionComponent,
         ClosedStatementsComponent,
         UserProfileComponent,
         ManageUsersComponent,
@@ -76,12 +88,19 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         SmtpComponent,
         SignUpComponent,
         LoginComponent,
-        InitialCashComponent
+        InitialCashComponent,
+        UpdateTransactionComponent,
+        ResetUserComponent,
+        DropImagesDirective,
+        UploadLogocomponent,
+        AuthComponent,
+        AboutComponent
     ],
     imports: [
         CommonModule,
         LayoutRouting,
         FormsModule,
+        SharedModule,
         AngularFireModule,
         BsDropdownModule.forRoot(),
         ProgressbarModule.forRoot(),
@@ -90,6 +109,7 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         SharedModule,
         NgbModule,
         NgbModule.forRoot(),
+        NgIdleKeepaliveModule.forRoot()
     ],
     providers: [
         alertService,
@@ -98,7 +118,13 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         LogService,
         ReportService,
         UserService,
-        Globals
+        ValidationService,
+        Globals,
+        DateService,
+        SettingService,
+        RouteService,
+        Broadcaster
+
     ],
     entryComponents: [
         CashInComponent,
@@ -110,11 +136,14 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         NewRegisterComponent,
         RefundComponent,
         SignUpComponent,
-        UpdateTransactionComponent,
         AuthorizationComponent,
-        InitialCashComponent
-
+        InitialCashComponent,
+        UpdateTransactionComponent,
+        ResetUserComponent,
+        UploadLogocomponent,
+        AboutComponent
     ]
 })
 
-export class LayoutModule {  }
+export class LayoutModule {
+}

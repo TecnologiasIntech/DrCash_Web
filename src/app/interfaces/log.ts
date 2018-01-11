@@ -1,5 +1,6 @@
 export interface Log {
     username:string;
-    dateTime:string;
+    dateTime:number;
     actions:string;
+    clinic:number;
 }

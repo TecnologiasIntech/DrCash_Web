@@ -10,11 +10,14 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
-
+import * as _ from "lodash";
 // Components
 import { AppComponent } from './app.component';
 import { SharedService } from "./shared/services/shared.service";
 import {alertService} from "./services/alert.service";
+import { UpdateTransactionComponent } from './modals/update-transaction/update-transaction.component';
+import {DropzoneDirective} from "./shared/directives/dropzone/dropzone.directive";
+import {InputFloatDirective} from "./shared/directives/input-float/input-float.directive";
 
 @NgModule({
     declarations: [
@@ -26,7 +29,7 @@ import {alertService} from "./services/alert.service";
         HttpModule,
         routing,
         AngularFireModule.initializeApp(environment.firebase),
-        AngularFireDatabaseModule, // imports firebase/database, only needed for database features
+        AngularFireDatabaseModule,
         AngularFireAuthModule
     ],
     providers: [
@@ -39,8 +42,6 @@ import {alertService} from "./services/alert.service";
     ],
     bootstrap: [AppComponent]
 })
-
-
 
 export class AppModule {
 }

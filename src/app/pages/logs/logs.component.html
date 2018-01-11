@@ -1,3 +1,74 @@
-<p>
-  logs works!
-</p>
+<section class="content">
+
+    <h1>Logs</h1>
+
+
+    <div class="card mt-4" style="height: 70vh; max-height: 70vh">
+        <!--Filters-->
+        <div class="row offset-1 mt-5">
+            <div class="col-4 p-l-30">
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-line" [(ngModel)]="username"
+                           placeholder="Username">
+                    <i class="form-group__bar"></i>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input class="form-control form-control-line" placeholder="Date From"
+                               name="dp" ngbDatepicker #df="ngbDatepicker" [(ngModel)]="dateFrom">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="df.toggle()" type="button">
+                                <i class="zmdi zmdi-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer; color: black;"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input class="form-control form-control-line" placeholder="Date From"
+                               name="dp" ngbDatepicker #dt="ngbDatepicker" [(ngModel)]="dateTo">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="dt.toggle()" type="button">
+                                <i class="zmdi zmdi-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer; color: black;"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <button class="btn btn-danger" (click)="cleanFields()">Clear</button>
+                <button class="btn btn-primary" (click)="searchLogs()">Search</button>
+                <button class="btn btn-success" (click)="printTransactionsTable()">Print</button>
+            </div>
+        </div>
+        <!--Transactions Table-->
+        <div class="row" style="height: 400px; max-height: 400px; overflow-y: auto">
+            <div class="col-10 offset-1">
+                <perfect-scrollbar>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>User</th>
+                            <th>Actions</th>
+                            <th>Clinic</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let log of logs">
+                            <td>{{_dateService.convertDateToDD_MM_YYYY_HH_MM(log.dateTime)}}</td>
+                            <td>{{log.username}}</td>
+                            <td>{{log.actions}}</td>
+                            <td>{{log.clinic}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </perfect-scrollbar>
+            </div>
+        </div>
+    </div>
+</section>

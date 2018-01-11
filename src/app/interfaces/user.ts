@@ -13,4 +13,7 @@ export interface User {
     modificationDate?:string;
     createdBy:number;
     creationDate:string;
+    userId:number;
+    clinic:number;
+    registerId: number;
 }
