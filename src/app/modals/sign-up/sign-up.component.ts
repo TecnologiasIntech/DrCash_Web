@@ -9,6 +9,8 @@ import {forEach} from "@angular/router/src/utils/collection";
 import {FirebaseListObservable} from "angularfire2/database-deprecated";
 import {LogService} from "../../services/log.service";
 import {alertService} from "../../services/alert.service";
+import {Register} from "../../interfaces/register";
+import {SettingService} from "../../services/setting.service";
 
 @Component({
     selector: 'app-sign-up',
@@ -18,11 +20,18 @@ import {alertService} from "../../services/alert.service";
 export class SignUpComponent implements OnInit {
 
     newUser: User = {} as User;
+    registers: Register[];
+    registerID: number;
 
     constructor(private _activeModal: NgbActiveModal,
                 private _usersService: UserService,
-                private _logService:LogService,
-                private _alertService:alertService) {
+                private _logService: LogService,
+                private _alertService: alertService,
+                private _settingsService: SettingService) {
+        this._settingsService.getRegisters()
+            .then((registers: Register[]) => {
+                this.registers = registers;
+            })
     }
 
     @ViewChild('username')
@@ -44,29 +53,40 @@ export class SignUpComponent implements OnInit {
 
     saveUser() {
         if (!this.areEmptyFields()) {
-            this._usersService.existUser(this.newUser.username).then(exist=>{
-                if(!exist){
+            this._usersService.existUser(this.newUser.username).then(exist => {
+                if (!exist) {
                     this.updateSecurityLevel();
                     this.loadUserDefaultData();
                     this.setUserClinic();
                     this._usersService.getUserID()
-                        .then((response:number)=>{
+                        .then((response: number) => {
                             this.newUser.userId = response;
                             this.setUserPassword();
-                            this._usersService.createNewUser(this.newUser.email, this.newUser.password);
-                            this._usersService.updateUser(this.newUser);
-                            this.setLog();
-                            this.showNewPasswordAler(this.newUser.password);
+                            this._usersService.createNewUser(this.newUser.email, this.newUser.password)
+                                .then(() => {
+                                    if (ValidationService.errorInField(this.registerID)) {
+                                        this.registerID = 0;
+                                    } else {
+                                        this.newUser.registerId = this.registerID;
+                                    }
+                                    this._usersService.updateUser(this.newUser);
+                                    this.setLog();
+                                    this.showNewPasswordAler(this.newUser.password);
+                                })
+                                .catch(error => {
+                                    console.log(error);
+                                })
+
                         })
-                }else{
+                } else {
                     this.enableSuccesfullyAlert();
                 }
             })
         }
     }
 
-    setLog(){
-        let message:string = Globals.userInfo.username + " Sign Up the new user "+this.newUser.username;
+    setLog() {
+        let message: string = Globals.userInfo.username + " Sign Up the new user " + this.newUser.username;
         this._logService.setLog(message);
     }
 
@@ -74,24 +94,24 @@ export class SignUpComponent implements OnInit {
         this.newUser.clinic = Globals.userInfo.clinic;
     }
 
-    setUserPassword(){
-        if(Globals.settings.useDefaultPassword){
+    setUserPassword() {
+        if (Globals.settings.useDefaultPassword) {
             this.newUser.password = Globals.settings.defaultPassword;
         }
-        else{
+        else {
             this.newUser.password = this.generateRandomPassword();
         }
     }
 
-    showNewPasswordAler(password:string) {
+    showNewPasswordAler(password: string) {
         this._alertService.confirmSuccess("New Password", password)
             .then(() => {
                 this._activeModal.close();
             });
     }
 
-    generateRandomPassword(){
-        let randomPassword:string = Math.random().toString(36).slice(-8);
+    generateRandomPassword() {
+        let randomPassword: string = Math.random().toString(36).slice(-8);
         return randomPassword;
     }
 

@@ -212,6 +212,7 @@ export class CloseDateComponent implements OnInit {
 
     setClosedTransaction() {
         //TODO: Preguntar si es necesario el balance
+        this.validateInputs()
         let closedTransaction: ClosedTransaction = {
             bills_100: this.Bills100,
             bills_50: this.Bills50,
@@ -242,6 +243,18 @@ export class CloseDateComponent implements OnInit {
                 PrintService.printClosedTransaction(closedTransaction, response);
             });
         this._activeModal.close();
+    }
+
+    validateInputs(){
+        if(ValidationService.errorInField(this.totalCredit)){
+           this.totalCredit = "0";
+        }
+        if(ValidationService.errorInField(this.totalCheck)){
+            this.totalCheck = "0";
+        }
+        if(ValidationService.errorInField(this.leftRegisterLabel)){
+            this.leftRegisterLabel = "0";
+        }
     }
 
     setLog(){

@@ -3,6 +3,7 @@ import {SettingService} from "../../services/setting.service";
 import {DateService} from "../../services/date.service";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {alertService} from "../../services/alert.service";
+import {Register} from "../../interfaces/register";
 
 @Component({
     selector: 'app-new-register',

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Globals} from "../../statics/globals";
 import {USERTYPE} from "../../enums/enums";
 import {SettingService} from "../../services/setting.service";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-about',
@@ -13,7 +14,8 @@ export class AboutComponent implements OnInit {
     securityLevel:string;
     computerName:string;
 
-    constructor(private _settingsService:SettingService) {
+    constructor(private _settingsService:SettingService,
+                private _activeModal: NgbActiveModal) {
         this.getUserType();
         this.getComputerName();
     }
@@ -39,6 +41,10 @@ export class AboutComponent implements OnInit {
             .then((response:string)=>{
                 this.computerName = response;
             })
+    }
+
+    closeModal(){
+        this._activeModal.close();
     }
 
     ngOnInit() {

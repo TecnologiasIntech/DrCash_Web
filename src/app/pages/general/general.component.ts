@@ -54,6 +54,7 @@ export class GeneralComponent implements OnInit {
         if (this.isDefaultPasswordEnabledAndFilled()) {
             this.prepareSettings();
             this._settingService.setSettings(this.settings);
+            this._alertService.success("Successfully Saved", "");
         }
     }
 
