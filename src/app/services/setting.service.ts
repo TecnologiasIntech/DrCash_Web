@@ -13,7 +13,7 @@ export class SettingService {
     constructor(private db: AngularFireDatabase) {
     }
 
-  getRegisters() {
+    getRegisters() {
         return new Promise(resolve => {
             return this.db.list('registers').valueChanges().take(1).subscribe((snapshot: Register[]) => {
                 resolve(snapshot);
@@ -29,11 +29,11 @@ export class SettingService {
 
     getMachineName() {
         return new Promise(resolve => {
-            this.db.object('registers/' + Globals.userInfo.registerId +"/getNameMachine/0").update({getNameMachine: true});
+            this.db.object('registers/' + Globals.userInfo.registerId + "/getNameMachine/0").update({getNameMachine: true});
 
-            this.db.object('registers/' + Globals.userInfo.registerId ).valueChanges().subscribe((snapshot: Register) => {
+            this.db.object('registers/' + Globals.userInfo.registerId).valueChanges().subscribe((snapshot: Register) => {
                 // if (!snapshot.getNameMachine) {
-                    resolve(snapshot.computerNameByPlugin);
+                resolve(snapshot.computerNameByPlugin);
                 // }
             })
         })
@@ -71,12 +71,12 @@ export class SettingService {
             creationDate: key,
             key: key,
             getNameMachine: {
-                0:{
+                0: {
                     getNameMachine: false,
                 }
             },
             openRegister: {
-                0:{
+                0: {
                     openRegister: false,
                 }
             },
@@ -84,8 +84,8 @@ export class SettingService {
         })
     }
 
-    openRegister(){
-        this.db.object('registers/'+Globals.userInfo.registerId.toString()+"/openRegister/0").update({openRegister:true});
+    openRegister() {
+        this.db.object('registers/' + Globals.userInfo.registerId.toString() + "/openRegister/0").update({openRegister: true});
     }
 
     setSettings(settings: Setting) {
@@ -103,8 +103,8 @@ export class SettingService {
         })
     }
 
-    setLogoUrl(url:string){
-        this.db.object('clinicas/' + Globals.userInfo.clinic+'/Settings').update({
+    setLogoUrl(url: string) {
+        this.db.object('clinicas/' + Globals.userInfo.clinic + '/Settings').update({
             logoUrl: url
         })
     }
@@ -115,7 +115,8 @@ export class SettingService {
             let uploadTask: firebase.storage.UploadTask =
                 storageRef.child(`clinic/${Globals.userInfo.clinic}/logo`).put(file.archivo);
             uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-                (snapshot: any) => { },
+                (snapshot: any) => {
+                },
                 (error) => console.log("Error updating the image: " + error),
                 () => {
                     file.url = uploadTask.snapshot.downloadURL;
@@ -126,12 +127,42 @@ export class SettingService {
         })
     }
 
-    getClinicInfo(){
-        return new Promise(resolve=>{
+    getClinicInfo() {
+        return new Promise(resolve => {
             this.db.object('clinicas/' + Globals.userInfo.clinic + "/info").valueChanges().take(1)
-                .subscribe((snapshot:ClinicInfo)=>{
+                .subscribe((snapshot: ClinicInfo) => {
                     resolve(snapshot);
                 })
         })
+    }
+
+    thisMachineIsRegistered(mac: string) {
+        return new Promise((resolve, reject) => {
+            this.db.list('macs', ref => ref
+                .orderByChild('mac')
+                .equalTo(mac))
+                .valueChanges().take(1).subscribe((snapshot: any[]) => {
+                if (snapshot.length > 0) {
+                    resolve();
+                } else {
+                    reject();
+                }
+            })
+        })
+    }
+
+    getMac() {
+        return new Promise(resolve => {
+            this.db.object('admin/0').update({getMac: true});
+
+            this.db.object('admin/0/mac').valueChanges().take(1).subscribe((snapshot: string) => {
+                this.db.object('admin/0').update({mac: ''});
+                resolve(snapshot);
+            })
+        })
+    }
+
+    registerMac(mac: string) {
+        this.db.list('macs').push({mac: mac});
     }
 }
