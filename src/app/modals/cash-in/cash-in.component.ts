@@ -63,27 +63,42 @@ export class CashInComponent implements OnInit {
     savePrint() {
         if (this.isCashInTransactionReady()) {
 
-            this.validateCashCreditCheckInputsArentNull();
-            this.getTransactionDate();
-            this.saveTransaction();
-            this.saveTransactionType();
-            this.setLog();
-            this._settingsService.openRegister();
-            this._settingsService.getClinicInfo()
-                .then((response:ClinicInfo)=>{
-                    this.printTicket(response);
-                    this.showSuccessfulTransactionAlert();
-                });
+            if (this.change < 0) {
+                this._alertService.error('Lacks Money', '');
+            } else {
+                this.validateCashCreditCheckInputsArentNull();
+                this.getTransactionDate();
+                this.saveTransaction();
+                this.saveTransactionType();
+                this.setLog();
+                this._settingsService.openRegister();
+                this._settingsService.getClinicInfo()
+                    .then((response: ClinicInfo) => {
+                        this.printTicket(response);
+                        this.showSuccessfulTransactionAlert();
+                    });
+            }
         } else {
             this.focusPaymentFirstNameInputs();
             this.focusCheckBoxs();
         }
     }
 
+    verifyTypePayments() {
+        debugger
+        this.newTransaction.copayment = false;
+        this.newTransaction.selfPay = false;
+        this.newTransaction.labs = false;
+        this.newTransaction.deductible = false;
+        this.newTransaction.other = false;
+        this.newTransaction.otherComments = "";
 
-    setLog(){
-        let message:string = Globals.userInfo.username+" made a CashIn for $"+this.newTransaction.amountCharged+" in register "+ Globals.userInfo.registerId;
-        message += " with the transaction number "+this.newTransaction.dateRegistered+Globals.userInfo.userId;
+    }
+
+
+    setLog() {
+        let message: string = Globals.userInfo.username + " made a CashIn for $" + this.newTransaction.amountCharged + " in register " + Globals.userInfo.registerId;
+        message += " with the transaction number " + this.newTransaction.dateRegistered + Globals.userInfo.userId;
         this._logService.setLog(message)
     }
 
@@ -94,16 +109,16 @@ export class CashInComponent implements OnInit {
         this._transactionService.setTransaction(this.newTransaction);
     }
 
-    saveTransactionType(){
+    saveTransactionType() {
         this.transactionType = this.whatKindOfTransactionIs();
     }
 
-    whatKindOfTransactionIs(){
-        if(this.newTransaction.copayment) return "Copayment";
-        if(this.newTransaction.selfPay) return "SelfPay";
-        if(this.newTransaction.deductible) return "Deductible";
-        if(this.newTransaction.labs) return "Labs";
-        if(this.newTransaction.other) return this.newTransaction.otherComments;
+    whatKindOfTransactionIs() {
+        if (this.newTransaction.copayment) return "Copayment";
+        if (this.newTransaction.selfPay) return "SelfPay";
+        if (this.newTransaction.deductible) return "Deductible";
+        if (this.newTransaction.labs) return "Labs";
+        if (this.newTransaction.other) return this.newTransaction.otherComments;
     }
 
     parserFields() {
@@ -111,13 +126,13 @@ export class CashInComponent implements OnInit {
             this.newTransaction.cash = parseFloat(this.newTransaction.cash.toString());
         }
         if (!ValidationService.errorInField(this.newTransaction.credit)) {
-        this.newTransaction.credit = parseFloat(this.newTransaction.credit.toString());
+            this.newTransaction.credit = parseFloat(this.newTransaction.credit.toString());
         }
         if (!ValidationService.errorInField(this.newTransaction.check)) {
-        this.newTransaction.check = parseFloat(this.newTransaction.check.toString());
+            this.newTransaction.check = parseFloat(this.newTransaction.check.toString());
         }
         if (!ValidationService.errorInField(this.newTransaction.amountCharged)) {
-        this.newTransaction.amountCharged = parseFloat(this.newTransaction.amountCharged.toString());
+            this.newTransaction.amountCharged = parseFloat(this.newTransaction.amountCharged.toString());
         }
     }
 
@@ -336,7 +351,7 @@ export class CashInComponent implements OnInit {
         return !!/[\d\s]/.test(input);
     }
 
-    printTicket(clinicInfo:ClinicInfo) {
+    printTicket(clinicInfo: ClinicInfo) {
         let mywindow = window.open('', 'PRINT', 'height=650,width=300');
 
         mywindow.document.write('<html><head>');

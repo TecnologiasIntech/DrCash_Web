@@ -98,7 +98,7 @@
 
                 <!-- Checkboxs-->
                 <div>
-                    <label class="custom-control custom-radio">
+                    <label class="custom-control custom-radio" (click)="verifyTypePayments()">
                         <input type="checkbox" class="custom-control-input"  [(ngModel)]="newTransaction.copayment" (ngModelChange)="unfocusCheckbox()">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description" #copayment >Copayment</span>
@@ -106,7 +106,7 @@
 
                     <div class="clearfix mt-2"></div>
 
-                    <label class="custom-control custom-radio">
+                    <label class="custom-control custom-radio" (click)="verifyTypePayments()">
                         <input type="checkbox" class="custom-control-input" [(ngModel)]="newTransaction.selfPay" (ngModelChange)="unfocusCheckbox()">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">SelfPay</span>
@@ -114,7 +114,7 @@
 
                     <div class="clearfix mt-2"></div>
 
-                    <label class="custom-control custom-radio">
+                    <label class="custom-control custom-radio" (click)="verifyTypePayments()">
                         <input type="checkbox" class="custom-control-input" [(ngModel)]="newTransaction.deductible" (ngModelChange)="unfocusCheckbox()">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Deductible</span>
@@ -122,7 +122,7 @@
 
                     <div class="clearfix mt-2"></div>
 
-                    <label class="custom-control custom-radio">
+                    <label class="custom-control custom-radio" (click)="verifyTypePayments()">
                         <input type="checkbox" class="custom-control-input"  [(ngModel)]="newTransaction.labs" (ngModelChange)="unfocusCheckbox()">
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Labs</span>
@@ -130,7 +130,7 @@
 
                     <div class="clearfix mt-2"></div>
 
-                    <label class="custom-control custom-radio">
+                    <label class="custom-control custom-radio" (click)="verifyTypePayments()">
                         <input type="checkbox" class="custom-control-input" [(ngModel)]="newTransaction.other" (ngModelChange)="focusOtherComment()" >
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Other</span>

@@ -16,4 +16,5 @@ export interface User {
     userId:number;
     clinic:number;
     registerId: number;
+    level:object;
 }
