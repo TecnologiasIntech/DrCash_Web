@@ -57,6 +57,8 @@ import {RouteService} from "../services/route.service";
 import {AuthComponent} from "../pages/auth/auth.component";
 import {AboutComponent} from "../modals/about/about.component";
 import {Broadcaster} from "../../assets/js/broadcaster";
+import {AuthAdminService} from "../services/auth-admin.service";
+import {AdministratorComponent} from "../pages/administrator/administrator.component";
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -94,7 +96,8 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         DropImagesDirective,
         UploadLogocomponent,
         AuthComponent,
-        AboutComponent
+        AboutComponent,
+        AdministratorComponent
     ],
     imports: [
         CommonModule,
@@ -123,7 +126,8 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         DateService,
         SettingService,
         RouteService,
-        Broadcaster
+        Broadcaster,
+        AuthAdminService
 
     ],
     entryComponents: [

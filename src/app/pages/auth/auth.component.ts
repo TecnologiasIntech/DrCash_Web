@@ -7,6 +7,7 @@ import {Globals} from "../../statics/globals";
 import {User} from "../../interfaces/user";
 import {SettingService} from "../../services/setting.service";
 import {Setting} from "../../interfaces/setting";
+import {ValidationService} from "../../services/validation.service";
 
 @Component({
     selector: 'app-auth',
@@ -28,6 +29,7 @@ export class AuthComponent implements OnInit {
     authUser() {
         let email = RouteService.getParameterByName("email");
         let pass = RouteService.getParameterByName("pass");
+        let admin = RouteService.getParameterByName("admin");
 
         this._af.auth.signInWithEmailAndPassword(email, pass).then(() => {
             email = email.replace(/[^a-zA-Z 0-9.]+/g,'');
@@ -39,7 +41,11 @@ export class AuthComponent implements OnInit {
                         .then((response: Setting) => {
                             Globals.settings = response;
                         })
-                    this._router.navigate(['home']);
+                    if(ValidationService.errorInField(admin)){
+                        this._router.navigate(['home']);
+                    }else{
+                        this._router.navigate(['admin']);
+                    }
                 });
         })
     }

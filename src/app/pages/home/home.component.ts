@@ -17,6 +17,7 @@ import {ValidationService} from "../../services/validation.service";
 import {ResetUserComponent} from "../../modals/reset-user/reset-user.component";
 import {ActivatedRoute} from "@angular/router";
 import {Broadcaster} from "../../../assets/js/broadcaster";
+import {LoginComponent} from "../../modals/login/login.component";
 
 
 @Component({
@@ -35,10 +36,17 @@ export class HomeComponent implements OnInit {
                 private db: AngularFireDatabase,
                 public  _dateService: DateService,
                 private  _transactionService: TransactionService,
-                private _broadcast:Broadcaster) {
+                private _broadcast: Broadcaster) {
 
-        if (Globals.userInfo.passwordReset) {
-            this.openResetUser();
+        if (Globals.userInfo == null) {
+            _modal.open(LoginComponent, Globals.optionModalLg).result
+                .then((response) => {
+                    if (Globals.userInfo.passwordReset) {
+                        this.openResetUser();
+                    } else {
+                        this.loadTransactions();
+                    }
+                })
         } else {
             this.loadTransactions();
         }
@@ -49,13 +57,13 @@ export class HomeComponent implements OnInit {
         this.listenFlagToHideTransactions();
     }
 
-    listenFlagToHideTransactions(){
+    listenFlagToHideTransactions() {
         this._broadcast.on<boolean>('hideTransactions')
-            .subscribe((response:boolean)=>{
-                if(response){
+            .subscribe((response: boolean) => {
+                if (response) {
                     this.currentTransactions = [];
                     this.cleanTotalsTransactions();
-                }else{
+                } else {
                     this.loadTransactions();
                 }
             });
@@ -107,11 +115,13 @@ export class HomeComponent implements OnInit {
     }
 
     openCloseDate() {
-        this._modal.open(CloseDateComponent, Globals.optionModalLg).result
-            .then(response => {
-                this.loadTransactions();
-            }, (reason) => {
-            })
+        const modalRef = this._modal.open(CloseDateComponent, Globals.optionModalLg);
+        // modalRef.result
+        //     .then(response => {
+        //         this.loadTransactions();
+        //     }, (reason) => {
+        //     })
+        modalRef.componentInstance.balance = this.totalsTransactions.Balance;
     }
 
     getLogTransaction(transaction: Transaction) {

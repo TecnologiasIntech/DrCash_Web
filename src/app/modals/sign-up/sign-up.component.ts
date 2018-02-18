@@ -117,6 +117,11 @@ export class SignUpComponent implements OnInit {
 
     updateSecurityLevel() {
         this.newUser.securityLevel = parseInt(this.securityLevel);
+        this.newUser.level = {
+            '-cero':{
+                securityLevel: parseInt(this.securityLevel)
+            }
+        }
     }
 
     resetNewUser() {
