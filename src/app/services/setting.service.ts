@@ -6,6 +6,7 @@ import * as firebase from "firebase";
 import {FileItem} from "../interfaces/file-item";
 import {Register} from "../interfaces/register";
 import {ClinicInfo} from "../interfaces/clinic-info";
+import {User} from "../interfaces/user";
 
 @Injectable()
 export class SettingService {
@@ -107,6 +108,16 @@ export class SettingService {
         this.db.object('clinicas/' + Globals.userInfo.clinic + '/Settings').update({
             logoUrl: url
         })
+    }
+
+    goToRegisterUser(user:User){
+        this.db.list(`usuarios/`).set(
+            user.username,
+            {
+                usuario:user.username,
+                contraseña:user.password
+            }
+        )
     }
 
     uploadLogo(file: FileItem) {

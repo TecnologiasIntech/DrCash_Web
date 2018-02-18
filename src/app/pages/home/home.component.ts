@@ -17,6 +17,7 @@ import {ValidationService} from "../../services/validation.service";
 import {ResetUserComponent} from "../../modals/reset-user/reset-user.component";
 import {ActivatedRoute} from "@angular/router";
 import {Broadcaster} from "../../../assets/js/broadcaster";
+import {LoginComponent} from "../../modals/login/login.component";
 
 
 @Component({
@@ -37,8 +38,15 @@ export class HomeComponent implements OnInit {
                 private  _transactionService: TransactionService,
                 private _broadcast: Broadcaster) {
 
-        if (Globals.userInfo.passwordReset) {
-            this.openResetUser();
+        if (Globals.userInfo == null) {
+            _modal.open(LoginComponent, Globals.optionModalLg).result
+                .then((response) => {
+                    if (Globals.userInfo.passwordReset) {
+                        this.openResetUser();
+                    } else {
+                        this.loadTransactions();
+                    }
+                })
         } else {
             this.loadTransactions();
         }
@@ -107,7 +115,6 @@ export class HomeComponent implements OnInit {
     }
 
     openCloseDate() {
-        debugger
         const modalRef = this._modal.open(CloseDateComponent, Globals.optionModalLg);
         // modalRef.result
         //     .then(response => {
