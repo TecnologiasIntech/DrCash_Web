@@ -37,7 +37,6 @@ export class HomeComponent implements OnInit {
                 public  _dateService: DateService,
                 private  _transactionService: TransactionService,
                 private _broadcast: Broadcaster) {
-
         if (Globals.userInfo == null) {
             _modal.open(LoginComponent, Globals.optionModalLg).result
                 .then((response) => {

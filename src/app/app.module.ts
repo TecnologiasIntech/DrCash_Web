@@ -15,6 +15,7 @@ import * as _ from "lodash";
 import { AppComponent } from './app.component';
 import { SharedService } from "./shared/services/shared.service";
 import {alertService} from "./services/alert.service";
+import {ErrorsService} from "./services/errors.service";
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import {alertService} from "./services/alert.service";
             provide: LocationStrategy,
             useClass: HashLocationStrategy
         },
-        alertService
+        alertService,
+        ErrorsService
     ],
     bootstrap: [AppComponent]
 })
