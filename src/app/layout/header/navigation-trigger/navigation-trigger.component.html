@@ -1,4 +1,4 @@
-<div class="navigation-trigger" [class.toggled]="_globals.sidebarVisible" (click)="sidenavAndClickIcon()">
+<div class="navigation-trigger" [class.toggled]="_globals.sidebarVisible" (click)="sidenavAndClickIcon()" *ngIf="path != 'auth' && path != 'admin'">
     <div class="navigation-trigger__inner" style="cursor: pointer;">
         <i class="navigation-trigger__line"></i>
         <i class="navigation-trigger__line"></i>

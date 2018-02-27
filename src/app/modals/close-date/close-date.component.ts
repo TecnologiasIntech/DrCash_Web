@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild, AfterViewInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, AfterViewInit, Input} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ValidationService} from "../../services/validation.service";
 import {BILLS} from "../../enums/enums";
@@ -47,12 +47,15 @@ export class CloseDateComponent implements OnInit {
     @ViewChild('check') checkRef: ElementRef;
     @ViewChild('leftRegisterRef') leftRegisterRef: ElementRef;
 
+    @Input() balance;
+
     constructor(private _activeModal: NgbActiveModal,
                 public _validationService: ValidationService,
                 private _transactionService: TransactionService,
                 private _logService: LogService,
                 private _settingsService: SettingService,
                 private _alertSerivce:alertService) {
+        debugger
     }
 
     ngOnInit() {
@@ -228,7 +231,7 @@ export class CloseDateComponent implements OnInit {
             total_credit: parseFloat(this.totalCredit),
             initial_cash: this._transactionService.initialCash,
             leftInRegister: parseFloat(this.leftRegisterLabel),
-            balance: 0,
+            balance: this.balance,
             transaction_count: this._transactionService.numberOfCurrentTransactions,
             reg_RegisterID: Globals.userInfo.registerId.toString(),
             username: Globals.userInfo.username,
@@ -273,6 +276,8 @@ export class CloseDateComponent implements OnInit {
             this.bills100.nativeElement.focus()
             this.isErrorTotalCash = true;
             this.selectAllText(BILLS.BILLS100);
+        }else if(this.totalEntered < this.totalRegistered){
+            this._alertSerivce.error('Lacks Money', '');
         } else if (Globals.settings.leaveMoneyInRegister){
             if(ValidationService.errorInField(this.leftRegisterLabel)) {
                 this.leftRegisterRef.nativeElement.focus();

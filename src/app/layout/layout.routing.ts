@@ -11,6 +11,8 @@ import {TransactionsComponent} from "../pages/transactions/transactions.componen
 import {UserProfileComponent} from "../pages/user-profile/user-profile.component";
 import {ClosedStatementsComponent} from "../pages/closed-statements/closed-statements.component";
 import {AuthComponent} from "../pages/auth/auth.component";
+import {AuthAdminService} from "../services/auth-admin.service";
+import {AdministratorComponent} from "../pages/administrator/administrator.component";
 
 const LAYOUT_ROUTES: Routes = [
     {
@@ -33,6 +35,11 @@ const LAYOUT_ROUTES: Routes = [
         {path: 'general', component: GeneralComponent},
         {path: 'smtp', component: SmtpComponent},
         {path: 'transactions', component: TransactionsComponent},
+        {
+            path: 'admin',
+            component: AdministratorComponent,
+            canActivate: [ AuthAdminService ]
+        },
         {path: 'user-profile', component: UserProfileComponent}
     ]
     }

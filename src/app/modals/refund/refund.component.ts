@@ -75,21 +75,26 @@ export class RefundComponent implements OnInit {
     }
 
     setTransaction() {
-        this.refundTransaction.dateRegistered = DateService.getCurrentDate();
-        this.refundTransaction.cash = parseFloat(this.refund);
-        this.refundTransaction.type = TRANSACTIONTYPE.REFUND;
-        this.refundTransaction.modificationDate = DateService.getCurrentDate();
-        if (!ValidationService.errorInField(this.refundComment)) {
-            this.refundTransaction.comment = this.refundComment;
+        if(!ValidationService.errorInField(this.refund)){
+            this.refundTransaction.dateRegistered = DateService.getCurrentDate();
+            this.refundTransaction.cash = parseFloat(this.refund);
+            this.refundTransaction.type = TRANSACTIONTYPE.REFUND;
+            this.refundTransaction.modificationDate = DateService.getCurrentDate();
+            if (!ValidationService.errorInField(this.refundComment)) {
+                this.refundTransaction.comment = this.refundComment;
+            }
+            this.showSuccessfulTransactionAlert();
+            this.setLog();
+            this._transactionService.setTransaction(this.refundTransaction);
+            this._settingsService.openRegister();
+            this._settingsService.getClinicInfo()
+                .then((response:ClinicInfo)=> {
+                    PrintService.printRefund(this.refundTransaction, response);
+                })
+        }else{
+            this._alertService.error('The amount is empty', '');
         }
-        this.showSuccessfulTransactionAlert();
-        this.setLog();
-        this._transactionService.setTransaction(this.refundTransaction);
-        this._settingsService.openRegister();
-        this._settingsService.getClinicInfo()
-            .then((response:ClinicInfo)=> {
-                PrintService.printRefund(this.refundTransaction, response);
-            })
+
     }
 
     setLog(){

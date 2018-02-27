@@ -2,7 +2,7 @@
     <div class="cardLogin">
         <div class="row" align="center">
             <div class="col-12" style="margin-top: 20px;">
-                <h2>Login</h2>
+                <h2>Iniciar sesión</h2>
                 <!--<i class="zmdi zmdi-close-circle-o closeIcon" (click)="closeLogin()"></i>-->
             </div>
         </div>
@@ -17,15 +17,13 @@
 
                             <input class="form-control" type="text"
                                    [(ngModel)]="User.username" name="username" required #username
-                                   placeholder="Username" (keyup)="changeBooleansUserAndErrorsInLogin()"
+                                   placeholder="Correo electronico" (keyup)="changeBooleansUserAndErrorsInLogin()"
                                    autofocus
                             >
-
                             <i class="form-group__bar"></i>
+
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </div>
@@ -40,7 +38,7 @@
 
                             <input class="form-control" type="password"
                                    [(ngModel)]="User.password" name="password" required #password
-                                   placeholder="Password"
+                                   placeholder="Contraseña"
                                    (keyup)="changeBooleansPasswordAndErrorsInLogin()"
                                    (keyup.enter)="errorInLoginFields(User)"
                             >
@@ -61,13 +59,13 @@
         <div class="button-container" style="margin-top: 20px">
             <div class="row">
                 <div class="offset-1 col-10">
-                    <button class="btn btn-success btn-block" (click)="errorInLoginFields(User)">Login</button>
+                    <button class="btn btn-success btn-block" (click)="errorInLoginFields(User)">Iniciar sesión</button>
                 </div>
             </div>
 
             <div class="row" style="margin-top: 30px;">
                 <div class="offset-1 col-10">
-                    <button class="btn btn-danger btn-block" (click)="closeApp()">Close</button>
+                    <button class="btn btn-danger btn-block" (click)="closeApp()">Registrate</button>
                 </div>
             </div>
         </div>

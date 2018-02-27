@@ -15,9 +15,7 @@ import * as _ from "lodash";
 import { AppComponent } from './app.component';
 import { SharedService } from "./shared/services/shared.service";
 import {alertService} from "./services/alert.service";
-import { UpdateTransactionComponent } from './modals/update-transaction/update-transaction.component';
-import {DropzoneDirective} from "./shared/directives/dropzone/dropzone.directive";
-import {InputFloatDirective} from "./shared/directives/input-float/input-float.directive";
+import {ErrorsService} from "./services/errors.service";
 
 @NgModule({
     declarations: [
@@ -38,7 +36,8 @@ import {InputFloatDirective} from "./shared/directives/input-float/input-float.d
             provide: LocationStrategy,
             useClass: HashLocationStrategy
         },
-        alertService
+        alertService,
+        ErrorsService
     ],
     bootstrap: [AppComponent]
 })
