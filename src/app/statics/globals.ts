@@ -15,7 +15,7 @@ export class Globals {
         size: "lg"
     };
     sidebarVisible: boolean = false;
-    static userInfo: User;
+    static userInfo: User = null;
 
     static settings: Setting;
 

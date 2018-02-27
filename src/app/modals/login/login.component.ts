@@ -43,13 +43,7 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        // RouteService.getParameterByName('email');
-        let token = RouteService.getParameterByName('token');
-        // var auth = this._auth.idToken.
-        // debugger
     }
-
-
 
     errorInLoginFields(user: User) {
         this.changeBooleansUserAndErrorsInLogin();

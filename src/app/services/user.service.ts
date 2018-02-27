@@ -8,31 +8,33 @@ import {DateService} from "./date.service";
 import {reject} from "q";
 import {ValidationService} from "./validation.service";
 import {AngularFireAuth} from "angularfire2/auth";
+import {ErrorsService} from "./errors.service";
 
 @Injectable()
 export class UserService {
 
     constructor(private db: AngularFireDatabase,
                 private alertService: alertService,
-                private _af: AngularFireAuth) {
+                private _af: AngularFireAuth,
+                private _errorService: ErrorsService) {
     }
 
     authUser(user: User) {
         return new Promise((resolve, reject) => {
-            let email = user.email.replace(/[^a-zA-Z 0-9.]+/g,'');
-            email = email.replace('.','');
-            this.db.object('users/' + email).valueChanges().subscribe((result: User) => {
-                if (user.email != null) {
-                    if (result.password == user.password) {
+            this._af.auth.signInWithEmailAndPassword(user.username, user.password)
+                .then(() => {
+                    let email = user.username.replace(/[^a-zA-Z 0-9.]+/g, '');
+                    email = email.replace('.', '');
+                    this.db.object('users/' + email).valueChanges().subscribe((result: User) => {
                         resolve(result);
+                    })
+                })
+                .catch((error: any) => {
+                    this._errorService.showErrorInLogin(error.code);
 
-                    } else {
-                        reject(ERRORAUTH.WRONGPASSWORD);
-                    }
-                } else {
-                    reject(ERRORAUTH.USERNOTFOUND);
-                }
-            })
+                    if (error.code == 'auth/user-not-found') reject(ERRORAUTH.USERNOTFOUND);
+                    if (error.code == 'auth/wrong-password') reject(ERRORAUTH.WRONGPASSWORD);
+                });
         })
     }
 
@@ -45,8 +47,8 @@ export class UserService {
     }
 
     updateUser(user: User) {
-        let email = user.email.replace(/[^a-zA-Z 0-9.]+/g,'');
-        email = email.replace('.','');
+        let email = user.email.replace(/[^a-zA-Z 0-9.]+/g, '');
+        email = email.replace('.', '');
         this.db.object('users/' + email).update(user);
         this.db.object("users/").update({
             numberUsers: user.userId
@@ -109,7 +111,7 @@ export class UserService {
             this._af.auth.createUserWithEmailAndPassword(email, pass)
                 .then(response => {
                     this._af.auth.signInWithEmailAndPassword(Globals.userInfo.email, Globals.userInfo.password)
-                        .then(()=>{
+                        .then(() => {
                             resolve();
                         })
                         .catch(error => {
@@ -125,5 +127,11 @@ export class UserService {
                 })
         })
 
+    }
+
+    isAuthenticated() {
+        this._af.auth.onAuthStateChanged((user) => {
+            return user;
+        })
     }
 }
