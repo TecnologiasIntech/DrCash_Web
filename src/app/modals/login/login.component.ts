@@ -22,8 +22,27 @@ import {AngularFireAuth} from "angularfire2/auth";
 export class LoginComponent implements OnInit {
 
     // Declaracion de variables
-    User: User[] = [];
-    enableButton:boolean=true;
+    User: User = {
+        username: "carlos@carlos.com",
+        firstName: null,
+        lastName: null,
+        password: "carlos",
+        securityQuestion: null,
+        securityAnswer: null,
+        email: null,
+        securityLevel: null,
+        activeAccount: null,
+        passwordReset: null,
+        modifiedBy: null,
+        modificationDate: null,
+        createdBy: null,
+        creationDate: null,
+        userId: null,
+        clinic: null,
+        registerId: null,
+        level: null
+    };
+    enableButton: boolean = true;
     errorPass: boolean = false;
     errorUserName: boolean = false;
     errorPassAndUsername: boolean = false;
@@ -37,9 +56,9 @@ export class LoginComponent implements OnInit {
 
     constructor(private activeModal: NgbActiveModal,
                 private _usrService: UserService,
-                private _logService:LogService,
+                private _logService: LogService,
                 private _settingService: SettingService,
-                private _auth:AngularFireAuth) {
+                private _auth: AngularFireAuth) {
     }
 
     ngOnInit() {
@@ -58,7 +77,7 @@ export class LoginComponent implements OnInit {
                 if (ValidationService.errorInField(user.password)) {
                     this.errorPass = true;
                     this.passRef.nativeElement.focus();
-                }else{
+                } else {
                     this.userAuth(user);
                 }
             }
@@ -66,7 +85,7 @@ export class LoginComponent implements OnInit {
     }
 
     userAuth(user: User) {
-        this._usrService.authUser(user).then((response:User) => {
+        this._usrService.authUser(user).then((response: User) => {
             Globals.userInfo = response;
             this.setLog();
             this.setSettings();
@@ -84,8 +103,8 @@ export class LoginComponent implements OnInit {
         })
     }
 
-    setLog(){
-        let message:string = Globals.userInfo.username+" made a login at te register "+ Globals.userInfo.registerId;
+    setLog() {
+        let message: string = Globals.userInfo.username + " made a login at te register " + Globals.userInfo.registerId;
         this._logService.setLog(message)
     }
 
@@ -105,7 +124,7 @@ export class LoginComponent implements OnInit {
         this.wrongPassword = false;
     }
 
-    setSettings(){
+    setSettings() {
         this._settingService.getSettings()
             .then((response: Setting) => {
                 Globals.settings = response;

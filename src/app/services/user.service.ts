@@ -129,9 +129,32 @@ export class UserService {
 
     }
 
-    isAuthenticated() {
-        this._af.auth.onAuthStateChanged((user) => {
-            return user;
+    setUserInfo(email: string) {
+        return new Promise(resolve => {
+            email = email.replace(/[^a-zA-Z 0-9.]+/g, '');
+            email = email.replace('.', '');
+
+            this.db.object('users/' + email).valueChanges().take(1).subscribe((response: User) => {
+                Globals.userInfo = response;
+                resolve();
+            })
         })
+    }
+
+    isAuthenticated() {
+        return new Promise(resolve => {
+            this._af.auth.onAuthStateChanged((user) => {
+                if(user){
+                    if (Globals.userInfo == null) {
+                        this.setUserInfo(user.email).then(() => {
+                            resolve(user)
+                        })
+                    }
+                }else{
+                    resolve(user);
+                }
+            })
+        })
+
     }
 }

@@ -92,15 +92,15 @@ export class HomeComponent implements OnInit {
     }
 
     openRefund() {
-        this._modal.open(AuthorizationComponent, Globals.optionModalLg).result.then((result) => {
-            if (result) {
+        // this._modal.open(AuthorizationComponent, Globals.optionModalLg).result.then((result) => {
+        //     if (result) {
                 this._modal.open(RefundComponent, Globals.optionModalLg).result
                     .then(response => {
                         this.loadTransactions();
                     }, (reason) => {
                     })
-            }
-        })
+            // }
+        // })
     }
 
     openCredentials() {

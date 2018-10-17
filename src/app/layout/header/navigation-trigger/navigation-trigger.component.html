@@ -1,4 +1,5 @@
-<div class="navigation-trigger" [class.toggled]="_globals.sidebarVisible" (click)="sidenavAndClickIcon()" *ngIf="path != 'auth' && path != 'admin'">
+<div class="navigation-trigger" [class.toggled]="_globals.sidebarVisible" (click)="sidenavAndClickIcon()"
+     *ngIf="path != 'auth' && path != 'admin'">
     <div class="navigation-trigger__inner" style="cursor: pointer;">
         <i class="navigation-trigger__line"></i>
         <i class="navigation-trigger__line"></i>
@@ -10,12 +11,12 @@
     <div class="row">
         <div class="col-12">
             <!--<div class="user">-->
-                <!--<div class="user__info">-->
-                    <!--&lt;!&ndash;<img class="borderStyleImage" src="../../../../assets/demo/img/profile-pics/4.jpg">&ndash;&gt;-->
-                    <!--<div>-->
-                        <!--<div class="user__name">Bienvenido</div>-->
-                    <!--</div>-->
-                <!--</div>-->
+            <!--<div class="user__info">-->
+            <!--&lt;!&ndash;<img class="borderStyleImage" src="../../../../assets/demo/img/profile-pics/4.jpg">&ndash;&gt;-->
+            <!--<div>-->
+            <!--<div class="user__name">Bienvenido</div>-->
+            <!--</div>-->
+            <!--</div>-->
             <!--</div>-->
             <!--menu and submenus-->
             <div class="f-s-16 c-s-gray">
@@ -53,11 +54,11 @@
                         <span class="itemsList">Settings</span>
                         <ul class="animated fadeIn p-0 m-l-75 listStyleNone p-0" *ngIf="viewSettingsOptions">
                             <li class="p-b-5 cursor-pointer" (click)="sidenavAndClickIcon()"><a
-                                    [routerLink]="['/register']">Register</a></li>
+                                    [routerLink]="['/registers']">Register</a></li>
                             <li class="p-b-5 cursor-pointer" (click)="sidenavAndClickIcon()"><a
                                     [routerLink]="['/general']">General</a></li>
                             <!--<li class="p-b-5 cursor-pointer" (click)="sidenavAndClickIcon()"><a-->
-                                    <!--[routerLink]="['/smtp']">SMTP</a></li>-->
+                            <!--[routerLink]="['/smtp']">SMTP</a></li>-->
                         </ul>
                     </li>
                     <li class="cursor-pointer" (click)="sidenavAndClickIcon(); openAbout()"><a>

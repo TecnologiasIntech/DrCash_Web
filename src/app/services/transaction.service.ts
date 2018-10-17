@@ -27,7 +27,7 @@ export class TransactionService {
 
     constructor(private db: AngularFireDatabase,
                 private _dateService: DateService) {
-        this.getMyCurrentTransactions()
+        // this.getMyCurrentTransactions()
     }
 
     getTransaction(key: number) {

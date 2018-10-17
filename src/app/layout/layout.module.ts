@@ -52,13 +52,14 @@ import {DropzoneDirective} from "../shared/directives/dropzone/dropzone.directiv
 import {InputFloatDirective} from "../shared/directives/input-float/input-float.directive";
 import {DropImagesDirective} from "../directives/drop-images.directive";
 import {UploadLogocomponent} from "../modals/uploadLogo/uploadLogocomponent";
-import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'
+import {NgIdleKeepaliveModule} from '@ng-idle/keepalive'
 import {RouteService} from "../services/route.service";
 import {AuthComponent} from "../pages/auth/auth.component";
 import {AboutComponent} from "../modals/about/about.component";
 import {Broadcaster} from "../../assets/js/broadcaster";
 import {AuthAdminService} from "../services/auth-admin.service";
 import {AdministratorComponent} from "../pages/administrator/administrator.component";
+import {AuthGuard} from "../guards/auth.guard";
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -127,8 +128,8 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         SettingService,
         RouteService,
         Broadcaster,
-        AuthAdminService
-
+        AuthAdminService,
+        AuthGuard
     ],
     entryComponents: [
         CashInComponent,

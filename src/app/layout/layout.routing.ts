@@ -13,35 +13,43 @@ import {ClosedStatementsComponent} from "../pages/closed-statements/closed-state
 import {AuthComponent} from "../pages/auth/auth.component";
 import {AuthAdminService} from "../services/auth-admin.service";
 import {AdministratorComponent} from "../pages/administrator/administrator.component";
+import {AuthGuard} from "../guards/auth.guard";
 
 const LAYOUT_ROUTES: Routes = [
     {
         path: '', component: LayoutComponent, children: [
-        //Home
-        {path: '', redirectTo: 'home', pathMatch: 'full'},
-        {path: 'home', component: HomeComponent},
-        {path: 'auth', component: AuthComponent},
-        {path: 'general', component: GeneralComponent},
-        {path: 'dailyTransaction', component: DailyTransactionsComponent},
-        {path: 'logs', component: LogsComponent},
-        {path: 'register', component: RegisterComponent},
-        {path: 'smtp', component: SmtpComponent},
-        {path: 'transactions', component: TransactionsComponent},
-        {path: 'userProfile', component: UserProfileComponent},
-        {path: 'closedStatements', component: ClosedStatementsComponent},
-        {path: 'daily-transactions', component: DailyTransactionsComponent},
-        {path: 'closed-statements', component: ClosedStatementsComponent},
-        {path: 'register', component: RegisterComponent},
-        {path: 'general', component: GeneralComponent},
-        {path: 'smtp', component: SmtpComponent},
-        {path: 'transactions', component: TransactionsComponent},
-        {
-            path: 'admin',
-            component: AdministratorComponent,
-            canActivate: [ AuthAdminService ]
-        },
-        {path: 'user-profile', component: UserProfileComponent}
-    ]
+            //Home
+            {path: '', redirectTo: 'home', pathMatch: 'full'},
+            {path: 'home', component: HomeComponent},
+            {path: 'auth', component: AuthComponent},
+            {path: 'general', component: GeneralComponent},
+            {path: 'dailyTransaction', component: DailyTransactionsComponent},
+            {path: 'logs', component: LogsComponent},
+            {path: 'registers', component: RegisterComponent},
+            {path: 'smtp', component: SmtpComponent},
+            {path: 'transactions', component: TransactionsComponent},
+            {
+                path: 'userProfile',
+                component: UserProfileComponent
+            },
+            {path: 'closedStatements', component: ClosedStatementsComponent},
+            {path: 'daily-transactions', component: DailyTransactionsComponent},
+            {path: 'closed-statements', component: ClosedStatementsComponent},
+            {path: 'register', component: RegisterComponent},
+            {path: 'general', component: GeneralComponent},
+            {path: 'smtp', component: SmtpComponent},
+            {path: 'transactions', component: TransactionsComponent},
+            {
+                path: 'admin',
+                component: AdministratorComponent,
+                canActivate: [AuthAdminService]
+            },
+            {
+                path: 'user-profile',
+                component: UserProfileComponent,
+                canActivate: [AuthGuard]
+            }
+        ]
     }
 ];
 
